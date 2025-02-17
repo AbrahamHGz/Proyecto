@@ -1,9 +1,11 @@
 import React from "react";
-
+import Menu from "../Objetos/Menu";
 const Home: React.FC = () => {
     return(
         <>
-            <div className="grid grid-cols-5">
+            <Menu></Menu>
+
+            <div className="grid grid-cols-5 pt-26">
                 <div>
                     <h1 className="text-2xl font-semibold flex justify-center p-3 my-3">
                         Top 10 USUARIO
