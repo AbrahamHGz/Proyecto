@@ -5,10 +5,10 @@ const Home: React.FC = () => {
         <>
             <Menu></Menu>
 
-            <div className="grid grid-cols-5 pt-26">
-                <div>
-                    <h1 className="text-2xl font-semibold flex justify-center p-3 my-3">
-                        Top 10 USUARIO
+            <div className="grid grid-cols-5 pt-23">
+                <div className="bg-gray-800">
+                    <h1 className="text-2xl text-white font-semibold flex justify-center p-3 my-3">
+                        Top 10 Usuarios
                     </h1>
                     <ol className=" p-2">
                         <li className="flex justify-center">
@@ -34,14 +34,18 @@ const Home: React.FC = () => {
                         </li>
                     </ol>
                 </div>
-                <div className="p-2 col-span-4">
-                    <h1 className="text-4xl font-bold my-3">Arte Más Reciente</h1>
+                
+                <div className="p-2 px-5 col-span-4">
+                    <h1 className="text-4xl font-bold my-3 text-white">Arte Más Reciente</h1>
 
                     <form action="">
-                        <label htmlFor="" className="text-lg text-blue-900 font-semibold">Categoria:</label>
-                        <select name="" id="" className="bg-white mx-2 border border-black ">
+                        <label htmlFor="" className="text-lg text-slate-300 font-semibold">Categoria:</label>
+                        <select name="" id="" className="bg-gray-200 rounded mx-2 p-1 px-2">
                             <option value="">paisajes llamativos</option>
                         </select>
+
+                        <label htmlFor="" className="text-lg text-slate-300 font-semibold">Fecha</label>
+                        <input type="date" className="bg-gray-200 rounded mx-2 p-1 px-2" />
                     </form>
 
                     <div id="Publicaciones" className="grid grid-cols-4 my-10">

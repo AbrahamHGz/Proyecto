@@ -10,7 +10,7 @@ const Menu: React.FC = () => {
                     </div>
                     <form action="" className="">
                         <input type="text" className="
-                        bg-stone-700 w-full p-2 rounded text-stone-300" 
+                        bg-gray-200 w-full p-2 rounded" 
                         placeholder="Buscar"/>
                        
                     </form>
