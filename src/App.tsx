@@ -8,6 +8,8 @@ import Home from './Pages/Home'
 import Perfil from './Pages/Perfil'
 import Publicacion from './Pages/Publicacion'
 import Login from './Pages/Login'
+import Crear_Publicacion from './Pages/Crear_Publicacion'
+import Singup from './Pages/Singup'
 
 
 function App() {
@@ -22,6 +24,8 @@ function App() {
         <Route path='/Perfil' element={<Perfil />}/>
         <Route path='/Publicacion' element={<Publicacion />}/>
         <Route path='/Login' element={<Login />}/>
+        <Route path='/SingUp' element={<Singup />}/>
+        <Route path='/Crear publicacion' element={<Crear_Publicacion/>}/>
 
         
         

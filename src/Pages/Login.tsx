@@ -31,7 +31,7 @@ const Login:React.FC =() => {
                                 <input type="submit" value="Enviar" className="px-30 bg-slate-200" />
                             </li>
                             <li>
-                                <p>¿No tienes cuenta? <Link to="" className="text-blue-800 hover:text-blue-200  font-bold underline">¡Registrate!</Link></p>
+                                <p>¿No tienes cuenta? <Link to="/SingUp" className="text-blue-800 hover:text-blue-200  font-bold underline">¡Registrate!</Link></p>
                             </li>
                         </ol>
 

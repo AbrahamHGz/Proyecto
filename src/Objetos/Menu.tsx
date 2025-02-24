@@ -5,8 +5,15 @@ const Menu: React.FC = () => {
         <>
             <div className="bg-slate-950 p-4 fixed w-full">
                 <div className="grid grid-cols-3 flex items-center">
-                    <div>
-                        <Link to="/Home" className="mx-2 text-4xl font-bold text-white">ARTROPOLIS</Link>
+                    <div className="flex items-center">
+                        <Link to="/Home" className="mx-2 text-4xl font-bold text-white
+                       hover:underline
+                        ">ARTROPOLIS</Link>
+
+                        <Link to="/Home" className="text-white mx-4 font-bold text-3xl px-4 p-1
+                        rounded hover:bg-slate-700">
+                            Inicio
+                        </Link>
                     </div>
                     <form action="" className="">
                         <input type="text" className="

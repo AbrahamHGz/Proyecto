@@ -1,9 +1,9 @@
 import React from "react";
-
+import { Link } from "react-router-dom";
 const Publicaciones: React.FC = () => {
     return (
         <>  
-            <div className="flex items-center space-x-5">
+            <div className="flex items-center space-x-5 mb-4">
                 <h1 className="text-2xl font-semibold">Publicaciones</h1>
 
                 <label htmlFor="" className="">Categoria</label>
@@ -11,9 +11,16 @@ const Publicaciones: React.FC = () => {
                     <option value="">Prueba de categoria</option>
                 </select>
 
-                <label htmlFor="">Fecha:</label>
+                <label htmlFor="">Desde:</label>
                 <input type="date" className="bg-white rounded px-2" />
 
+                <label htmlFor="">Hasta:</label>
+                <input type="date" className="bg-white rounded px-2" />
+
+            </div>
+
+            <div className="mb-4">
+                <Link to="/Crear publicacion" className="text-green-200 border p-2 px-4 hover:bg-lime-700">Publicar</Link>
             </div>
 
             <div className="grid grid-cols-4">
@@ -22,6 +29,9 @@ const Publicaciones: React.FC = () => {
                     <img src="https://res.cloudinary.com/dmcvdsh4c/image/upload/v1711699300/iceebookImage/ciencia/geologia/geologia-montanas-formacion-misterios_iz66pg.webp" alt="" className="h-45 w-84"/>
                     <p className="flex justify-center text-lg font-bold">"Arte de ejemplo"</p>
                     <p className="flex justify-start">"Por: Usuario 123"</p>
+                    
+                    <button>Editar</button>
+                 
                 </button>
 
                 <button className="p-2 bg-gray-700 text-white mr-3 mb-3 rounded
