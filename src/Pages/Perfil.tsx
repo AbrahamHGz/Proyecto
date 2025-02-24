@@ -27,7 +27,7 @@ const Perfil: React.FC = () => {
 
 
                 <div className=" mt-2 flex justify-end space-x-3">
-                    <Link to="" className="border p-2 hover:bg-slate-700 border-white text-white">Editar Perfil</Link>
+                    <Link to="/Editar Perfil" className="border p-2 hover:bg-slate-700 border-white text-white">Editar Perfil</Link>
                     <Link to="/Login" className="border p-2 hover:bg-red-800 border-red-300 text-white px-8">Salir</Link>
 
                 </div>

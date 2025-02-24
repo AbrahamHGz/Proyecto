@@ -10,7 +10,7 @@ const Login:React.FC =() => {
             <div className="flex justify-center  ">
                 <div className="">
 
-                <form action="" className=" p-15 shadow-xl  bg-gray-400 rounded m-40">
+                <form action="/Home" className=" p-15 shadow-xl  bg-gray-500 rounded m-40">
                     <h1 className="flex justify-center text-4xl mb-2 font-bold text-white">
                         Iniciar Sesión
                     </h1>
@@ -18,20 +18,21 @@ const Login:React.FC =() => {
                     <div className="w-96">
                         <ol className="space-y-3">
                             <li>
-                                <label htmlFor="" className="font-semibold">Correo:</label>
+                                <label htmlFor="" className="font-semibold text-white">Correo:</label>
                                 <br />
-                                <input type="text" className="rounded w-full px-2 p-1 bg-white" placeholder="correo@mail.com"/>
+                                <input type="text" className="rounded w-full px-2 p-1 bg-slate-200" placeholder="correo@mail.com"/>
                             </li>
                             <li>
-                                <label htmlFor="" className="font-semibold">Contraseña:</label>
+                                <label htmlFor="" className="font-semibold text-white">Contraseña:</label>
                                 <br />
-                                <input type="password" name="" className="rounded w-full px-2 p-1 bg-white" id="" placeholder="Contraseña" />
+                                <input type="password" name="" className="rounded w-full px-2 p-1 bg-slate-200" id="" placeholder="Contraseña" />
                             </li>
                             <li>
-                                <input type="submit" value="Enviar" className="px-30 bg-slate-200" />
+                                
+                                <input type="submit" value="Enviar" className=" bg-slate-700 rounded text-white font-bold text-lg hover:text-black hover:bg-slate-300 w-full p-1" />
                             </li>
                             <li>
-                                <p>¿No tienes cuenta? <Link to="/SingUp" className="text-blue-800 hover:text-blue-200  font-bold underline">¡Registrate!</Link></p>
+                                <p className="text-white">¿No tienes cuenta? <Link to="/SingUp" className="text-blue-300 hover:text-blue-200  font-bold hover:underline">¡Registrate!</Link></p>
                             </li>
                         </ol>
 

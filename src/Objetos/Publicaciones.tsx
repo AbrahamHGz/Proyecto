@@ -24,15 +24,15 @@ const Publicaciones: React.FC = () => {
             </div>
 
             <div className="grid grid-cols-4">
-                <button className="p-2 bg-gray-700 text-white mr-3 mb-3 rounded
+                <Link to="/Publicacion" className="p-2 bg-gray-700 text-white mr-3 mb-3 rounded
                  hover:drop-shadow-xl hover:bg-gray-500">
                     <img src="https://res.cloudinary.com/dmcvdsh4c/image/upload/v1711699300/iceebookImage/ciencia/geologia/geologia-montanas-formacion-misterios_iz66pg.webp" alt="" className="h-45 w-84"/>
                     <p className="flex justify-center text-lg font-bold">"Arte de ejemplo"</p>
                     <p className="flex justify-start">"Por: Usuario 123"</p>
                     
-                    <button>Editar</button>
+              
                  
-                </button>
+                </Link>
 
                 <button className="p-2 bg-gray-700 text-white mr-3 mb-3 rounded
                  hover:drop-shadow-xl hover:bg-gray-500">

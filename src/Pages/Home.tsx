@@ -1,5 +1,6 @@
 import React from "react";
 import Menu from "../Objetos/Menu";
+import { Link } from "react-router-dom";
 const Home: React.FC = () => {
     return(
         <>
@@ -44,19 +45,23 @@ const Home: React.FC = () => {
                             <option value="">paisajes llamativos</option>
                         </select>
 
-                        <label htmlFor="" className="text-lg text-slate-300 font-semibold">Fecha</label>
+                        <label htmlFor="" className="text-lg text-slate-300 font-semibold">Desde:</label>
                         <input type="date" className="bg-gray-200 rounded mx-2 p-1 px-2" />
+                        
+                        <label htmlFor="" className="text-lg text-slate-300 font-semibold">Hasta:</label>
+                        <input type="date" className="bg-gray-200 rounded mx-2 p-1 px-2" />
+                        <button className="border p-2 hover:bg-slate-700 border-white text-white">Filtrar</button>
                     </form>
 
                     <div id="Publicaciones" className="grid grid-cols-4 my-10">
 
 
-                        <button className="p-2 bg-gray-700 text-white mr-3 mb-3 rounded
+                        <Link to="/Publicacion" className="p-2 bg-gray-700 text-white mr-3 mb-3 rounded
                          hover:drop-shadow-xl hover:bg-gray-500">
                             <img src="https://res.cloudinary.com/dmcvdsh4c/image/upload/v1711699300/iceebookImage/ciencia/geologia/geologia-montanas-formacion-misterios_iz66pg.webp" alt="" className="h-45 w-84"/>
                             <p className="flex justify-center text-lg font-bold">"Arte de ejemplo"</p>
                             <p className="flex justify-start">"Por: Usuario 123"</p>
-                        </button>
+                        </Link>
 
                         <button className="p-2 bg-gray-700 text-white mr-3 mb-3 rounded
                          hover:drop-shadow-xl hover:bg-gray-500">

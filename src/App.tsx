@@ -10,6 +10,9 @@ import Publicacion from './Pages/Publicacion'
 import Login from './Pages/Login'
 import Crear_Publicacion from './Pages/Crear_Publicacion'
 import Singup from './Pages/Singup'
+import Editar_Publicacion from './Pages/Editar_Publicacion'
+import Editar_Perfil from './Pages/Editar_Perfil'
+import Artistas from './Pages/Artistas'
 
 
 function App() {
@@ -22,10 +25,13 @@ function App() {
         <Route path='/' element={<Home />}/>
         <Route path='/Home' element={<Home />}/>
         <Route path='/Perfil' element={<Perfil />}/>
+        <Route path='/Editar Perfil' element={<Editar_Perfil />}/>
         <Route path='/Publicacion' element={<Publicacion />}/>
         <Route path='/Login' element={<Login />}/>
         <Route path='/SingUp' element={<Singup />}/>
         <Route path='/Crear publicacion' element={<Crear_Publicacion/>}/>
+        <Route path='/Editar publicacion' element={<Editar_Publicacion/>}/>
+        <Route path='/Artistas' element={<Artistas />}/>
 
         
         
