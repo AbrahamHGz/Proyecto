@@ -61,7 +61,7 @@ const Artistas: React.FC = () => {
                                 <img src="https://res.cloudinary.com/dmcvdsh4c/image/upload/v1711699300/iceebookImage/ciencia/geologia/geologia-montanas-formacion-misterios_iz66pg.webp"   alt="" 
                                 className="h-31 "/>
                             </div>
-                            <p className="flex justify-center text-lg font-bold">"Usuario 123"</p>
+                            <p className="flex justify-center text-lg font-bold">"Usuario 1234"</p>
                         </Link> 
 
                     </div>
