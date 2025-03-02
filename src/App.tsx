@@ -13,6 +13,7 @@ import Singup from './Pages/Singup'
 import Editar_Publicacion from './Pages/Editar_Publicacion'
 import Editar_Perfil from './Pages/Editar_Perfil'
 import Artistas from './Pages/Artistas'
+import Admin from './Pages/Admin'
 
 
 function App() {
@@ -32,6 +33,8 @@ function App() {
         <Route path='/Crear publicacion' element={<Crear_Publicacion/>}/>
         <Route path='/Editar publicacion' element={<Editar_Publicacion/>}/>
         <Route path='/Artistas' element={<Artistas />}/>
+        <Route path='/Administrador' element={<Admin />}/>
+
 
         
         
