@@ -1,9 +1,19 @@
 import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
-// import './App.css'
-import Home from './Pages/Home'
+import { Route, Routes, Link } from 'react-router-dom'
 import Menu from './Objetos/Menu'
+
+import Home from './Pages/Home'
+import Perfil from './Pages/Perfil'
+import Publicacion from './Pages/Publicacion'
+import Login from './Pages/Login'
+import Crear_Publicacion from './Pages/Crear_Publicacion'
+import Singup from './Pages/Singup'
+import Editar_Publicacion from './Pages/Editar_Publicacion'
+import Editar_Perfil from './Pages/Editar_Perfil'
+import Artistas from './Pages/Artistas'
+import Admin from './Pages/Admin'
 
 
 function App() {
@@ -11,32 +21,26 @@ function App() {
 
   return (
     <>
-      <Menu></Menu>
-      <Home></Home>
-      
-    
-      {/* <div>
-        <Home></Home>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-        <h1 className=''>Hola  </h1>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p> */}
+
+      <Routes>
+        <Route path='/' element={<Home />}/>
+        <Route path='/Home' element={<Home />}/>
+        <Route path='/Perfil' element={<Perfil />}/>
+        <Route path='/Editar Perfil' element={<Editar_Perfil />}/>
+        <Route path='/Publicacion' element={<Publicacion />}/>
+        <Route path='/Login' element={<Login />}/>
+        <Route path='/SingUp' element={<Singup />}/>
+        <Route path='/Crear publicacion' element={<Crear_Publicacion/>}/>
+        <Route path='/Editar publicacion' element={<Editar_Publicacion/>}/>
+        <Route path='/Artistas' element={<Artistas />}/>
+        <Route path='/Administrador' element={<Admin />}/>
+
+
+        
+        
+      </Routes>
+
+
     </>
   )
 }
