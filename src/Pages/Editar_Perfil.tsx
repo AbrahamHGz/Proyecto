@@ -8,7 +8,7 @@ const Editar_Perfil: React.FC = () => {
             <div className="pt-40">
                 <div className="grid grid-cols-5 ">
                     <p></p>
-                    <div className="bg-slate-400 rounded col-span-3 py-2">
+                    <div className="bg-gray-400 rounded col-span-3 py-2">
                        
                         <form action="">
                             <h1 className="pt-4 text-4xl font-bold text-white  flex justify-center">Editar Perfil</h1>
@@ -46,10 +46,10 @@ const Editar_Perfil: React.FC = () => {
                                 </li>
                                 <li>
                                     <img src="" alt="" />
-                                    <button className="bg-slate-600 text-white font-bold p-2 rounded mt-2 hover:bg-slate-200 hover:text-black">Foto de Perfil</button>
+                                    <button className="bg-slate-600 text-white font-bold p-2 rounded mt-2 hover:bg-slate-500 hover:text-black">Foto de Perfil</button>
                                 </li>
                                 <li>
-                                    <input type="submit" value="Editar" className="bg-gray-500 w-full p-2 text-xl font-bold text-white rounded mt-2 hover:bg-gray-200 hover:text-black" />
+                                    <input type="submit" value="Editar" className="p-2 bg-slate-800 rounded  hover:bg-slate-700 font-bold text-white w-full my-2" />
                                 </li>
                                 <li className="flex justify-end">
                                     <button className="mt-4 text-red-800 font-bold hover:underline hover:text-red-200">Borrar perfil</button>

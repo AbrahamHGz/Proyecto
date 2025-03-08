@@ -45,7 +45,7 @@ const Publicacion: React.FC = () => {
                             </svg>
 
                             <div>
-                                <Link to="/Editar publicacion" className="hover:bg-gray-700 rounded border p-2">Editar Publicación</Link>
+                                <Link to="/Editar publicacion" className="text-white font-bold  bg-slate-800 px-4 p-2 rounded hover:bg-slate-200 hover:text-black ml-2">Editar Publicación</Link>
                             </div>
 
                         </div>
@@ -81,15 +81,7 @@ const Escribe_Comentario: React.FC = () => {
                         <textarea name="" className="w-full mt-2 rounded bg-gray-200 p-2"
                          id=""></textarea>
                     </li>
-                    <li className="px-4 pb-2 flex">
-                       <button type="button" className="">
-
-                            <svg className="size-10 text-gray-800  ms-1 hover:text-red-600  " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-                                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-                            </svg>
-
-                       </button>
-                    </li>
+  
                 </ol>
                 <div className="m-4">
                     <input type="submit" value="Comentar" className="px-4 rounded text-xl font-bold hover:bg-slate-300 hover:text-black py-3 w-full bg-slate-500 text-white" />

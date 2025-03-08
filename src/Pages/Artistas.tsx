@@ -10,16 +10,16 @@ const Artistas: React.FC = () => {
             <div className="pt-30">
                 <div className="px-30">
                     <form action="" className="flex space-x-2 items-center">
-                        <label htmlFor="" className="text-white font-bold text-2xl">Desde:</label>
+                        <label htmlFor="" className=" font-semibold text-lg text-slate-300 ">Desde:</label>
                         <input type="date" name="" className="bg-slate-200 rounded px-2 p-1" id="" />
 
-                        <label htmlFor="" className="text-white font-bold text-2xl">Hasta:</label>
+                        <label htmlFor="" className=" font-semibold text-lg text-slate-300 ">Hasta:</label>
                         <input type="date" name="" className="bg-slate-200 rounded px-2 p-1" id="" />
                         
-                        <label htmlFor="" className="text-white font-bold text-2xl">Nombre del Artista:</label>
+                        <label htmlFor="" className=" font-semibold text-lg text-slate-300 ">Nombre del Artista:</label>
                         <input type="text" placeholder="Nombre del artista" className="bg-slate-200 rounded px-2 p-1" />
 
-                        <input type="submit" value="Buscar" className="text-white font-bold text-2xl bg-slate-800 px-4 p-1 rounded hover:bg-slate-200 hover:text-black" />
+                        <input type="submit" value="Buscar" className="text-white font-bold  bg-slate-800 px-4 p-2 rounded hover:bg-slate-700 " />
                     </form>
 
                     <div className="grid grid-cols-4 mt-10">

@@ -34,6 +34,8 @@ function App() {
         <Route path='/Editar publicacion' element={<Editar_Publicacion/>}/>
         <Route path='/Artistas' element={<Artistas />}/>
         <Route path='/Administrador' element={<Admin />}/>
+        <Route path='/PruebaDB' element={<Admin />}/>
+
 
 
         

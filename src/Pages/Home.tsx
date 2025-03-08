@@ -50,7 +50,7 @@ const Home: React.FC = () => {
                         
                         <label htmlFor="" className="text-lg text-slate-300 font-semibold">Hasta:</label>
                         <input type="date" className="bg-gray-200 rounded mx-2 p-1 px-2" />
-                        <button className="border p-2 hover:bg-slate-700 border-white text-white">Filtrar</button>
+                        <button className=" p-2 bg-slate-800 rounded  hover:bg-slate-700 font-bold text-white">Filtrar</button>
                     </form>
 
                     <div id="Publicaciones" className="grid grid-cols-4 my-10">

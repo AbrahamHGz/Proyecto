@@ -6,7 +6,7 @@ const Crear_Publicacion: React.FC = () => {
         <>
             <Menu></Menu>
             <div className="pt-26 ">
-                <div className="mt-2 p-4 rounded mx-20 bg-slate-400">
+                <div className="mt-2 p-4 rounded mx-20 bg-gray-400">
                     <h1 className="flex justify-center text-white font-bold  text-3xl">Crear Publicación</h1>
                     <form action="" className="grid grid-cols-3 my-2">
 

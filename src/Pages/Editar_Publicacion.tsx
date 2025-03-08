@@ -35,7 +35,7 @@ const Editar_Publicacion: React.FC = () => {
                                 <p className="text-white" id="CategoriaZone">Arte, 3D</p>
                             </li>
                             <li className="mt-4">
-                            <input type="button" value="Cargar imagen"  className=" bg-slate-500 rounded text-white font-bold text-lg hover:text-black hover:bg-slate-200 w-96 p-1" />
+                            <input type="button" value="Cargar imagen"  className=" bg-slate-800 rounded text-white font-bold text-lg hover:text-black hover:bg-slate-200 w-96 p-1" />
                                 
                             </li>
                             <li className="mt-4 flex space-x-2 w-96">
