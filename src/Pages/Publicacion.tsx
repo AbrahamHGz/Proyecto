@@ -45,7 +45,7 @@ const Publicacion: React.FC = () => {
                             </svg>
 
                             <div>
-                                <Link to="/Editar publicacion" className="text-white font-bold  bg-slate-800 px-4 p-2 rounded hover:bg-slate-200 hover:text-black ml-2">Editar Publicación</Link>
+                                <Link to="/Editar publicacion" className="text-white font-bold  bg-slate-800 px-4 p-2 rounded hover:bg-slate-700  ml-2">Editar Publicación</Link>
                             </div>
 
                         </div>
@@ -84,7 +84,7 @@ const Escribe_Comentario: React.FC = () => {
   
                 </ol>
                 <div className="m-4">
-                    <input type="submit" value="Comentar" className="px-4 rounded text-xl font-bold hover:bg-slate-300 hover:text-black py-3 w-full bg-slate-500 text-white" />
+                    <input type="submit" value="Comentar" className="px-4 rounded text-xl font-bold hover:bg-slate-600  py-3 w-full bg-slate-700 text-white" />
 
                 </div>
             </form>

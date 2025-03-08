@@ -35,14 +35,14 @@ const Editar_Publicacion: React.FC = () => {
                                 <p className="text-white" id="CategoriaZone">Arte, 3D</p>
                             </li>
                             <li className="mt-4">
-                            <input type="button" value="Cargar imagen"  className=" bg-slate-800 rounded text-white font-bold text-lg hover:text-black hover:bg-slate-200 w-96 p-1" />
+                            <input type="button" value="Cargar imagen"  className="  bg-slate-500 rounded text-white font-bold text-lg hover:text-black hover:bg-slate-300 w-96 p-1" />
                                 
                             </li>
-                            <li className="mt-4 flex space-x-2 w-96">
-                                <input type="submit" value="Borrar" className=" bg-red-500 rounded text-white font-bold text-lg hover:text-black hover:bg-red-300 w-96 p-1" />
+                            
+                            <input type="submit" value="Editar" className="my-5 text-white font-bold  bg-slate-800 px-4 p-2 rounded hover:bg-slate-700  w-96 p-1" />
+                            <br />
+                            <input type="submit" value="Borrar" className=" text-red-800 hover:underline text-lg" />
 
-                                <input type="submit" value="Editar" className=" bg-sky-700 rounded text-white font-bold text-lg hover:text-black hover:bg-sky-300 w-96 p-1" />
-                            </li>
                         </ol>
                         <div className="col-span-2">
                             

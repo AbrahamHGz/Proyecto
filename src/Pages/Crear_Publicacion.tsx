@@ -35,11 +35,11 @@ const Crear_Publicacion: React.FC = () => {
                                 <p className="text-white" id="CategoriaZone">Arte, 3D</p>
                             </li>
                             <li className="mt-4">
-                            <input type="button" value="Cargar imagen"  className=" bg-slate-500 rounded text-white font-bold text-lg hover:text-black hover:bg-slate-200 w-96 p-1" />
+                            <input type="button" value="Cargar imagen"  className=" bg-slate-500 rounded text-white font-bold text-lg hover:text-black hover:bg-slate-300 w-96 p-1" />
                                 
                             </li>
                             <li className="mt-4">
-                                <input type="submit" value="Publicar" className=" bg-gray-500 rounded text-white font-bold text-lg hover:text-black hover:bg-gray-300 w-96 p-1" />
+                                <input type="submit" value="Publicar" className=" text-white font-bold  bg-slate-800 px-4 p-2 rounded hover:bg-slate-700  w-96 p-1" />
                             </li>
                         </ol>
                         <div className="col-span-2">
