@@ -46,7 +46,7 @@ const Editar_Perfil: React.FC = () => {
                                 </li>
                                 <li>
                                     <img src="" alt="" />
-                                    <button className="bg-slate-600 text-white font-bold p-2 rounded mt-2 hover:bg-slate-500 hover:text-black">Foto de Perfil</button>
+                                    <button className="bg-slate-600 text-white font-bold p-2 rounded mt-2 hover:bg-slate-500 ">Foto de Perfil</button>
                                 </li>
                                 <li>
                                     <input type="submit" value="Editar" className="p-2 bg-slate-800 rounded  hover:bg-slate-700 font-bold text-white w-full my-2" />
