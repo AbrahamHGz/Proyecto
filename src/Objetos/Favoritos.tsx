@@ -16,7 +16,7 @@ const Favoritos: React.FC = () => {
 
                 <label htmlFor="">Hasta:</label>
                 <input type="date" className="bg-white rounded px-2" />
-
+                <button className=" p-2 bg-slate-800 rounded  hover:bg-slate-700 font-bold text-white">Filtrar</button>
             </div>
 
             <div className="grid grid-cols-4">

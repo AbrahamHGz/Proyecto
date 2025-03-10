@@ -17,10 +17,12 @@ const Publicaciones: React.FC = () => {
                 <label htmlFor="">Hasta:</label>
                 <input type="date" className="bg-white rounded px-2" />
 
+                <button className=" p-2 bg-slate-800 rounded  hover:bg-slate-700 font-bold text-white">Filtrar</button>
+
             </div>
 
             <div className="mb-4">
-                <Link to="/Crear publicacion" className="text-green-200 border p-2 px-4 hover:bg-lime-700">Publicar</Link>
+                <Link to="/Crear publicacion" className="text-white font-bold  bg-blue-800 px-4 p-2 rounded hover:bg-blue-700 ">Publicar</Link>
             </div>
 
             <div className="grid grid-cols-4">

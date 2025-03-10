@@ -6,7 +6,7 @@ const Crear_Publicacion: React.FC = () => {
         <>
             <Menu></Menu>
             <div className="pt-26 ">
-                <div className="mt-2 p-4 rounded mx-20 bg-slate-400">
+                <div className="mt-2 p-4 rounded mx-20 bg-gray-400">
                     <h1 className="flex justify-center text-white font-bold  text-3xl">Crear Publicación</h1>
                     <form action="" className="grid grid-cols-3 my-2">
 
@@ -35,11 +35,11 @@ const Crear_Publicacion: React.FC = () => {
                                 <p className="text-white" id="CategoriaZone">Arte, 3D</p>
                             </li>
                             <li className="mt-4">
-                            <input type="button" value="Cargar imagen"  className=" bg-slate-500 rounded text-white font-bold text-lg hover:text-black hover:bg-slate-200 w-96 p-1" />
+                            <input type="button" value="Cargar imagen"  className=" bg-slate-500 rounded text-white font-bold text-lg hover:text-black hover:bg-slate-300 w-96 p-1" />
                                 
                             </li>
                             <li className="mt-4">
-                                <input type="submit" value="Publicar" className=" bg-gray-500 rounded text-white font-bold text-lg hover:text-black hover:bg-gray-300 w-96 p-1" />
+                                <input type="submit" value="Publicar" className=" text-white font-bold  bg-slate-800 px-4 p-2 rounded hover:bg-slate-700  w-96 p-1" />
                             </li>
                         </ol>
                         <div className="col-span-2">

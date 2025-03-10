@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import Administradores from "../Objetos/Administradores";
 import UsuariosAd from "../Objetos/UsuariosAd";
 import Reportes from "../Objetos/Reportes";
+import Categorias from "../Objetos/Categorias";
+import Estadisticas from "../Objetos/Estadisticas";
 
 
 const Admin: React.FC = () => {
@@ -27,8 +29,8 @@ const Admin: React.FC = () => {
 
 
                 <div className=" mt-2 flex justify-end space-x-3">
-                    <Link to="/Editar Perfil" className="border p-2 hover:bg-slate-700 border-white text-white">Editar Perfil</Link>
-                    <Link to="/Login" className="border p-2 hover:bg-red-800 border-red-300 text-white px-8">Salir</Link>
+                    <Link to="/Editar Perfil" className="p-2 bg-slate-800 rounded  hover:bg-slate-700 font-bold text-white">Editar Perfil</Link>
+                    <Link to="/Login" className="p-2 bg-red-500 rounded border-red-100 hover:text-black hover:bg-red-400 font-bold text-white px-8">Salir</Link>
 
                 </div>
             </div>
@@ -45,6 +47,12 @@ const Admin: React.FC = () => {
                 <button onClick={() => setSeccionActiva("Reportes")}
                     className={`font-bold px-10 p-1 rounded-t text-white hover:bg-gray-400 
                     ${seccionActiva === "Reportes" ? "bg-gray-400" : "bg-gray-500"}`}>Reportes</button>
+                <button onClick={() => setSeccionActiva("Categorias")}
+                    className={`font-bold px-10 p-1 rounded-t text-white hover:bg-gray-400 
+                    ${seccionActiva === "Categorias" ? "bg-gray-400" : "bg-gray-500"}`}>Categorias</button>
+                <button onClick={() => setSeccionActiva("Estadisticas")}
+                    className={`font-bold px-10 p-1 rounded-t text-white hover:bg-gray-400 
+                    ${seccionActiva === "Estadisticas" ? "bg-gray-400" : "bg-gray-500"}`}>Estadísticas</button>
 
             </div>
 
@@ -52,6 +60,10 @@ const Admin: React.FC = () => {
                 {seccionActiva == "Administradores" && <Administradores></Administradores> }
                 {seccionActiva == "Usuarios" && <UsuariosAd></UsuariosAd>}
                 {seccionActiva == "Reportes" && <Reportes></Reportes>}
+                {seccionActiva == "Categorias" && <Categorias></Categorias>}
+                {seccionActiva == "Estadisticas" && <Estadisticas></Estadisticas>}
+
+
             </div>
 
             <div className="p-2">

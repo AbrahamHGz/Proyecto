@@ -29,7 +29,7 @@ const Login:React.FC =() => {
                             </li>
                             <li>
                                 
-                                <input type="submit" value="Enviar" className=" bg-slate-700 rounded text-white font-bold text-lg hover:text-black hover:bg-slate-300 w-full p-1" />
+                                <input type="submit" value="Enviar" className=" bg-slate-700 rounded text-white font-bold text-lg  hover:bg-slate-600 w-full p-1" />
                             </li>
                             <li>
                                 <p className="text-white">¿No tienes cuenta? <Link to="/SingUp" className="text-blue-300 hover:text-blue-200  font-bold hover:underline">¡Registrate!</Link></p>

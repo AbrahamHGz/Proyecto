@@ -15,7 +15,7 @@ const Comentario: React.FC = () => {
                             <p><strong>Fecha:</strong> 24/02/2025</p>
                             
 
-                            <button className=" mt-2 hover:underline text-black">Reportar</button>
+                            <button className=" mt-2 hover:underline text-red-900">Reportar</button>
 
                         </div>
 

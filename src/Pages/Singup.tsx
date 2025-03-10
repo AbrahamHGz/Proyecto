@@ -58,7 +58,7 @@ const Singup: React.FC = () => {
                                 </div>
                             </li>
                             <li>
-                            <input type="submit" value="Enviar" className=" bg-gray-500 rounded text-white font-bold text-lg hover:text-black hover:bg-slate-300 w-full p-1" />
+                            <input type="submit" value="Enviar" className=" bg-slate-700 rounded text-white font-bold text-lg hover:text-black hover:bg-slate-300 w-full p-1" />
 
                             </li>
                         </ol>

@@ -1,9 +1,10 @@
 import React  from "react";
+import { Link } from "react-router-dom";
 
 const Administradores: React.FC = () => {
     return(
         <>
-            <h1 className=" font-semibold text-2xl">Administradores</h1>
+            <h1 className=" font-bold text-2xl">Administradores</h1>
             <form action="" className="flex items-center justify-center space-x-4 py-4">
                 <input type="text" className="bg-slate-200 w-96 rounded p-1 px-2" placeholder="Administrador" />
                 
@@ -14,10 +15,12 @@ const Administradores: React.FC = () => {
                 <label htmlFor="">Hasta:</label>
                 <input type="date" name="" id="" className="bg-slate-200 rounded p-1"/>
 
-                <input type="submit" value="Buscar" className="bg-slate-600 rounded p-1 px-4 text-white font-bold hover:bg-slate-200 hover:text-black" />
+                <input type="submit" value="Buscar" className="bg-slate-600 rounded p-1 px-4 text-white font-bold hover:bg-slate-500 " />
             </form>
+            <Link to="/Agrega Administrador" type="button"  className="bg-slate-600 rounded p-1 px-4 mx-2 text-white font-bold hover:bg-slate-500 " >Agregar Administrador</Link>
 
-            <div className="grid grid-cols-4 ">
+
+            <div className="grid grid-cols-5 ">
                 <Admins></Admins>
                 <Admins></Admins>
                 <Admins></Admins>
@@ -42,9 +45,10 @@ const Admins: React.FC = () => {
                      <div>
                         <h1 className="font-bold text-2xl">UsuarioAdmin123</h1>
                         <h1 className="font-semibold text-lg">Usuario@mail.com</h1>
+                        <p className="font-semibold">Fecha de ingreso:</p> <p>08/03/2025</p>
                      </div>
-                    <button className="w-full hover:bg-red-200 bg-red-500 rounded p-2 font-bold text-white hover:text-black">Desactivar</button>
-                    <button className="w-full hover:bg-green-200 bg-green-500 rounded p-2 font-bold text-white hover:text-black">Reactivar</button>
+                    <button className="w-full hover:bg-red-400 bg-red-500 rounded p-2 font-bold text-white ">Desactivar</button>
+                    <button className="w-full hover:bg-slate-400 bg-slate-500 rounded p-2 font-bold text-white ">Reactivar</button>
 
                      
                 </div>
