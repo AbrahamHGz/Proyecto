@@ -1,4 +1,17 @@
 import React from "react";
+import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
+
+const data = [
+  { name: "Enero", ventas: 400 },
+  { name: "Febrero", ventas: 300 },
+  { name: "Marzo", ventas: 500 },
+  { name: "Abril", ventas: 700 },
+  { name: "Mayo", ventas: 600 },
+  { name: "Febrero", ventas: 300 },
+  { name: "Marzo", ventas: 500 },
+  { name: "Abril", ventas: 700 },
+  { name: "Mayo", ventas: 600 },
+];
 
 const Categorias: React.FC = () =>{
     return(

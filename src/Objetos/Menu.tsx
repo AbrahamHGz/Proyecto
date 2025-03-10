@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 const Menu: React.FC = () => {
     return (
         <>
-            <div className="bg-slate-950 p-4 fixed w-full">
+            <div className="bg-slate-950 p-4 fixed w-full z-50">
                 <div className="grid grid-cols-3 flex items-center">
                     <div className="flex items-center">
                         <Link to="/Home" className="mx-2 text-4xl font-bold text-white

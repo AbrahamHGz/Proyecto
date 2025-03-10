@@ -5,6 +5,7 @@ import Administradores from "../Objetos/Administradores";
 import UsuariosAd from "../Objetos/UsuariosAd";
 import Reportes from "../Objetos/Reportes";
 import Categorias from "../Objetos/Categorias";
+import Estadisticas from "../Objetos/Estadisticas";
 
 
 const Admin: React.FC = () => {
@@ -60,6 +61,8 @@ const Admin: React.FC = () => {
                 {seccionActiva == "Usuarios" && <UsuariosAd></UsuariosAd>}
                 {seccionActiva == "Reportes" && <Reportes></Reportes>}
                 {seccionActiva == "Categorias" && <Categorias></Categorias>}
+                {seccionActiva == "Estadisticas" && <Estadisticas></Estadisticas>}
+
 
             </div>
 

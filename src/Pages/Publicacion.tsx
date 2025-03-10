@@ -30,7 +30,7 @@ const Publicacion: React.FC = () => {
                                 <p className="p-2 font-bold text-xl">20</p>
 
                             </div>
-                            <button className=" mt-2 hover:underline text-black">Reportar</button>
+                            <button className=" mt-2 hover:underline text-red-900 text-lg">Reportar</button>
                       
                         </div>
 
