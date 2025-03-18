@@ -1,22 +1,24 @@
 import { MongoClient } from "mongodb";
+import mongoose from "mongoose";
 
 class dbClient {
     constructor(){
-        const queryString = "mongodb://localhost:27017/";
-        this.client = new MongoClient(queryString);
-        this.conectarDB();
+        this.conectarBaseDatos();
+    }
+    async conectarBaseDatos(){
+        const queryString = "mongodb://localhost:27017/PruebaDB";
+        await mongoose.connect(queryString);
+        console.log("Conexion Exitosa");
     }
 
-    async conectarDB(){
+    async cerrarConexion(){
         try{
-            await this.client.connect();
-            this.db = this.client.db('PruebaDB');
-            console.log("Conectado al servidor de base de datos");
-        }
-        catch(e){
-            console.log(e)
+            await mongoose.disconnect();
+            console.log("Conexion a la base de datos cerrada");
+        }catch(e){
+            console.error("Error al cerrar la conexion: " ,e);
         }
     }
 }
 
-export default new dbClient;
+export default new dbClient();
