@@ -2,9 +2,20 @@ import axios from 'axios';
 
 const API_URL = "http://localhost:5100";
 
-export const crearUsuario = async(nombre:string, email: string, edad: number):  Promise<void> =>{
+export const crearUsuario = async(
+    nombre:string, 
+    email: string, 
+    password: String,
+    sexo: string,
+    TipoUsu: string,
+    FechaNac: Date,
+    Estatus: boolean,
+    //edad: number,
+    
+    
+): Promise<void> =>{
     try {
-        const response = await axios.post(`${API_URL}/usuario`, { nombre, email, edad });
+        const response = await axios.post(`${API_URL}/usuario`, { nombre, email, password, sexo, TipoUsu, FechaNac, Estatus});
         console.log("Respuesta del servidor:", response.data);
     } catch (error) {
         console.error("Error al crear usuario:", error);

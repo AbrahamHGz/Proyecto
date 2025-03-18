@@ -10,34 +10,41 @@ const usuarioSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
-        edad:{
-            type: Number,
-            required: false
+        password:{
+            type: String,
+            required: true
+        },
+        sexo:{
+            type:String,
+            required: true,
+            enum:["Hombre", "Mujer"]
+        },
+        TipoUsu:{
+            type:String,
+            required: true,
+            enum:["artista", "admin", "superadmin"]
+        },
+        FechaNac:{
+            type:Date,
+            required: true
+        },
+        FechaReg:{
+            type:Date,
+            required:false
+        },
+        FechaAct:{
+            type:Date,
+            required:false
+        },
+        FechaDelete:{
+            type:Date,
+            required:false
+        },
+        Estatus:{
+            type:Boolean,
+            required:true,
+            default:true
         }
-        // password:{
-        //     type: String,
-        //     require: true
-        // },
-        // sexo:{
-        //     type:String,
-        //     require: true
-        // },
-        // FechaNac:{
-        //     type:Date,
-        //     require: true
-        // },
-        // FechaReg:{
-        //     type:Date,
-        //     require:false
-        // },
-        // FechaAct:{
-        //     type:Date,
-        //     require:false
-        // },
-        // FechaDelete:{
-        //     type:Date,
-        //     require:false
-        // }
 
 
 
