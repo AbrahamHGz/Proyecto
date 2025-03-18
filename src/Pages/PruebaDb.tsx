@@ -1,30 +1,23 @@
 import React,{ useState} from "react";
+import { crearUsuario } from "../services/api";
+
 // Esta es una prueba de un formulario hacia mongoDB
 const PruebaDb: React.FC = () =>{
     const [nombre, setNombre] = useState('');
     const [email, setEmail] = useState('');
+    const [edad, setEdad] = useState<number | "">("");
+    
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-
-        const data = {
-            nombre,
-            email
-        }
-
-        //Enviar datos al servidor
         try {
-            const response = await fetch('', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(data),
-            });
-            const result = await response.json();
-            console.log(result);
-        }catch(error){
-            console.error('Error al enviar el formulario:', error);
+            await crearUsuario(nombre, email, Number(edad));
+            alert("Usuario creado exitosamente");
+            setNombre("");
+            setEmail("");
+            setEdad("");
+        } catch (error) {
+            alert("Error al crear usuario");
         }
     };
     
@@ -37,6 +30,12 @@ const PruebaDb: React.FC = () =>{
                 <br />
                 <input type="text" value={nombre} className="border" 
                 onChange={(e) => setNombre(e.target.value)} />
+            </div>
+            <div>
+                <label htmlFor="">Edad</label>
+                <br />
+                <input type="number" value={edad} className="border" 
+                onChange={(e) => setEdad(e.target.value ? Number(e.target.value): "")} />
             </div>
             <div>
             <label htmlFor="">Email</label>

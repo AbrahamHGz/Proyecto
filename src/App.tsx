@@ -15,6 +15,7 @@ import Editar_Perfil from './Pages/Editar_Perfil'
 import Artistas from './Pages/Artistas'
 import Admin from './Pages/Admin'
 import Agrega_Administrador from './Pages/Agrega_Administrador'
+import PruebaDb from './Pages/PruebaDb'
 
 
 function App() {
@@ -36,7 +37,7 @@ function App() {
         <Route path='/Artistas' element={<Artistas />}/>
         <Route path='/Administrador' element={<Admin />}/>
         <Route path='/Agrega Administrador' element={<Agrega_Administrador />}/>
-        <Route path='/PruebaDB' element={<Admin />}/>
+        <Route path='/PruebaDB' element={<PruebaDb />}/>
 
 
 
