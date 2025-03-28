@@ -1,13 +1,13 @@
-import usuarioModel from "../models/usuarios.js";
+import comentarioModel from "../models/comentario.js";
 
-class usuarioControler {
+class comentarioController {
     constructor(){
 
     }
 
     async create(req, res){
         try{
-            const data = await usuarioModel.create(req.body);
+            const data = await comentarioModel.create(req.body);
             res.status(201).json(data);
         }catch(e){
             res.status(500).send(e);
@@ -17,7 +17,7 @@ class usuarioControler {
     async update(req, res){
         try{
             const {id} = req.params;
-            const data = await usuarioModel.update(id,req.body);
+            const data = await comentarioModel.update(id,req.body);
             res.status(200).json(data);
         }catch(e){
             res.status(500).send(e);
@@ -27,7 +27,7 @@ class usuarioControler {
     async delete(req, res){
         try{
             const {id} = req.params;
-            const data = await usuarioModel.delete(id);
+            const data = await comentarioModel.delete(id);
             res.status(206).json(data);
         }catch(e){
             res.status(500).send(e);
@@ -36,7 +36,7 @@ class usuarioControler {
 
     async getAll(req, res){
         try{
-            const data = await usuarioModel.getAll();
+            const data = await comentarioModel.getAll();
             res.status(200).json(data);
         }catch(e){
             res.status(500).send(e);
@@ -46,7 +46,7 @@ class usuarioControler {
     async getOne(req, res){
         try{
             const {id} = req.params
-            const data = await usuarioModel.getOne(id);
+            const data = await comentarioModel.getOne(id);
             res.status(200).json(data);
         }catch(e){
             res.status(500).send(e);
@@ -54,4 +54,4 @@ class usuarioControler {
     }
 }
 
-export default new usuarioControler();
+export default new comentarioController();
