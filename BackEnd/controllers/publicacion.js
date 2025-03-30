@@ -1,4 +1,6 @@
 import publicacionModel from "../models/publicacion.js";
+import categoriaModel from "../models/categoria.js";
+import usuarioModel from "../models/usuarios.js";
 
 class publicacionController {
     constructor(){
@@ -7,7 +9,24 @@ class publicacionController {
 
     async create(req, res){
         try{
-            const data = await publicacionModel.create(req.body);
+            const {PUBnombre, CATnombre,  email, PUBdescripcion} = req.body
+            
+            const existeUsuario = await usuarioModel.getOneEmail(email)
+            const categoriasNombre = Array.isArray(CATnombre) ? CATnombre : [CATnombre];
+
+            const existeCategoria = await categoriaModel.getAllNombre(categoriasNombre)
+
+            if(!existeUsuario)
+                return res.status(400).json({error: "El usuario no existe"})
+
+
+            if(existeCategoria.length === 0)
+                return res.status(400).json({error: "La categoria no existe"})
+
+            const categoriasIds = existeCategoria.map(cat => cat._id)
+            
+            const data = await publicacionModel.create({PUBnombre, PUBcategorias: categoriasIds, PUBusuario: existeUsuario._id, PUBdescripcion});
+            
             res.status(201).json(data);
         }catch(e){
             res.status(500).send(e);
@@ -16,8 +35,19 @@ class publicacionController {
 
     async update(req, res){
         try{
-            const {id} = req.params;
-            const data = await publicacionModel.update(id,req.body);
+            const {id, PUBnombre, CATnombre, PUBdescripcion} = req.body;
+            const categoriasNombre = Array.isArray(CATnombre) ? CATnombre : [CATnombre];
+            const existeCategoria = await categoriaModel.getAllNombre(categoriasNombre)
+
+            if(!id)
+                return res.status(400).json({error: "Falta el ID de la publicacion"})
+
+            if(existeCategoria.length === 0)
+                return res.status(400).json({error: "La categoria no existe"})
+
+            const categoriasIds = existeCategoria.map(cat => cat._id)
+
+            const data = await publicacionModel.update(id, {PUBnombre, PUBcategorias: categoriasIds, PUBdescripcion});
             res.status(200).json(data);
         }catch(e){
             res.status(500).send(e);
@@ -43,6 +73,7 @@ class publicacionController {
         }
     }
 
+
     async getOne(req, res){
         try{
             const {id} = req.params
@@ -50,6 +81,19 @@ class publicacionController {
             res.status(200).json(data);
         }catch(e){
             res.status(500).send(e);
+        }
+    }
+
+    async getOneByNombre(req,res){
+        try{
+            const {PUBnombre} = req.params
+            const data = await publicacionModel.getOnebyNombre(PUBnombre)
+            if(!data)
+                return res.status(400).json({error: "La publicacion no existe"})
+            res.status(201).json(data)
+
+        }catch(e){
+            res.status(500).send(e)
         }
     }
 }

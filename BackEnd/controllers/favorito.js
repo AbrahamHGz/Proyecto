@@ -1,4 +1,6 @@
 import favoritoModel from "../models/favorito.js";
+import usuarioModel from "../models/usuarios.js";
+import publicacionModel from "../models/publicacion.js";
 
 class favoritoController {
     constructor(){
@@ -7,7 +9,15 @@ class favoritoController {
 
     async create(req, res){
         try{
-            const data = await favoritoModel.create(req.body);
+            const {email, publicacion} = req.body
+            const existeUsuario = await usuarioModel.getOneEmail(email)
+            if(!existeUsuario)
+               return res.status(400).json({error: "El usuario no existe"})
+            const existePublicacion = await publicacionModel.getOnebyNombre(publicacion);
+            if(!existePublicacion)
+                return res.status(400).json({error: "La publicacion no existe"})
+            
+            const data = await favoritoModel.create({FAVusuario: existeUsuario._id, FAVpublicacion: existePublicacion._id});
             res.status(201).json(data);
         }catch(e){
             res.status(500).send(e);

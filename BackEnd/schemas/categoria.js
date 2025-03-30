@@ -2,12 +2,12 @@ import mongoose from "mongoose";
 
 const categoriaSchema = new mongoose.Schema(
     {
-        nombre:{
+        CATnombre:{
             type:String,
             required:true,
             unique:true
         },
-        usuario:{
+        CATusuario:{
             type:mongoose.Schema.Types.ObjectId, ref: 'usuario',
             required:true
         },

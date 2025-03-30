@@ -2,15 +2,15 @@ import mongoose from "mongoose";
 
 const reporteSchema = new mongoose.Schema(
     {
-        Descripcion: {
+        REPdescripcion: {
             type:String,
             required:true
         },
-        Enlace:{
+        REPenlace:{
             type:String,
             required:true
         },
-        Respuesta:{
+        REPespuesta:{
             type:String,
             required:false
         }

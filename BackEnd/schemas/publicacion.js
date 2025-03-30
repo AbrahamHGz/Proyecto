@@ -2,19 +2,26 @@ import mongoose from "mongoose";
 
 const publicacionSchema = new mongoose.Schema(
     {
-        nombre:{
+
+        PUBnombre:{
             type:String,
+            required:true,
+            unique:true
+        },
+        PUBcategorias:[{
+            type:mongoose.Schema.Types.ObjectId, ref: 'categoria',
+            required:true
+        }],
+        PUBusuario:{
+            type:mongoose.Schema.Types.ObjectId, ref: 'usuario',
             required:true
         },
-        categorias:{
-            type:String
-        },
-        Likes:{
+        PUBlikes:{
             type:Number,
             required: false,
             default: 0
         },
-        Descripcion:{
+        PUBdescripcion:{
             type:String,
             required:true,
         }

@@ -20,8 +20,20 @@ class categoriaModelo {
         return await Categoria.find();
     }
 
+    async getAllNombre( categoriasnombre){
+        return await Categoria.find({CATnombre: {$in: categoriasnombre}})
+    }
+
+    async getAllId(ids){
+        return await Categoria.find({_id: { $in: ids.map(id => new mongoose.Types.ObjectId(id))}})
+    }
+    
     async getOne(id){
         return await Categoria.findById({_id: new mongoose.Types.ObjectId(id)})
+    }
+
+    async getOneNombre(CATnombre){
+        return await Categoria.findOne({CATnombre})
     }
 }
 

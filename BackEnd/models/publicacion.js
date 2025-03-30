@@ -17,11 +17,18 @@ class publicacionModelo {
     }
 
     async getAll(){
-        return await Publicacion.find();
+        return await Publicacion.find().populate('PUBusuario', 'nombre');
     }
+    
 
     async getOne(id){
        return await Publicacion.findById({_id: new mongoose.Types.ObjectId(id)})
+    }
+
+    async getOnebyNombre(PUBnombre){
+        return await Publicacion.findOne({PUBnombre})
+        .populate('PUBusuario', 'nombre')
+        .populate('PUBcategorias', 'CATnombre')
     }
 }
 

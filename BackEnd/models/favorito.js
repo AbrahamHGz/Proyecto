@@ -17,11 +17,15 @@ class favoritoModelo {
     }
 
     async getAll(){
-        return await Favorito.find();
+        return await Favorito.find()
+        .populate('FAVusuario', 'email')
+        .populate('FAVpublicacion', 'PUBnombre')
     }
 
     async getOne(id){
         return await Favorito.findById({_id: new mongoose.Types.ObjectId(id)})
+        .populate('FAVusuario', 'email')
+        .populate('FAVpublicacion', 'PUBnombre')
     }
 }
 

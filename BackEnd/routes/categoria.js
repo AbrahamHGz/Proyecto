@@ -12,6 +12,7 @@ route.use(cors({
 route.post('/', categoriaController.create);
 route.get('/:id', categoriaController.getOne);
 route.get('/', categoriaController.getAll);
+route.get('/Nombre/:CATnombre', categoriaController.getOneNombre);
 route.put('/:id', categoriaController.update);
 route.delete('/:id' ,categoriaController.delete);
 

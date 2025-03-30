@@ -10,9 +10,12 @@ route.use(cors({
 }));
 
 route.post('/', usuarioControler.create);
+route.post('/login', usuarioControler.postLogin);
 route.get('/:id', usuarioControler.getOne);
+route.get('/email/:email', usuarioControler.getOneEmail);
 route.get('/', usuarioControler.getAll);
 route.put('/:id', usuarioControler.update);
+route.put('/email/:email', usuarioControler.updateForEmail);
 route.delete('/:id' ,usuarioControler.delete);
 
 export default route;

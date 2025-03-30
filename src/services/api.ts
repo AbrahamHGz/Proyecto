@@ -23,6 +23,20 @@ export const crearUsuario = async(
     }
 }
 
+export const login = async(
+    email: string, 
+    password: String
+): Promise<void> =>{
+    try {
+        const response = await axios.post(`${API_URL}/usuario/login`, { email, password});
+        console.log("Respuesta del servidor:", response.data);
+    } catch (error) {
+        console.error("Error al crear usuario:", error);
+        throw error;
+    }
+}
+
+
 export const getData = async (): Promise<any> => {
     try{
         const response = await axios.get(`${API_URL}/usuario`)

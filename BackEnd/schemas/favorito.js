@@ -2,14 +2,15 @@ import mongoose from "mongoose";
 
 const favoritoSchema = new mongoose.Schema(
     {
-        publicacion:{
-            type:String,
-            require:true
+        FAVusuario:{
+            type:mongoose.Schema.Types.ObjectId, ref: 'usuario',
+            required:true
         },
-        usuario:{
-            type:String,
-            require:true
+        FAVpublicacion: {
+            type:mongoose.Schema.Types.ObjectId, ref: 'publicacion',
+            required:true
         }
+        
 
     }, {timestamps: true}
 )

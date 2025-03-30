@@ -1,8 +1,36 @@
 import React from "react";
 import Menu_LogSing from "../Objetos/Menu_LogSing";
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import { login} from "../services/api";
+import { useNavigate } from "react-router-dom";
 
 const Login:React.FC =() => {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const navigate = useNavigate();
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        
+        e.preventDefault();
+        try {
+            await login(
+                email,
+                password
+            );
+            alert("Puede ingresar");
+            setEmail("");
+            setPassword("");
+            navigate('/Perfil');
+        } catch (error: any) {
+            if (error.response && error.response.data && error.response.data.error) {
+                alert(`Error: ${error.response.data.error}`);  // Muestra el mensaje del backend
+            } else {
+                alert("Error inesperado al crear usuario");  // Fallback si el error no tiene mensaje específico
+            }
+        }
+    };
+
     return (
         <>
             <Menu_LogSing></Menu_LogSing>
@@ -10,7 +38,7 @@ const Login:React.FC =() => {
             <div className="flex justify-center  ">
                 <div className="">
 
-                <form action="/Home" className=" p-15 shadow-xl  bg-gray-500 rounded m-40">
+                <form action="/Home" onSubmit={handleSubmit} className=" p-15 shadow-xl  bg-gray-500 rounded m-40">
                     <h1 className="flex justify-center text-4xl mb-2 font-bold text-white">
                         Iniciar Sesión
                     </h1>
@@ -20,12 +48,14 @@ const Login:React.FC =() => {
                             <li>
                                 <label htmlFor="" className="font-semibold text-white">Correo:</label>
                                 <br />
-                                <input type="text" className="rounded w-full px-2 p-1 bg-slate-200" placeholder="correo@mail.com"/>
+                                <input type="text" className="rounded w-full px-2 p-1 bg-slate-200" placeholder="correo@mail.com" required
+                                 value={email} onChange={(e)=> setEmail(e.target.value)}/>
                             </li>
                             <li>
                                 <label htmlFor="" className="font-semibold text-white">Contraseña:</label>
                                 <br />
-                                <input type="password" name="" className="rounded w-full px-2 p-1 bg-slate-200" id="" placeholder="Contraseña" />
+                                <input type="password" name="" className="rounded w-full px-2 p-1 bg-slate-200" id="" placeholder="Contraseña" required
+                                value={password} onChange={(e)=> setPassword(e.target.value)}/>
                             </li>
                             <li>
                                 

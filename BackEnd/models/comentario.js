@@ -18,11 +18,15 @@ class comentarioModelo {
     }
 
     async getAll(){
-        return await Comentario.find();
+        return await Comentario.find()
+        .populate('COMusuario', 'nombre')
+        .populate('COMpublicacion', 'PUBnombre')
     }
 
     async getOne(id){
        return await Comentario.findById({_id: new mongoose.Types.ObjectId(id)})
+       .populate('COMusuario', 'nombre')
+       .populate('COMpublicacion', 'PUBnombre')
     }
 }
 
