@@ -115,7 +115,7 @@ const Singup: React.FC = () => {
                             <li>
                                 <label htmlFor="" className="text-white">Contraseña:</label>
                                 <br />
-                                <input type="text" placeholder="Contraseña"
+                                <input type="password" placeholder="Contraseña"
                                 className="rounded w-96 px-2 p-1 bg-slate-200" 
                                 value={password} onChange={handlePasswordChange} required/>
                                 {password.length > 0 && ( <div className="text-sm mt-1">

@@ -1,11 +1,34 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Publicaciones from "../Objetos/Publicaciones";
 import Menu from "../Objetos/Menu";
 import Acerca_de_mi from "../Objetos/Acerca_de_Mi";
 import Favoritos from "../Objetos/Favoritos";
+
+import {getDataPerfil} from "../services/api";
+
+
 const Perfil: React.FC = () => {
     const [seccionActiva, setSeccionActiva] = useState("AcercadeMi");
+
+    const [usuario, setUsuario] = useState<any>(null);
+
+    useEffect(() => {
+        const usuarioInfo = JSON.parse(sessionStorage.getItem("USER_INFO") || "{}");
+        if(usuarioInfo?.email){
+            cargarPerfil(usuarioInfo.email)
+        }
+    })
+
+    const cargarPerfil = async(email: string) => {
+        try{
+            const data = await getDataPerfil(email);
+            setUsuario(data)
+        }catch(error){
+            console.log("Error al cargar el perfil:", error);
+        }
+    }
+
     return (
         <>
             <Menu></Menu>
@@ -17,10 +40,10 @@ const Perfil: React.FC = () => {
                         alt="" className="size-30 rounded-full" />
 
                     <div className="text-white px-3">
-                        <p className="font-bold text-5xl ">Usuario 123</p>
-                        <p className="font-semibold text-xl">usuario123@mail.com</p>
-                        <p><strong>Seguidores:</strong> 200</p>
-                        <p><strong>Siguiendo:</strong> 20</p>
+                        <p className="font-bold text-5xl ">{usuario?.nombre || "Cargando.."}</p>
+                        <p className="font-semibold text-xl">{usuario?.email || "Cargando.."}</p>
+                        <p><strong>Seguidores:</strong> {usuario?.Seguidores}</p>
+                        <p><strong>Siguiendo:</strong> {usuario?.Siguiendo}</p>
                     </div>
 
                 </div>

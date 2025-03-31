@@ -47,6 +47,18 @@ const usuarioSchema = new mongoose.Schema(
             type:Boolean,
             required:true,
             default:true
+        },
+        Seguidores:{
+            type:Number,
+            default:0
+        },
+        Siguiendo:{
+            type:Number,
+            default:0
+        },
+        descripcion: {
+            type:String,
+            default: "Hola soy un artista y estoy en ¡ARTROPOLIS! :D"
         }
 
 

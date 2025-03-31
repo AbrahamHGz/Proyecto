@@ -3,7 +3,6 @@ import jsonwebtoken from 'jsonwebtoken';
 
 
 export function generarToken(email){
-    console.log(email)
     return jsonwebtoken.sign({email},process.env.JWT_TOKEN_SECRET,{expiresIn: '1h'})
     
 }

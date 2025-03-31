@@ -14,10 +14,14 @@ const Login:React.FC =() => {
         
         e.preventDefault();
         try {
-            await login(
-                email,
-                password
-            );
+
+            
+            const {token, user}  = await login(email,password);
+          
+
+            sessionStorage.setItem("TOKEN", token);
+            sessionStorage.setItem("USER_INFO", JSON.stringify(user))
+
             alert("Puede ingresar");
             setEmail("");
             setPassword("");

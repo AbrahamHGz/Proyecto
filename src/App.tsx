@@ -27,24 +27,6 @@ function App() {
         <RouterProvider router={router} />
       </AuthProvider>
 
-      
-      {/* <Routes>
-        <Route path='/' element={<Home />}/>
-        <Route path='/Home' element={<Home />}/>
-        <Route path='/Perfil' element={<Perfil />}/>
-        <Route path='/Editar Perfil' element={<Editar_Perfil />}/>
-        <Route path='/Publicacion' element={<Publicacion />}/>
-        <Route path='/Login' element={<Login />}/>
-        <Route path='/SingUp' element={<Singup />}/>
-        <Route path='/Crear publicacion' element={<Crear_Publicacion/>}/>
-        <Route path='/Editar publicacion' element={<Editar_Publicacion/>}/>
-        <Route path='/Artistas' element={<Artistas />}/>
-        <Route path='/Administrador' element={<Admin />}/>
-        <Route path='/Agrega Administrador' element={<Agrega_Administrador />}/>
-        <Route path='/PruebaDB' element={<PruebaDb />}/>     
-      </Routes> */}
-
-
     </>
   )
 }
@@ -59,19 +41,17 @@ const router = createBrowserRouter(
       <Route path='/Login' element={<Login />}/>
       <Route path='/SingUp' element={<Singup />}/>
 
-      {/* <Route index element={<Login />}/> */}
-
       {/* Rutas privadas */}
       <Route element={<PrivateRoute />}>
         <Route path='/Home' element={<Home />}/>
         <Route path='/Perfil' element={<Perfil />}/>
-        <Route path='/Editar-Perfil' element={<Editar_Perfil />}/>
+        <Route path='/Editar Perfil' element={<Editar_Perfil />}/>
         <Route path='/Publicacion' element={<Publicacion />}/>
-        <Route path='/Crear-publicacion' element={<Crear_Publicacion/>}/>
-        <Route path='/Editar-publicacion' element={<Editar_Publicacion/>}/>
+        <Route path='/Crear publicacion' element={<Crear_Publicacion/>}/>
+        <Route path='/Editar publicacion' element={<Editar_Publicacion/>}/>
         <Route path='/Artistas' element={<Artistas />}/>
         <Route path='/Administrador' element={<Admin />}/>
-        <Route path='/Agrega-Administrador' element={<Agrega_Administrador />}/>
+        <Route path='/Agrega Administrador' element={<Agrega_Administrador />}/>
         <Route path='/PruebaDB' element={<PruebaDb />}/>
       </Route>        
     </Route>

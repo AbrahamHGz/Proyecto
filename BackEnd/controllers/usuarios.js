@@ -108,7 +108,7 @@ class usuarioControler {
 
 
             const token = generarToken(email);
-            res.status(200).json({msg: 'Usuario autenticado', token});
+            res.status(200).json({msg: 'Usuario autenticado', token, user: {email: existeUsuario.email}});
         }catch(e){
             res.status(500).send(e);
         }
