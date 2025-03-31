@@ -1,4 +1,6 @@
+import { generarToken } from "../helpers/authentication.js";
 import usuarioModel from "../models/usuarios.js";
+import jsonwebtoken from 'jsonwebtoken';
 
 class usuarioControler {
     constructor(){
@@ -104,7 +106,9 @@ class usuarioControler {
             if(existeUsuario.password != password)
                 return res.status(400).json({error: "La contraseña es incorrecta"})
 
-            res.status(200).json("Exito puede ingresar");
+
+            const token = generarToken(email);
+            res.status(200).json({msg: 'Usuario autenticado', token});
         }catch(e){
             res.status(500).send(e);
         }

@@ -5,8 +5,6 @@ import mongoose from "mongoose";
 
 class usuarioModelo {
     async create(usuario){
-        // const colUsuarios = dbClient.db.collection('usuario');
-        // return await colUsuarios.insertOne(usuario)
         return await Usuario.create(usuario);
     }
 
