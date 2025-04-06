@@ -11,94 +11,28 @@ const Home: React.FC = () => {
                     <h1 className="text-2xl text-white font-semibold flex justify-center p-3 my-3">
                         Top 10 Usuarios
                     </h1>
-                    <ol className=" p-2">
-                        <li className="flex justify-center">
-                            <button className="p-2 bg-gray-700 text-white mr-3 mb-3 rounded
-                             hover:drop-shadow-xl hover:bg-gray-500">
-                                <img src="https://res.cloudinary.com/dmcvdsh4c/image/upload/v1711699300/iceebookImage/ciencia/geologia/geologia-montanas-formacion-misterios_iz66pg.webp"   alt="" className="h-31 "/>
-                                <p className="flex justify-center text-lg font-bold">"Usuario 123"</p>
-                            </button>   
-                        </li>
-                        <li className="flex justify-center">
-                            <button className="p-2 bg-gray-700 text-white mr-3 mb-3 rounded
-                             hover:drop-shadow-xl hover:bg-gray-500">
-                                <img src="https://res.cloudinary.com/dmcvdsh4c/image/upload/v1711699300/iceebookImage/ciencia/geologia/geologia-montanas-formacion-misterios_iz66pg.webp"   alt="" className="h-31 "/>
-                                <p className="flex justify-center text-lg font-bold">"Usuario 123"</p>
-                            </button>   
-                        </li>
-                        <li className="flex justify-center">
-                            <button className="p-2 bg-gray-700 text-white mr-3 mb-3 rounded
-                             hover:drop-shadow-xl hover:bg-gray-500">
-                                <img src="https://res.cloudinary.com/dmcvdsh4c/image/upload/v1711699300/iceebookImage/ciencia/geologia/geologia-montanas-formacion-misterios_iz66pg.webp"   alt="" className="h-31 "/>
-                                <p className="flex justify-center text-lg font-bold">"Usuario 123"</p>
-                            </button>   
-                        </li>
+                    <ol className=" p-2 ml-3">
+                        <UsuariosPopulares></UsuariosPopulares>
+                        <UsuariosPopulares></UsuariosPopulares>
+                        <UsuariosPopulares></UsuariosPopulares>
+                        <UsuariosPopulares></UsuariosPopulares>
+
                     </ol>
                 </div>
                 
                 <div className="p-2 px-5 col-span-4">
                     <h1 className="text-4xl font-bold my-3 text-white">Arte Más Reciente</h1>
 
-                    <form action="">
-                        <label htmlFor="" className="text-lg text-slate-300 font-semibold">Categoria:</label>
-                        <select name="" id="" className="bg-gray-200 rounded mx-2 p-1 px-2">
-                            <option value="">paisajes llamativos</option>
-                        </select>
+                    <FiltroPantallaMD></FiltroPantallaMD>
+                    <FiltroPantallaSM></FiltroPantallaSM>
 
-                        <label htmlFor="" className="text-lg text-slate-300 font-semibold">Desde:</label>
-                        <input type="date" className="bg-gray-200 rounded mx-2 p-1 px-2" />
-                        
-                        <label htmlFor="" className="text-lg text-slate-300 font-semibold">Hasta:</label>
-                        <input type="date" className="bg-gray-200 rounded mx-2 p-1 px-2" />
-                        <button className=" p-2 bg-slate-800 rounded  hover:bg-slate-700 font-bold text-white">Filtrar</button>
-                    </form>
+                    <div id="Publicaciones" className="grid grid-cols-3 md:grid-cols-4 my-10">
 
-                    <div id="Publicaciones" className="grid grid-cols-4 my-10">
-
-
-                        <Link to="/Publicacion" className="p-2 bg-gray-700 text-white mr-3 mb-3 rounded
-                         hover:drop-shadow-xl hover:bg-gray-500">
-                            <img src="https://res.cloudinary.com/dmcvdsh4c/image/upload/v1711699300/iceebookImage/ciencia/geologia/geologia-montanas-formacion-misterios_iz66pg.webp" alt="" className="h-45 w-84"/>
-                            <p className="flex justify-center text-lg font-bold">"Arte de ejemplo"</p>
-                            <p className="flex justify-start">"Por: Usuario 123"</p>
-                        </Link>
-
-                        <button className="p-2 bg-gray-700 text-white mr-3 mb-3 rounded
-                         hover:drop-shadow-xl hover:bg-gray-500">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQIQQ5LVYvALNN0iVPlc62QtVhFTUPdwCm3MA&s" alt="" 
-                            className="h-45 w-84"/>
-                            <p className="flex justify-center text-lg font-bold">"Arte de ejemplo"</p>
-                            <p className="flex justify-start">"Por: Usuario 123"</p>
-                        </button>
-                        <button className="p-2 bg-gray-700 text-white mr-3 mb-3 rounded
-                         hover:drop-shadow-xl hover:bg-gray-500">
-                            <img src="https://ahoraeg.com/listas/wp-content/uploads/2024/06/Estas-son-las-Montanas-Mas-Altas-de-Asia.webp" alt="" className="h-45 w-84"/>
-                            <p className="flex justify-center text-lg font-bold">"Arte de ejemplo"</p>
-                            <p className="flex justify-start">"Por: Usuario 123"</p>
-                        </button>
-
-                        <button className="p-2 bg-gray-700 text-white mr-3 mb-3 rounded
-                         hover:drop-shadow-xl hover:bg-gray-500">
-                            <img src="https://res.cloudinary.com/dmcvdsh4c/image/upload/v1711699300/iceebookImage/ciencia/geologia/geologia-montanas-formacion-misterios_iz66pg.webp" alt="" className="h-45 w-84"/>
-                            <p className="flex justify-center text-lg font-bold">"Arte de ejemplo"</p>
-                            <p className="flex justify-start">"Por: Usuario 123"</p>
-                        </button>
-
-                        <button className="p-2 bg-gray-700 text-white mr-3 mb-3 rounded
-                         hover:drop-shadow-xl hover:bg-gray-500">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQIQQ5LVYvALNN0iVPlc62QtVhFTUPdwCm3MA&s" alt="" 
-                            className="h-45 w-84"/>
-                            <p className="flex justify-center text-lg font-bold">"Arte de ejemplo"</p>
-                            <p className="flex justify-start">"Por: Usuario 123"</p>
-                        </button>
-                        <button className="p-2 bg-gray-700 text-white mr-3 mb-3 rounded
-                         hover:drop-shadow-xl hover:bg-gray-500">
-                            <img src="https://ahoraeg.com/listas/wp-content/uploads/2024/06/Estas-son-las-Montanas-Mas-Altas-de-Asia.webp" alt="" className="h-45 w-84"/>
-                            <p className="flex justify-center text-lg font-bold">"Arte de ejemplo"</p>
-                            <p className="flex justify-start">"Por: Usuario 123"</p>
-                        </button>
-                        
-
+                       <ArtesPublic></ArtesPublic>
+                       <ArtesPublic></ArtesPublic>
+                       <ArtesPublic></ArtesPublic>
+                       <ArtesPublic></ArtesPublic>
+                       <ArtesPublic></ArtesPublic>
                       
 
                     </div>
@@ -113,3 +47,87 @@ const Home: React.FC = () => {
 }
 
 export default Home
+
+
+const ArtesPublic:React.FC = () => {
+    return(
+        <>
+         <Link to="/Publicacion" className="p-2 bg-gray-700 text-white mr-3 mb-3 rounded
+         hover:drop-shadow-xl hover:bg-gray-500">
+            <img src="https://res.cloudinary.com/dmcvdsh4c/image/upload/v1711699300/iceebookImage/ciencia/geologia/geologia-montanas-formacion-misterios_iz66pg.webp" alt="" 
+            className="sm:h-45 sm:w-84 h-24 w-full"/>
+            <p className="sm:flex justify-center sm:text-lg text-sm font-bold">"Arte de ejemplo"</p>
+            <p className="sm:flex justify-start text-xs">"Por: Usuario 123"</p>
+        </Link>
+        </>
+    )
+}
+
+
+
+const UsuariosPopulares: React.FC = () => {
+    return(
+        <>
+            <li className="flex justify-center">
+                <Link to="/Perfil" className="p-2 bg-gray-700 text-white mr-3 mb-3 rounded
+                 hover:drop-shadow-xl hover:bg-gray-500">
+                <img src="https://res.cloudinary.com/dmcvdsh4c/image/upload/v1711699300/iceebookImage/ciencia/geologia/geologia-montanas-formacion-misterios_iz66pg.webp"   alt="" 
+                className="sm:h-31 w-full h-20"/>
+                <p className="flex justify-center text-lg font-bold">Usuario 123</p>
+                </Link>   
+            </li>
+        </>
+    )
+}
+
+const FiltroPantallaMD: React.FC = () => {
+    return (
+        <>
+            <form action="" className="hidden md:block">
+                <label htmlFor="" className="text-lg text-slate-300 font-semibold">Categoria:</label>
+                <select name="" id="" className="bg-gray-200 rounded mx-2 p-1 px-2">
+                    <option value="">paisajes llamativos</option>
+                </select>
+                <label htmlFor="" className="text-lg text-slate-300 font-semibold">Desde:</label>
+                <input type="date" className="bg-gray-200 rounded mx-2 p-1 px-2" />
+
+                <label htmlFor="" className="text-lg text-slate-300 font-semibold">Hasta:</label>
+                <input type="date" className="bg-gray-200 rounded mx-2 p-1 px-2" />
+                <button className=" p-2 bg-slate-800 rounded  hover:bg-slate-700 font-bold text-white">Filtrar</button>
+            </form>
+        
+        </>
+    )
+}
+
+
+const FiltroPantallaSM: React.FC = () => {
+    return (
+        <>
+            <form action="" className="md:hidden grid grid-cols-1 space-y-2">
+                <div>
+                    <label htmlFor="" className="text-lg text-slate-300 font-semibold">Categoria:</label>
+                    <select name="" id="" className="bg-gray-200 rounded md:mx-2 p-1 px-2 w-full">
+                        <option value="">paisajes llamativos</option>
+                    </select>
+
+                </div>
+
+                <div>
+                    
+                <label htmlFor="" className="text-lg text-slate-300 font-semibold">Desde:</label>
+                <input type="date" className="bg-gray-200 rounded md:mx-2 p-1 px-2 w-full" />
+                
+                </div>
+
+                <div>
+                <label htmlFor="" className="text-lg text-slate-300 font-semibold">Hasta:</label>
+                <input type="date" className="bg-gray-200 rounded md:mx-2 p-1 px-2 w-full"  />
+
+                </div>
+                <button className=" p-2 bg-slate-800 rounded  hover:bg-slate-700 font-bold text-white">Filtrar</button>
+            </form>
+        
+        </>
+    )
+}
