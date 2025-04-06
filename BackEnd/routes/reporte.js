@@ -4,7 +4,7 @@ const route = express.Router();
 import cors from 'cors';
 
 route.use(cors({
-    origin: 'http://localhost:5176', // Permitir solo tu frontend
+    origin: 'http://localhost:5177', // Permitir solo tu frontend
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
 }));
