@@ -33,14 +33,14 @@ const Perfil: React.FC = () => {
         <>
             <Menu></Menu>
 
-            <div className="flex mx-40 grid grid-cols-2 items-center pt-26 mb-3">
-                <div className="flex">
+            <div className="flex lg:mx-40 md:mx-20 mx-2 grid grid-cols-2 items-center pt-26 mb-3">
+                <div className="md:flex">
 
                     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTELPl2WQuMBShrQaqe0IWYjLf_y2XRkhGNWcdLfADOPJ6KAJe84GaYOQ51__wkkbGfR78&usqp=CAU"
-                        alt="" className="size-30 rounded-full" />
+                        alt="" className="md:size-30 size-25 rounded-full" />
 
                     <div className="text-white px-3">
-                        <p className="font-bold text-5xl ">{usuario?.nombre || "Cargando.."}</p>
+                        <p className="font-bold md:text-5xl text-2xl ">{usuario?.nombre || "Cargando.."}</p>
                         <p className="font-semibold text-xl">{usuario?.email || "Cargando.."}</p>
                         <p><strong>Seguidores:</strong> {usuario?.Seguidores}</p>
                         <p><strong>Siguiendo:</strong> {usuario?.Siguiendo}</p>
@@ -56,22 +56,22 @@ const Perfil: React.FC = () => {
                 </div>
             </div>
 
-            <div className="mx-40 space-x-2">
+            <div className="lg:mx-40 md:mx-20 space-x-2">
                 <button onClick={() => setSeccionActiva("AcercadeMi")}
-                    className={`font-bold px-10 p-1 rounded-t text-white hover:bg-gray-400 
+                    className={`font-bold lg:px-10 p-1 rounded-t text-white hover:bg-gray-400 
                ${seccionActiva === "AcercadeMi" ? "bg-gray-400" : "bg-gray-500"}`}>Acerca de mí</button>
 
                 <button onClick={() => setSeccionActiva("Publicaciones")}
-                    className={`font-bold px-10 p-1 rounded-t text-white hover:bg-gray-400 
+                    className={`font-bold lg:px-10 p-1 rounded-t text-white hover:bg-gray-400 
                     ${seccionActiva === "Publicaciones" ? "bg-gray-400" : "bg-gray-500"}`}>Publicaciones</button>
 
                 <button onClick={() => setSeccionActiva("Favoritos")}
-                    className={`font-bold px-10 p-1 rounded-t text-white hover:bg-gray-400 
+                    className={`font-bold lg:px-10 p-1 rounded-t text-white hover:bg-gray-400 
                     ${seccionActiva === "Favoritos" ? "bg-gray-400" : "bg-gray-500"}`}>Favoritos</button>
 
             </div>
 
-            <div className="mx-40 bg-gray-400 p-4 rounded-b rounded-e">
+            <div className="lg:mx-40 md:mx-20 bg-gray-400 p-4 rounded-b rounded-e">
                 {seccionActiva == "AcercadeMi" && <Acerca_de_mi></Acerca_de_mi>}
                 {seccionActiva == "Publicaciones" && <Publicaciones></Publicaciones>}
                 {seccionActiva == "Favoritos" && <Favoritos></Favoritos>}

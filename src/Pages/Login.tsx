@@ -42,7 +42,7 @@ const Login:React.FC =() => {
             <div className="flex justify-center  ">
                 <div className="">
 
-                <form action="/Home" onSubmit={handleSubmit} className=" p-15 shadow-xl  bg-gray-500 rounded m-40">
+                <form action="/Home" onSubmit={handleSubmit} className="my-40  sm:p-15 sm:shadow-xl  sm:bg-gray-500 rounded md:m-40">
                     <h1 className="flex justify-center text-4xl mb-2 font-bold text-white">
                         Iniciar Sesión
                     </h1>

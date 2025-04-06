@@ -4,17 +4,26 @@ const Reportes:React.FC = () =>{
     return(
         <>
             <h1 className="font-bold text-2xl">Reportes</h1>
-            <form action="" className="flex items-center justify-center space-x-4 py-4">
-                <input type="text" className="bg-slate-200 w-96 rounded p-1 px-2" placeholder="Usuario" />
+            <form action="" className="lg:flex lg:items-center  space-x-4 py-4">
+                <div>
+                    <label htmlFor="">Correo:</label>
+                    <input type="text" className="bg-slate-200  w-full mb-2 rounded p-1 px-2" placeholder="usuario@mail.com" />
+
+                </div>
                 
-                <label htmlFor="">Desde:</label>
-                <input type="date" name="" id="" className="bg-slate-200 rounded p-1" />
+                <div>
 
+                    <label htmlFor="">Desde:</label>
+                    <input type="date" name="" id="" className="bg-slate-200  mb-2 rounded p-1" />
+                </div>
 
-                <label htmlFor="">Hasta:</label>
-                <input type="date" name="" id="" className="bg-slate-200 rounded p-1"/>
+                <div>
+                    <label htmlFor="">Hasta:</label>
+                    <input type="date" name="" id="" className="bg-slate-200 mb-2 rounded p-1"/>
+                    
+                </div>
 
-                <input type="submit" value="Buscar" className="bg-slate-600 rounded p-1 px-4 text-white font-bold hover:bg-slate-500 " />
+                <input type="submit" value="Buscar" className="bg-slate-600 mb-2 rounded p-1 px-4 text-white font-bold hover:bg-slate-500 " />
             </form>
            <div className="">
             <Report></Report>

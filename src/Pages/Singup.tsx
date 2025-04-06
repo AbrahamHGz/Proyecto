@@ -87,8 +87,8 @@ const Singup: React.FC = () => {
             <Menu_LogSing></Menu_LogSing>
 
 
-            <div className="grid grid-cols-2 ">
-                <div>
+            <div className="lg:grid grid-cols-2 ">
+                <div className="hidden lg:block">
                     
                     <img src="https://res.cloudinary.com/dmcvdsh4c/image/upload/v1711699300/iceebookImage/ciencia/geologia/geologia-montanas-formacion-misterios_iz66pg.webp" alt="" 
                         className="h-screen w-full "/>

@@ -4,6 +4,13 @@ import {getDataPerfil} from "../services/api";
 
 const Acerca_de_mi: React.FC = () => {
 
+    
+        const [mostrarFormulario, setMostrarFormulario] = useState(false);
+
+        const toggleFormulario = () => {
+            setMostrarFormulario(!mostrarFormulario);
+         }
+    
     const [usuario, setUsuario] = useState<any>(null);
     
         useEffect(() => {
@@ -26,9 +33,29 @@ const Acerca_de_mi: React.FC = () => {
             <div>
                 <div className="flex space-x-10 items-center">
                     <h1 className="text-2xl font-semibold">Acerca de mí</h1> 
-                    <button className="text-white font-bold  bg-slate-800 px-4 p-2 rounded hover:bg-slate-700 ">Editar</button>
+                    <button onClick={toggleFormulario} 
+                    className="text-white font-bold  bg-slate-800 px-4 p-2 rounded hover:bg-slate-700 ">
+                    {mostrarFormulario ? 'Cancelar': 'Editar'}
+                    </button>
+                
                 </div>
+
+                {mostrarFormulario && (
+                    <form action="">
+                        <textarea name="" id=""
+                        className="bg-white w-full my-2 rounded p-2"></textarea>
+                        
+                        <button type="submit" 
+                        className="text-white font-bold  bg-slate-800 px-4 p-2 rounded hover:bg-slate-700 ">
+                            Guardar
+                        </button>
+                    </form>
+                )
+
+                }
+
                 <p className="p-2">{usuario?.descripcion || "Cargando..."}</p>
+                
             </div>
         </>
     )

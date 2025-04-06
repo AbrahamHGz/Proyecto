@@ -17,13 +17,13 @@ const Categorias: React.FC = () =>{
     return(
         <>
             <h1 className="font-bold text-2xl">Categorias</h1>
-            <form action="" className="flex items-center justify-center space-x-4 py-4">
+            <form action="" className="lg:flex items-center lg:justify-center space-x-4 py-4">
                 <label htmlFor="">Desde:</label>
                 <input type="date" name="" id="" className="bg-slate-200 rounded p-1" />
 
 
                 <label htmlFor="">Hasta:</label>
-                <input type="date" name="" id="" className="bg-slate-200 rounded p-1"/>
+                <input type="date" name="" id="" className="bg-slate-200 rounded p-1 mb-2 lg:mb-0"/>
 
                 <input type="submit" value="Buscar" className="bg-slate-600 rounded p-1 px-4 text-white font-bold hover:bg-slate-500 " />
             </form>
@@ -31,11 +31,11 @@ const Categorias: React.FC = () =>{
             <form action="">
                 <h1 className="font-semibold text-xl">Crear Categoria</h1>
                 
-                <input type="text" className="bg-slate-200 rounded w-96 px-2 p-1" />
-                <input type="submit" value="Buscar" className="bg-slate-600 rounded p-1 px-4 text-white font-bold hover:bg-slate-500 ml-2 " />
+                <input type="text" className="bg-slate-200 rounded w-96 px-2 p-1 mb-2 lg:mb-0" />
+                <input type="submit" value="Crear" className="bg-slate-600 rounded p-1 px-4 text-white font-bold hover:bg-slate-500 md:ml-2 " />
             </form>
 
-            <div className="grid grid-cols-5">
+            <div className="grid  lg:grid-cols-4 md:grid-cols-3  grid-cols-2 ">
                 <Categori></Categori>
                 <Categori></Categori>
                 <Categori></Categori>
