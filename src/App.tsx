@@ -40,6 +40,9 @@ const router = createBrowserRouter(
       <Route path='/' element={<Login />}/>
       <Route path='/Login' element={<Login />}/>
       <Route path='/SingUp' element={<Singup />}/>
+
+      {/* Rutas privadas */}
+      <Route element={<PrivateRoute />}>
         <Route path='/Home' element={<Home />}/>
         <Route path='/Perfil' element={<Perfil />}/>
         <Route path='/Editar Perfil' element={<Editar_Perfil />}/>
@@ -50,9 +53,6 @@ const router = createBrowserRouter(
         <Route path='/Administrador' element={<Admin />}/>
         <Route path='/Agrega Administrador' element={<Agrega_Administrador />}/>
         <Route path='/PruebaDB' element={<PruebaDb />}/>
-
-      {/* Rutas privadas */}
-      <Route element={<PrivateRoute />}>
       </Route>        
     </Route>
    
