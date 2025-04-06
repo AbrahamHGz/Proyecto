@@ -6,10 +6,16 @@ class dbClient {
         this.conectarBaseDatos();
     }
     async conectarBaseDatos(){
-        const queryString = "mongodb://localhost:27017/PruebaDB";
-        await mongoose.connect(queryString);
-        console.log("Conexion Exitosa");
+        try{
+            const queryString = `mongodb+srv://${process.env.USER_DB}:${process.env.PASS_DB}@${process.env.SERVER_DB}/?retryWrites=true&w=majority&appName=artropolisCluster`;
+            await mongoose.connect(queryString);
+            console.log("Conexion Exitosa");
+        }catch(e){
+            console.log(e);
+        }
     }
+
+
 
     async cerrarConexion(){
         try{
