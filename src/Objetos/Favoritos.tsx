@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import CategoriaSelect from "./CategoriaSelect";
 
 const Favoritos: React.FC = () => {
     return (
@@ -12,9 +13,7 @@ const Favoritos: React.FC = () => {
                     <div>
                         <label htmlFor="" className="">Categoria: </label>
                         <br />
-                        <select name="" className="bg-white rounded px-2" id="">
-                            <option value="">Prueba de categoria</option>
-                        </select>
+                        <CategoriaSelect></CategoriaSelect>
                     </div>
 
                     <div>

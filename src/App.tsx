@@ -18,6 +18,7 @@ import PruebaDb from './Pages/PruebaDb'
 
 import PrivateRoute from './Rutas/PrivateRoute'
 import AuthProvider from './auth/autenticacion'
+import PrivateRouteWithRole from './Rutas/PrivateRouteRole'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -56,6 +57,10 @@ const router = createBrowserRouter(
       </Route>        
     </Route>
    
+    {/* <Route element={<PrivateRouteWithRole allowedRoles={['admin']} />}>
+      <Route path='/Administrador' element={<Admin />}/>
+      <Route path='/Agrega Administrador' element={<Agrega_Administrador />}/>
+    </Route> */}
     </>
   )
 )

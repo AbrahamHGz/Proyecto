@@ -11,4 +11,6 @@ const PrivateRoute: React.FC = () =>{
 export default PrivateRoute;
 
 
+
+
 //Hacer que algunas rutas sean privadas

@@ -58,3 +58,36 @@ export const getDataPerfil = async (email:string): Promise<any> => {
         throw e;
     }
 }
+
+export const EditarPerfil = async(
+    nombre:string, 
+    email: string, 
+    password: String,
+    sexo: string,
+    FechaNac: Date,
+  
+    
+): Promise<void> =>{
+    try {
+        const token = sessionStorage.getItem("TOKEN");
+        const response = await axios.put(`${API_URL}/usuario/email/${email}`, { nombre, email, password, sexo, FechaNac} ,{headers: {Authorization: `Bearer ${token}`}});
+        console.log("Respuesta del servidor:", response.data);
+    } catch (error) {
+        console.error("Error al editar usuario:", error);
+        throw error;
+    }
+}
+
+export const EdtiarAcercaMi = async(
+    email: string, 
+    descripcion: string
+): Promise<void> => {
+    try{
+        const token = sessionStorage.getItem("TOKEN");
+        const response = await axios.put(`${API_URL}/usuario/email/${email}`, {email, descripcion} ,{headers: {Authorization: `Bearer ${token}`}});
+        console.log("Respuesta del servidor:", response.data);
+    }catch(error) {
+        console.error("Error al editar usuario:", error);
+        throw error;
+    }
+}

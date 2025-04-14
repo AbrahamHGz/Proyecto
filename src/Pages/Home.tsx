@@ -1,6 +1,7 @@
 import React from "react";
 import Menu from "../Objetos/Menu";
 import { Link } from "react-router-dom";
+import CategoriaSelect from "../Objetos/CategoriaSelect";
 const Home: React.FC = () => {
     return(
         <>
@@ -85,9 +86,7 @@ const FiltroPantallaMD: React.FC = () => {
         <>
             <form action="" className="hidden md:block">
                 <label htmlFor="" className="text-lg text-slate-300 font-semibold">Categoria:</label>
-                <select name="" id="" className="bg-gray-200 rounded mx-2 p-1 px-2">
-                    <option value="">paisajes llamativos</option>
-                </select>
+                <CategoriaSelect></CategoriaSelect>
                 <label htmlFor="" className="text-lg text-slate-300 font-semibold">Desde:</label>
                 <input type="date" className="bg-gray-200 rounded mx-2 p-1 px-2" />
 
@@ -107,9 +106,10 @@ const FiltroPantallaSM: React.FC = () => {
             <form action="" className="md:hidden grid grid-cols-1 space-y-2">
                 <div>
                     <label htmlFor="" className="text-lg text-slate-300 font-semibold">Categoria:</label>
-                    <select name="" id="" className="bg-gray-200 rounded md:mx-2 p-1 px-2 w-full">
-                        <option value="">paisajes llamativos</option>
-                    </select>
+                
+                      <CategoriaSelect></CategoriaSelect>
+                   
+
 
                 </div>
 

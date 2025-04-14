@@ -25,7 +25,12 @@ const Login:React.FC =() => {
             alert("Puede ingresar");
             setEmail("");
             setPassword("");
-            navigate('/Perfil');
+            if(user.tipo == "artista"){
+                navigate('/Perfil');
+            }else{
+                navigate('/Administrador');
+                
+            }
         } catch (error: any) {
             if (error.response && error.response.data && error.response.data.error) {
                 alert(`Error: ${error.response.data.error}`);  // Muestra el mensaje del backend

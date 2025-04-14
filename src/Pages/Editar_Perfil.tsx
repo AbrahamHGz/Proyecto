@@ -1,5 +1,5 @@
 import React, { useEffect, useState,  useRef } from "react";
-import {getDataPerfil} from "../services/api";
+import {getDataPerfil, EditarPerfil} from "../services/api";
 import { useNavigate } from "react-router-dom";
 
 import Menu from "../Objetos/Menu";
@@ -22,6 +22,7 @@ const Editar_Perfil: React.FC = () => {
         const [imagenPerfil, setImagenPerfil] = useState<string | null>(null);
         const fileInputRef = useRef<HTMLInputElement>(null);
        
+        
         const navigate = useNavigate();
 
         const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -89,7 +90,40 @@ const Editar_Perfil: React.FC = () => {
             }
         };
 
-
+        const handleSubmit = async (e: React.FormEvent) => {
+                
+                e.preventDefault();
+                try {
+                    await EditarPerfil(
+                        nombre, 
+                        email,
+                        password, 
+                        sexo, 
+                        new Date(FechaNac),
+                    );
+                    alert("Usuario editado exitosamente");
+                    setNombre("");
+                    setEmail("");
+                    setPassword("");
+                    setSexo("");
+                    setFechaNac("");
+                    navigate('/Perfil');
+                } catch (error: any) {
+                    if (error.response && error.response.data && error.response.data.error) {
+                        alert(`Error: ${error.response.data.error}`);  // Muestra el mensaje del backend
+                    } else {
+                        alert("Error inesperado al editar el usuario");  // Fallback si el error no tiene mensaje específico
+                    }
+                }
+        };
+        
+        const formatFecha = (dateStr: string) => {
+            const date = new Date(dateStr);
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+          };
     return(
         <>
             <Menu></Menu>
@@ -99,14 +133,14 @@ const Editar_Perfil: React.FC = () => {
                     <p></p>
                     <div className="md:bg-gray-400 rounded col-span-3 py-2">
                        
-                        <form action="">
+                        <form action="/Perfil" onSubmit={handleSubmit}>
                             <h1 className="pt-4 text-4xl font-bold text-white  flex justify-center">Editar Perfil</h1>
                             <ol className="p-2 md:px-30">
                                 <li>
                                     <label htmlFor="" className="text-white text-lg">Correo:</label>
                                     <br />
                                     <input type="text" className="bg-slate-200 w-full rounded px-2 p-1" placeholder="usuario@mail.com"
-                                    value={email} onChange={handleEmailChange} required/>
+                                    value={email} onChange={handleEmailChange} required readOnly/>
                                     {email.length > 0 && ( <div className="text-sm mt-1">
                                 {emailValid ? ( <p className="text-green-200">✅ El correo es válido.</p> ) : (<p className="text-red-700">
                                 ❌ Debe contener "@".</p> )}
@@ -137,7 +171,7 @@ const Editar_Perfil: React.FC = () => {
                                         <label htmlFor="" className="text-white text-lg">Fecha de Nacimiento:</label>
                                         <br />
                                         <input type="date" name="" className="bg-slate-200 rounded px-2 p-1" id="" 
-                                         value={FechaNac} onChange={handleBirthdateChange} />
+                                         value={formatFecha(FechaNac)} onChange={handleBirthdateChange} />
                                         {FechaNac.length > 0 && ( <div className="text-sm mt-1">
                                         {FechaNacValid ? ( <p className="text-green-200">✅ Fecha seleccionada.</p> ) : ( <p className="text-red-700">
                                         ❌ Selecciona una fecha válida. </p> )} </div> )}

@@ -107,8 +107,8 @@ class usuarioControler {
                 return res.status(400).json({error: "La contraseña es incorrecta"})
 
 
-            const token = generarToken(email);
-            res.status(200).json({msg: 'Usuario autenticado', token, user: {email: existeUsuario.email}});
+            const token = generarToken(email, existeUsuario.TipoUsu);
+            res.status(200).json({msg: 'Usuario autenticado', token, user: {email: existeUsuario.email, tipo: existeUsuario.TipoUsu}});
         }catch(e){
             res.status(500).send(e);
         }

@@ -17,6 +17,7 @@ const Perfil: React.FC = () => {
         const usuarioInfo = JSON.parse(sessionStorage.getItem("USER_INFO") || "{}");
         if(usuarioInfo?.email){
             cargarPerfil(usuarioInfo.email)
+
         }
     })
 

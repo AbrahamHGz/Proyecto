@@ -1,0 +1,40 @@
+import React, { useEffect, useState } from "react";
+import {Link, useNavigate} from "react-router-dom";
+import { crearCategoria, obtenerCategoriasDetallada } from "../services/apiCategoria";
+import { Categoria } from "../interfaces/categoria";
+
+
+
+interface Props {
+    categoria:Categoria;
+}
+const CategoriaSelect: React.FC = () => {
+    const [categorias, setCategorias] = useState<Categoria[]>([]);
+    const fetchCategorias = async () => {
+        try{
+            const data = await obtenerCategoriasDetallada();
+            setCategorias(data);
+        }catch(error){
+            console.error("Error al obtener categorías:", error);
+        }
+    }
+    useEffect(() => {
+
+        fetchCategorias();
+    }, []);
+
+
+    return(
+        <>
+            <select name="" className="bg-white rounded px-2 m-2" id="">
+                
+                {categorias.map((cat) => (
+                    <option value={cat.CATnombre} key={cat._id}>{cat.CATnombre}</option>
+                ))}
+            </select>
+        </>
+    )
+
+}
+
+export default CategoriaSelect;
