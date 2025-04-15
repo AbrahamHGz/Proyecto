@@ -12,6 +12,9 @@ route.use(cors({
 
 route.post('/', usuarioControler.create);
 route.post('/login', usuarioControler.postLogin);
+route.get('/artistas/', usuarioControler.getAllArtistas);
+
+
 route.get('/:id', usuarioControler.getOne);
 route.get('/email/:email', usuarioControler.getOneEmail);
 route.get('/', usuarioControler.getAll);

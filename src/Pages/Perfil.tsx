@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Publicaciones from "../Objetos/Publicaciones";
 import Menu from "../Objetos/Menu";
 import Acerca_de_mi from "../Objetos/Acerca_de_Mi";
@@ -12,18 +12,19 @@ const Perfil: React.FC = () => {
     const [seccionActiva, setSeccionActiva] = useState("AcercadeMi");
 
     const [usuario, setUsuario] = useState<any>(null);
+    const usuarioInfo = JSON.parse(sessionStorage.getItem("USER_INFO") || "{}");
+    const {id} = useParams();
 
     useEffect(() => {
-        const usuarioInfo = JSON.parse(sessionStorage.getItem("USER_INFO") || "{}");
-        if(usuarioInfo?.email){
-            cargarPerfil(usuarioInfo.email)
+        if(id){
+            cargarPerfil(id)
 
         }
-    })
+    },[id])
 
-    const cargarPerfil = async(email: string) => {
+    const cargarPerfil = async(id: string) => {
         try{
-            const data = await getDataPerfil(email);
+            const data = await getDataPerfil(id);
             setUsuario(data)
         }catch(error){
             console.log("Error al cargar el perfil:", error);
@@ -73,8 +74,8 @@ const Perfil: React.FC = () => {
             </div>
 
             <div className="lg:mx-40 md:mx-20 bg-gray-400 p-4 rounded-b rounded-e">
-                {seccionActiva == "AcercadeMi" && <Acerca_de_mi></Acerca_de_mi>}
-                {seccionActiva == "Publicaciones" && <Publicaciones></Publicaciones>}
+                {seccionActiva == "AcercadeMi" && <Acerca_de_mi usuario_i={usuario}></Acerca_de_mi>}
+                {seccionActiva == "Publicaciones" && <Publicaciones usuario_i={usuario}></Publicaciones>}
                 {seccionActiva == "Favoritos" && <Favoritos></Favoritos>}
             </div>
 

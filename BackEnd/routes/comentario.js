@@ -14,6 +14,7 @@ route.use(cors({
 route.post('/', comentarioController.create);
 route.get('/:id', comentarioController.getOne);
 route.get('/', comentarioController.getAll);
+route.get('/com/:id', comentarioController.getAllByPub)
 route.put('/:id', comentarioController.update);
 route.delete('/:id' ,comentarioController.delete);
 

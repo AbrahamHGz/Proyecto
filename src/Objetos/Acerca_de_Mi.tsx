@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
 import {getDataPerfil,  EdtiarAcercaMi} from "../services/api";
 import { useNavigate } from "react-router-dom";
+import { I_Usuario } from "../interfaces/usuario";
 
-
-
-const Acerca_de_mi: React.FC = () => {
+interface usuarioProps{
+    usuario_i:I_Usuario
+}
+const Acerca_de_mi: React.FC<usuarioProps> = ({usuario_i}) => {
 
     const navigate = useNavigate();
     const [mostrarFormulario, setMostrarFormulario] = useState(false);
-    const [usuario, setUsuario] = useState<any>(null);
     const [acercami, setAcercaMi] = useState('');
     const usuarioInfo = JSON.parse(sessionStorage.getItem("USER_INFO") || "{}");
     const email = usuarioInfo.email
@@ -23,21 +24,6 @@ const Acerca_de_mi: React.FC = () => {
     }
     
     
-    useEffect(() => {
-        if(usuarioInfo?.email){
-            cargarPerfil(usuarioInfo.email)
-        }
-    },[])
-
-    const cargarPerfil = async(email: string) => {
-        try{
-            const data = await getDataPerfil(email);
-            setUsuario(data)
-            setAcercaMi(data.descripcion || '');
-        }catch(error){
-            console.log("Error al cargar el perfil:", error);
-        }
-    }
 
     const handleSubmit = async (e: React.FormEvent) => {
                     
@@ -48,7 +34,8 @@ const Acerca_de_mi: React.FC = () => {
                 acercami
             );
             alert("Usuario editado exitosamente");
-            navigate('/Perfil');
+            toggleFormulario();
+            navigate(`/Perfil/${usuario_i._id}`);
         } catch (error: any) {
             if (error.response && error.response.data && error.response.data.error) {
                 alert(`Error: ${error.response.data.error}`);  // Muestra el mensaje del backend
@@ -87,7 +74,7 @@ const Acerca_de_mi: React.FC = () => {
 
                 }
 
-                <p className="p-2">{usuario?.descripcion || "Cargando..."}</p>
+                <p className="p-2">{usuario_i?.descripcion || "Cargando..."}</p>
                 
             </div>
         </>

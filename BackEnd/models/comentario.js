@@ -23,6 +23,11 @@ class comentarioModelo {
         .populate('COMpublicacion', 'PUBnombre')
     }
 
+    async getAllByPub(COMpublicacion){
+        return await Comentario.find({COMpublicacion})
+        .populate('COMusuario', 'nombre')
+    }
+
     async getOne(id){
        return await Comentario.findById({_id: new mongoose.Types.ObjectId(id)})
        .populate('COMusuario', 'nombre')

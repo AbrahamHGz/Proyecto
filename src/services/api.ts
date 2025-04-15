@@ -48,9 +48,19 @@ export const getData = async (): Promise<any> => {
     }
 }
 
-export const getDataPerfil = async (email:string): Promise<any> => {
+export const getDataArtistasActivos = async (): Promise<any> => {
     try{
-        const response = await axios.get(`${API_URL}/usuario/email/${email}`)
+        const response = await axios.get(`${API_URL}/usuario/artistas`)
+        return response.data;
+    }catch(e){
+        console.error("Error al obtener datos: ", e);
+        throw e;
+    }
+}
+
+export const getDataPerfil = async (id:string): Promise<any> => {
+    try{
+        const response = await axios.get(`${API_URL}/usuario/${id}`)
         return response.data;
 
     }catch(e){

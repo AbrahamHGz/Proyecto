@@ -73,6 +73,17 @@ class publicacionController {
         }
     }
 
+    async getAllIdUsu(req,res){
+        try{
+            const {id} = req.params
+            const data = await publicacionModel.getAllByIdUsu(id);
+            res.status(200).json(data);
+
+        }catch(e){
+            res.status(500).send(e);
+        }
+    }
+
 
     async getOne(req, res){
         try{

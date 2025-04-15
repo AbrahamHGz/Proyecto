@@ -1,8 +1,27 @@
-import React from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Menu from "../Objetos/Menu";
 import { Link } from "react-router-dom";
 
+import { I_Usuario } from "../interfaces/usuario";
+import { getDataArtistasActivos } from "../services/api"
+
 const Artistas: React.FC = () => {
+
+    const [usuarios, setUsuarios] = useState<I_Usuario[]>([])
+
+     const fetchPublicacion = async () => {
+            try{
+                const data = await getDataArtistasActivos();
+                setUsuarios(data);
+            }catch(error){
+                console.error("Error al obtener las publicaciones:", error);
+            }
+        }
+    
+        useEffect(() => {
+            fetchPublicacion();
+        }, [])
+
     return(
         <>
             <Menu></Menu>
@@ -30,14 +49,9 @@ const Artistas: React.FC = () => {
                     </form>
 
                     <div className="grid grid-cols-4 md:mt-10">
-                        <Artei></Artei>
-                        <Artei></Artei>
-                        <Artei></Artei>
-                        <Artei></Artei>
-
-                        <Artei></Artei>
-
-
+                        {usuarios.map((usu, index) => (
+                            <Artei key={index} P_Artistas={usu}></Artei>
+                        ))}
 
                     </div>
                 </div>
@@ -45,20 +59,23 @@ const Artistas: React.FC = () => {
         </>
     )
 }
-
 export default Artistas;
 
-const Artei: React.FC = () => {
+
+interface ArteIPropr{
+    P_Artistas:I_Usuario
+}
+const Artei: React.FC<ArteIPropr> = ({P_Artistas}) => {
     return(
         <>
-            <Link to="/Perfil" className="p-2 bg-gray-700 text-white mr-3 mb-3 rounded
+            <Link to={`/Perfil/${P_Artistas._id}`} className="p-2 bg-gray-700 text-white mr-3 mb-3 rounded
                  hover:drop-shadow-xl hover:bg-gray-500">
                     <div className="flex justify-center">
                         <img src="https://res.cloudinary.com/dmcvdsh4c/image/upload/v1711699300/iceebookImage/ciencia/geologia/geologia-montanas-formacion-misterios_iz66pg.webp"   alt="" 
                         className="h-31 w-full"/>
                     </div>
-                    <p className="flex justify-center text-lg font-bold">Usuario 1234</p>
-                    <p className="flex justify-center text-sm ">Seguidores: 20</p>
+                    <p className="flex justify-center text-lg font-bold">{P_Artistas.nombre}</p>
+                    <p className="flex justify-center text-sm ">Seguidores: {P_Artistas.Seguidores}</p>
 
             </Link> 
         </>

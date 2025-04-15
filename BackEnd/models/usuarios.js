@@ -24,6 +24,10 @@ class usuarioModelo {
         return await Usuario.find();
     }
 
+    async getAllArtistas(){
+        return await Usuario.find({TipoUsu: 'artista'})
+    }
+
     async getAllId(ids){
         return await Usuario.find({_id: { $in: ids.map(id => new mongoose.Types.ObjectId(id))}})
     }

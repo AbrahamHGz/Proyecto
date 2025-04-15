@@ -24,6 +24,10 @@ const publicacionSchema = new mongoose.Schema(
         PUBdescripcion:{
             type:String,
             required:true,
+        },
+        PUBestatus:{
+            type:Boolean,
+            default:true
         }
     },
     {timestamps: true}

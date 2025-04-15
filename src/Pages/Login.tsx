@@ -22,11 +22,14 @@ const Login:React.FC =() => {
             sessionStorage.setItem("TOKEN", token);
             sessionStorage.setItem("USER_INFO", JSON.stringify(user))
 
+            const usuarioInfo = JSON.parse(sessionStorage.getItem("USER_INFO") || "{}");
+            const id = usuarioInfo.id
+
             alert("Puede ingresar");
             setEmail("");
             setPassword("");
             if(user.tipo == "artista"){
-                navigate('/Perfil');
+                navigate(`/Perfil/${id}`);
             }else{
                 navigate('/Administrador');
                 

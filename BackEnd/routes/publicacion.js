@@ -12,6 +12,7 @@ route.use(cors({
 route.post('/', publicacionController.create);
 route.get('/:id', publicacionController.getOne);
 route.get('/', publicacionController.getAll);
+route.get('/pub/:id',publicacionController.getAllIdUsu);
 route.get('/Nombre/:PUBnombre', publicacionController.getOneByNombre);
 route.put('/:id', publicacionController.update);
 route.delete('/:id' ,publicacionController.delete);

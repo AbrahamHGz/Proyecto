@@ -17,18 +17,26 @@ class publicacionModelo {
     }
 
     async getAll(){
-        return await Publicacion.find().populate('PUBusuario', 'nombre');
+        return await Publicacion.find().populate('PUBusuario', 'nombre').populate('PUBcategorias', 'CATnombre');
     }
     
 
     async getOne(id){
-       return await Publicacion.findById({_id: new mongoose.Types.ObjectId(id)})
+       return await Publicacion.findById({_id: new mongoose.Types.ObjectId(id)}).populate('PUBusuario', 'nombre').populate('PUBcategorias', 'CATnombre');
     }
 
     async getOnebyNombre(PUBnombre){
         return await Publicacion.findOne({PUBnombre})
         .populate('PUBusuario', 'nombre')
         .populate('PUBcategorias', 'CATnombre')
+    }
+
+    async getOneByIdUsu(PUBusuario){
+        return await Publicacion.findOne({PUBusuario})
+    }
+
+    async getAllByIdUsu(PUBusuario){
+        return await Publicacion.find({PUBusuario})
     }
 }
 

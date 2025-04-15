@@ -6,10 +6,13 @@ import { Categoria } from "../interfaces/categoria";
 
 
 interface Props {
-    categoria:Categoria;
+    value:string;
+    onChange:(value:string) => void;
+
 }
-const CategoriaSelect: React.FC = () => {
+const CategoriaSelect: React.FC<Props> = ({value, onChange}) => {
     const [categorias, setCategorias] = useState<Categoria[]>([]);
+    
     const fetchCategorias = async () => {
         try{
             const data = await obtenerCategoriasDetallada();
@@ -26,8 +29,8 @@ const CategoriaSelect: React.FC = () => {
 
     return(
         <>
-            <select name="" className="bg-white rounded px-2 m-2" id="">
-                
+            <select name="" className="bg-white rounded px-2 m-2" id="" value={value} onChange={(e) => onChange(e.target.value)}>
+                <option value="">Selecciona una categoria</option>
                 {categorias.map((cat) => (
                     <option value={cat.CATnombre} key={cat._id}>{cat.CATnombre}</option>
                 ))}

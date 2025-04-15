@@ -1,6 +1,16 @@
-import React from "react";
-import { Link } from "react-router-dom";
-const Comentario: React.FC = () => {
+import React, { useState, useRef, useEffect } from "react";
+import { Link, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
+import {  obtenerComentarios } from "../services/apiComentarios";
+import { I_Comentario } from "../interfaces/I_comentarip";
+
+interface ComentarioProps {
+    comentario: I_Comentario
+}
+
+const Comentario: React.FC<ComentarioProps> = ({comentario}) => {
+
     return(
         <>
             <div className="bg-gray-400 mt-4 rounded lg:grid grid-cols-4">
@@ -10,7 +20,7 @@ const Comentario: React.FC = () => {
                         className=" size-30 border-4 border-slate-900 border-double"/>
                     </Link>
                     <div className="text-white p-2">
-                        <Link  to="/Perfil" className="hover:underline text-xl font-bold">Usuario 123</Link>
+                        <Link  to="/Perfil" className="hover:underline text-xl font-bold">{comentario?.COMusuario.nombre}</Link>
                       
                         <p><strong>Fecha:</strong> 24/02/2025</p>
                         
@@ -18,7 +28,7 @@ const Comentario: React.FC = () => {
                     </div>
                 </div>
                 <div className="p-4 text-white col-span-3">
-                    <p className="text-white">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Maiores quibusdam, praesentium id quia odit ducimus? Illo omnis sint, vitae dolore, velit cupiditate rerum nesciunt beatae, eaque at iusto tenetur eveniet.</p>
+                    <p className="text-white">{comentario?.COMdescripcion}</p>
                     {/* <div className="flex justify-end">
                         <button>
                             <svg className="size-10 text-gray-800  ms-1 hover:text-red-600  " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">

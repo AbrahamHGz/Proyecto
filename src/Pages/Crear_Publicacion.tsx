@@ -1,12 +1,15 @@
 import React, { useState, useRef, useEffect } from "react";
 import Menu from "../Objetos/Menu";
 import { useNavigate, useParams } from "react-router-dom";
+import CategoriaSelect from "../Objetos/CategoriaSelect";
+import { crearPublicacion } from "../services/apiPublicacion";
 
 const Crear_Publicacion: React.FC = () => {
 
     const [titulo, setTitulo] = useState('');
     const [descripcion, setDescripcion] = useState('');
-    const [categoria, setCategoria] = useState('Arte');
+    const [categriasSeleccionadas, setCategoriaSeleccionada] = useState<string[]>([]);
+    const [categoria, setCategoria] = useState('');
     const [imagen, setImagen] = useState<string | null>(null);
     const [imagenFile, setImagenFile] = useState<File | null>(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -15,22 +18,16 @@ const Crear_Publicacion: React.FC = () => {
     const navigate = useNavigate();
     const { id } = useParams();
 
+    const usuarioInfo = JSON.parse(sessionStorage.getItem("USER_INFO") || "{}");
+    const email = usuarioInfo.email
+
     const MAX_IMAGE_SIZE = 20 * 1024 * 1024;
 
     useEffect(() => {
         if (id) {
-            const publicacionEjemplo = {
-                titulo: "Ejemplo de publicación",
-                descripcion: "Esta es una publicación de ejemplo",
-                categoria: "3D",
-                imagenUrl: "https://res.cloudinary.com/dmcvdsh4c/image/upload/v1711699300/iceebookImage/ciencia/geologia/geologia-montanas-formacion-misterios_iz66pg.webp"
-            };
-            
-            setTitulo(publicacionEjemplo.titulo);
-            setDescripcion(publicacionEjemplo.descripcion);
-            setCategoria(publicacionEjemplo.categoria);
-            setImagen(publicacionEjemplo.imagenUrl);
-        } }, [id]);
+           
+        } }, 
+    [id]);
 
     const handleImageButtonClick = () => {
         fileInputRef.current?.click();
@@ -75,17 +72,32 @@ const Crear_Publicacion: React.FC = () => {
                     ? `Archivo: ${imagenFile.name} (${(imagenFile.size / (1024 * 1024)).toFixed(2)}MB)`
                     : 'Usando imagen existente' });
         
-            await new Promise(resolve => setTimeout(resolve, 1500));
-            
-            alert(id ? 'Publicación actualizada (simulación)' : 'Publicación creada (simulación)');
-            navigate('/mis-publicaciones');
-        } catch (err) {
-            console.error("Error:", err);
-            setError('Error al procesar la publicación');
-        } finally {
-            setIsSubmitting(false);
-        } 
+            // await new Promise(resolve => setTimeout(resolve, 1500));
+            await crearPublicacion(
+                titulo,
+                categriasSeleccionadas,
+                email,
+                descripcion
+            )
+            alert(id ? 'Publicación actualizada' : 'Publicación creada');
+            navigate('/Perfil');
+        }catch (error: any) {
+            if (error.response && error.response.data && error.response.data.error) {
+                alert(`Error: ${error.response.data.error}`);  // Muestra el mensaje del backend
+            } else {
+                alert("Error inesperado al crear la publicación");  // Fallback si el error no tiene mensaje específico
+            }
+        }
     };
+
+    const añadirCategoria = () => {
+        if(categoria && !categriasSeleccionadas.includes(categoria)){
+            setCategoriaSeleccionada([...categriasSeleccionadas, categoria]);
+        }
+    }
+    const eliminarCategoria = (categoriaAEliminar:string) => {
+        setCategoriaSeleccionada(categriasSeleccionadas.filter(cat => cat !== categoriaAEliminar));
+    }
 
     return(
         <>
@@ -131,18 +143,22 @@ const Crear_Publicacion: React.FC = () => {
                             <li>
                                 <label htmlFor="" className="font-semibold text-white text-2xl ">Categorias</label>
                                 <br />
-                                <select 
-                                    id="categoria"
-                                    className="mt-2 rounded bg-slate-200 px-2 p-1" 
-                                    value={categoria}
-                                    onChange={(e) => setCategoria(e.target.value)} >
-                                    <option value="Arte">Arte</option>
-                                    <option value="3D">3D</option>
-                                    <option value="Fotografía">Fotografía</option>
-                                    <option value="Diseño">Diseño</option>
-                                </select>
+                                <CategoriaSelect value={categoria} onChange={setCategoria}/>
+                                
+                                <button type="button" className="bg-slate-300 rounded px-2 hover:bg-slate-500"
+                                onClick={añadirCategoria}
+                                >Añadir</button>
 
-                                <p className="text-white" id="CategoriaZone">Arte, 3D</p>
+                                <p className="text-white" id="CategoriaZone">
+                                    {categriasSeleccionadas.map((cat,index) => (
+                                        <span key={index} className="inline-block bg-gray-500 hover:bg-red-700 text-white px-2 py-1 rounded-full text-sm mr-2 mt-2"
+                                        onClick={() => eliminarCategoria(cat)} title="Haz click para eliminar esta categoria">
+                                            {cat}
+                                        </span>
+                                    ))
+
+                                    }
+                                </p>
                             </li>
                             <li className="mt-4">
                                 <input 

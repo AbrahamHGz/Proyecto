@@ -6,6 +6,9 @@ const Menu: React.FC = () => {
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
     };
+
+    const usuarioInfo = JSON.parse(sessionStorage.getItem("USER_INFO") || "{}");
+    const id = usuarioInfo.id
     return (
         <>
             <div className="bg-slate-950 md:p-4 py-7 px-2 fixed w-full z-50">
@@ -58,11 +61,11 @@ const Menu: React.FC = () => {
                             rounded hover:bg-slate-700">
                             Artistas
                         </Link>
-                        <Link to="/Perfil" className="text-white mx-4 hidden lg:block font-bold text-3xl px-4 p-1
+                        <Link to={`/Perfil/${id}`} className="text-white mx-4 hidden lg:block font-bold text-3xl px-4 p-1
                         rounded hover:bg-slate-700">
                             Perfil
                         </Link>
-                        <Link to="/Perfil" className=" mx-2 hidden lg:block">
+                        <Link to={`/Perfil/${id}`} className=" mx-2 hidden lg:block">
                             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTELPl2WQuMBShrQaqe0IWYjLf_y2XRkhGNWcdLfADOPJ6KAJe84GaYOQ51__wkkbGfR78&usqp=CAU" 
                             alt="" className="size-16 rounded-full" />
                         </Link>

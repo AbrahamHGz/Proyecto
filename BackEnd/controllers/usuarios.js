@@ -74,6 +74,16 @@ class usuarioControler {
         }
     }
 
+    async getAllArtistas(req, res){
+        try{
+            const data = await usuarioModel.getAllArtistas();
+            res.status(200).json(data);
+        }catch(e){
+            res.status(500).send(e);
+        }
+    }
+
+
     async getOne(req, res){
         try{
             const {id} = req.params
@@ -108,7 +118,7 @@ class usuarioControler {
 
 
             const token = generarToken(email, existeUsuario.TipoUsu);
-            res.status(200).json({msg: 'Usuario autenticado', token, user: {email: existeUsuario.email, tipo: existeUsuario.TipoUsu}});
+            res.status(200).json({msg: 'Usuario autenticado', token, user: {email: existeUsuario.email, tipo: existeUsuario.TipoUsu, id: existeUsuario._id}});
         }catch(e){
             res.status(500).send(e);
         }
