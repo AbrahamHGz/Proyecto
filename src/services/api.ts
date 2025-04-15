@@ -75,12 +75,12 @@ export const EditarPerfil = async(
     password: String,
     sexo: string,
     FechaNac: Date,
-  
+    imagen: string | null
     
 ): Promise<void> =>{
     try {
         const token = sessionStorage.getItem("TOKEN");
-        const response = await axios.put(`${API_URL}/usuario/email/${email}`, { nombre, email, password, sexo, FechaNac} ,{headers: {Authorization: `Bearer ${token}`}});
+        const response = await axios.put(`${API_URL}/usuario/email/${email}`, { nombre, email, password, sexo, FechaNac, imagen} ,{headers: {Authorization: `Bearer ${token}`}});
         console.log("Respuesta del servidor:", response.data);
     } catch (error) {
         console.error("Error al editar usuario:", error);

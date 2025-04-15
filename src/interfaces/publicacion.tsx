@@ -7,9 +7,11 @@ export interface publicacion {
     }]
     PUBusuario: {
         _id:string,
-        nombre:string;
+        nombre:string,
+        imagen:string;
     },
     PUBlikes:number;
     PUBdescripcion:string;
-    PUBstatus:Boolean
+    PUBstatus:Boolean,
+    PUBimagen:string
 }

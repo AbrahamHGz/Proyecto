@@ -46,7 +46,7 @@ const router = createBrowserRouter(
       <Route element={<PrivateRoute />}>
         <Route path='/Home' element={<Home />}/>
         <Route path='/Perfil/:id' element={<Perfil />}/>
-        <Route path='/Editar Perfil' element={<Editar_Perfil />}/>
+        <Route path='/Editar Perfil/:id' element={<Editar_Perfil />}/>
         <Route path='/Publicacion/:id' element={<Publicacion />}/>
         <Route path='/Crear publicacion' element={<Crear_Publicacion/>}/>
         <Route path='/Editar publicacion/:id' element={<Editar_Publicacion/>}/>

@@ -87,7 +87,7 @@ const PublicaUsu: React.FC<Props> = ({P_publicacion}) => {
         <>
             <Link to={`/Publicacion/${P_publicacion._id}`} className="p-2 bg-gray-700 text-white mr-3 mb-3 rounded
              hover:drop-shadow-xl hover:bg-gray-500">
-                <img src="https://res.cloudinary.com/dmcvdsh4c/image/upload/v1711699300/iceebookImage/ciencia/geologia/geologia-montanas-formacion-misterios_iz66pg.webp" alt="" 
+                <img src={P_publicacion?.PUBimagen || "https://res.cloudinary.com/dmcvdsh4c/image/upload/v1711699300/iceebookImage/ciencia/geologia/geologia-montanas-formacion-misterios_iz66pg.webp"} alt="" 
                 className="md:h-45 w-84"/>
                 <p className="flex justify-center text-lg font-bold">{P_publicacion?.PUBnombre}</p>
                 <svg className="size-7 text-red-300  ms-1   " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">

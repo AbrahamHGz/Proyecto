@@ -4,7 +4,8 @@ export interface I_Comentario {
     COMlikes: number,
     COMusuario: {    
         _id:string,
-        nombre:string
+        nombre:string,
+        imagen:string
     },
     COMpublicacion: {
         _id:string,

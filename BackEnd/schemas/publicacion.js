@@ -28,6 +28,10 @@ const publicacionSchema = new mongoose.Schema(
         PUBestatus:{
             type:Boolean,
             default:true
+        },
+        PUBimagen: {
+            type:String,
+            default:null
         }
     },
     {timestamps: true}

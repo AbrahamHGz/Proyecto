@@ -6,5 +6,6 @@ export interface I_Usuario{
     FechaNac:string,
     Seguidores:number,
     Siguiendo:number,
-    descripcion: string
+    descripcion: string,
+    imagen:string
 }

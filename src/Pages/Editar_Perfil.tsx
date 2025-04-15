@@ -21,7 +21,8 @@ const Editar_Perfil: React.FC = () => {
     
         const [imagenPerfil, setImagenPerfil] = useState<string | null>(null);
         const fileInputRef = useRef<HTMLInputElement>(null);
-       
+        const usuarioInfo = JSON.parse(sessionStorage.getItem("USER_INFO") || "{}");
+        const ids = usuarioInfo.id
         
         const navigate = useNavigate();
 
@@ -69,15 +70,15 @@ const Editar_Perfil: React.FC = () => {
         };
 
         useEffect(() => {
-            const usuarioInfo = JSON.parse(sessionStorage.getItem("USER_INFO") || "{}");
-            if (usuarioInfo?.email) {
-                cargarPerfil(usuarioInfo.email);
+            
+            if (usuarioInfo?.id) {
+                cargarPerfil(usuarioInfo.id);
             }
         }, []);
     
-        const cargarPerfil = async (email: string) => {
+        const cargarPerfil = async (id: string) => {
             try {
-                const data = await getDataPerfil(email);
+                const data = await getDataPerfil(id);
                 setNombre(data.nombre || '');
                 setEmail(data.email || '');
                 setFechaNac(data.FechaNac || '');
@@ -100,6 +101,7 @@ const Editar_Perfil: React.FC = () => {
                         password, 
                         sexo, 
                         new Date(FechaNac),
+                        imagenPerfil
                     );
                     alert("Usuario editado exitosamente");
                     setNombre("");
@@ -107,7 +109,7 @@ const Editar_Perfil: React.FC = () => {
                     setPassword("");
                     setSexo("");
                     setFechaNac("");
-                    navigate('/Perfil');
+                    navigate(`/Perfil/${ids}`);
                 } catch (error: any) {
                     if (error.response && error.response.data && error.response.data.error) {
                         alert(`Error: ${error.response.data.error}`);  // Muestra el mensaje del backend

@@ -20,6 +20,7 @@ const Crear_Publicacion: React.FC = () => {
 
     const usuarioInfo = JSON.parse(sessionStorage.getItem("USER_INFO") || "{}");
     const email = usuarioInfo.email
+    const ids = usuarioInfo.id
 
     const MAX_IMAGE_SIZE = 20 * 1024 * 1024;
 
@@ -77,10 +78,11 @@ const Crear_Publicacion: React.FC = () => {
                 titulo,
                 categriasSeleccionadas,
                 email,
-                descripcion
+                descripcion,
+                imagen
             )
             alert(id ? 'Publicación actualizada' : 'Publicación creada');
-            navigate('/Perfil');
+            navigate(`/Perfil/${ids}`);
         }catch (error: any) {
             if (error.response && error.response.data && error.response.data.error) {
                 alert(`Error: ${error.response.data.error}`);  // Muestra el mensaje del backend

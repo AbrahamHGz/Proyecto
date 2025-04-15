@@ -25,7 +25,7 @@ class comentarioModelo {
 
     async getAllByPub(COMpublicacion){
         return await Comentario.find({COMpublicacion})
-        .populate('COMusuario', 'nombre')
+        .populate('COMusuario', 'nombre imagen')
     }
 
     async getOne(id){

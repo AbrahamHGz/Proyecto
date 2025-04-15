@@ -59,6 +59,10 @@ const usuarioSchema = new mongoose.Schema(
         descripcion: {
             type:String,
             default: "Hola soy un artista y estoy en ¡ARTROPOLIS! :D"
+        },
+        imagen: {
+            type:String,
+            default: null
         }
 
 

@@ -32,6 +32,7 @@ const Editar_Publicacion: React.FC = () => {
                     setTitulo(data.PUBnombre);
                     setDescripcion(data.PUBdescripcion);
                     setCategoriaSeleccionada(data.PUBcategorias.map((cat: any) => cat.CATnombre)); //las categorias que obtengo aqui
+                    setImagen(data.PUBimagen)
                     console.log("Categorías recibidas:", data.PUBcategorias);
                     // setCategoria(publicacionEjemplo.categoria);
                     // setImagen(publicacionEjemplo.imagenUrl);
@@ -97,11 +98,12 @@ const Editar_Publicacion: React.FC = () => {
                     titulo,
                     categriasSeleccionadas,
                     descripcion,
-                    id
+                    id,
+                    imagen
                 )
                                 
                 alert(id ? 'Publicación actualizada' : 'Publicación creada');
-                navigate('/Perfil');
+                navigate( `/Publicacion/${id}`);
             } catch (err) {
                 console.error("Error:", err);
                 setError('Error al procesar la publicación');

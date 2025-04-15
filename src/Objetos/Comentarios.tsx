@@ -15,12 +15,12 @@ const Comentario: React.FC<ComentarioProps> = ({comentario}) => {
         <>
             <div className="bg-gray-400 mt-4 rounded lg:grid grid-cols-4">
                 <div className="p-2 flex">
-                    <Link to="/Perfil">
-                        <img src="https://static.vecteezy.com/system/resources/previews/022/077/324/large_2x/chinese-dragon-fantasy-background-asian-and-eastern-mythological-creature-illustration-for-chinese-new-year-generative-ai-photo.jpg" alt="" 
+                    <Link to={`/Perfil/${comentario?.COMusuario._id}`}>
+                        <img src={comentario?.COMusuario.imagen || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTELPl2WQuMBShrQaqe0IWYjLf_y2XRkhGNWcdLfADOPJ6KAJe84GaYOQ51__wkkbGfR78&usqp=CAU"} alt="" 
                         className=" size-30 border-4 border-slate-900 border-double"/>
                     </Link>
                     <div className="text-white p-2">
-                        <Link  to="/Perfil" className="hover:underline text-xl font-bold">{comentario?.COMusuario.nombre}</Link>
+                        <Link  to={`/Perfil/${comentario?.COMusuario._id}`} className="hover:underline text-xl font-bold">{comentario?.COMusuario.nombre}</Link>
                       
                         <p><strong>Fecha:</strong> 24/02/2025</p>
                         

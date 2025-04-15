@@ -71,7 +71,7 @@ const Artei: React.FC<ArteIPropr> = ({P_Artistas}) => {
             <Link to={`/Perfil/${P_Artistas._id}`} className="p-2 bg-gray-700 text-white mr-3 mb-3 rounded
                  hover:drop-shadow-xl hover:bg-gray-500">
                     <div className="flex justify-center">
-                        <img src="https://res.cloudinary.com/dmcvdsh4c/image/upload/v1711699300/iceebookImage/ciencia/geologia/geologia-montanas-formacion-misterios_iz66pg.webp"   alt="" 
+                        <img src={P_Artistas?.imagen || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTELPl2WQuMBShrQaqe0IWYjLf_y2XRkhGNWcdLfADOPJ6KAJe84GaYOQ51__wkkbGfR78&usqp=CAU"}   alt="" 
                         className="h-31 w-full"/>
                     </div>
                     <p className="flex justify-center text-lg font-bold">{P_Artistas.nombre}</p>

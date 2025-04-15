@@ -76,7 +76,7 @@ const ArtesPublic:React.FC<Props> = ({P_publicacion}) => {
         <>
          <Link to={`/Publicacion/${P_publicacion._id}`} className="p-2 bg-gray-700 text-white mr-3 mb-3 rounded
          hover:drop-shadow-xl hover:bg-gray-500">
-            <img src="https://res.cloudinary.com/dmcvdsh4c/image/upload/v1711699300/iceebookImage/ciencia/geologia/geologia-montanas-formacion-misterios_iz66pg.webp" alt="" 
+            <img src={P_publicacion?.PUBimagen || "https://res.cloudinary.com/dmcvdsh4c/image/upload/v1711699300/iceebookImage/ciencia/geologia/geologia-montanas-formacion-misterios_iz66pg.webp"} alt="" 
             className="sm:h-45 sm:w-84 h-24 w-full"/>
             <p className="sm:flex justify-center sm:text-lg text-sm font-bold">{P_publicacion.PUBnombre}</p>
             <p className="sm:flex justify-start text-xs">Por: {P_publicacion.PUBusuario.nombre}</p>

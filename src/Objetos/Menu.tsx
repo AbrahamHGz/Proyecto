@@ -1,14 +1,34 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-const Menu: React.FC = () => {
+import {getDataPerfil} from "../services/api";
 
+const Menu: React.FC = () => {
+    const [usuario, setUsuario] = useState<any>(null);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
     };
 
     const usuarioInfo = JSON.parse(sessionStorage.getItem("USER_INFO") || "{}");
     const id = usuarioInfo.id
+
+
+    useEffect(() => {
+        if(id){
+            cargarPerfil(id)
+
+        }
+    },[id])
+
+    const cargarPerfil = async(id: string) => {
+        try{
+            const data = await getDataPerfil(id);
+            setUsuario(data)
+        }catch(error){
+            console.log("Error al cargar el perfil:", error);
+        }
+    }
     return (
         <>
             <div className="bg-slate-950 md:p-4 py-7 px-2 fixed w-full z-50">
@@ -66,7 +86,7 @@ const Menu: React.FC = () => {
                             Perfil
                         </Link>
                         <Link to={`/Perfil/${id}`} className=" mx-2 hidden lg:block">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTELPl2WQuMBShrQaqe0IWYjLf_y2XRkhGNWcdLfADOPJ6KAJe84GaYOQ51__wkkbGfR78&usqp=CAU" 
+                            <img src={usuario?.imagen || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTELPl2WQuMBShrQaqe0IWYjLf_y2XRkhGNWcdLfADOPJ6KAJe84GaYOQ51__wkkbGfR78&usqp=CAU"}
                             alt="" className="size-16 rounded-full" />
                         </Link>
                     </div>
