@@ -48,7 +48,7 @@ const Artistas: React.FC = () => {
                         <input type="submit" value="Buscar" className="text-white font-bold m-2 bg-slate-800 px-4 p-2 rounded hover:bg-slate-700 " />
                     </form>
 
-                    <div className="grid grid-cols-4 md:mt-10">
+                    <div className="grid grid-cols-6 md:mt-10">
                         {usuarios.map((usu, index) => (
                             <Artei key={index} P_Artistas={usu}></Artei>
                         ))}

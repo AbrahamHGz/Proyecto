@@ -10,6 +10,8 @@ route.use(cors({
 }));
 
 route.post('/', favoritoController.create);
+route.get('/fav/:FAVusuario/:FAVpublicacion', favoritoController.getOneFav);
+route.get('/us/:FAVusuario', favoritoController.getAllByUsu)
 route.get('/:id', favoritoController.getOne);
 route.get('/', favoritoController.getAll);
 route.put('/:id', favoritoController.update);

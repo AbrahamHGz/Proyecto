@@ -31,7 +31,7 @@ const Login:React.FC =() => {
             if(user.tipo == "artista"){
                 navigate(`/Perfil/${id}`);
             }else{
-                navigate('/Administrador');
+                navigate(`/Administrador/${id}`);
                 
             }
         } catch (error: any) {

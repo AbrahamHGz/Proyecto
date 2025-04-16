@@ -16,7 +16,7 @@ export const crearPublicacion = async(
         const response = await axios.post(`${API_URL}/publicacion`, { PUBnombre, CATnombre, email, PUBdescripcion, PUBimagen});
         console.log("Respuesta del servidor:", response.data);
     } catch (error) {
-        console.error("Error al crear usuario:", error);
+        console.error("Error al crear publicacion:", error);
         throw error;
     }
 }
@@ -69,7 +69,7 @@ export const editarPublicacion = async(
         const response = await axios.put(`${API_URL}/publicacion/${id}`, {id, PUBnombre, CATnombre, PUBdescripcion, PUBimagen});
         console.log("Respuesta del servidor:", response.data);
     } catch (error) {
-        console.error("Error al crear usuario:", error);
+        console.error("Error al editar publicacion:", error);
         throw error;
     }
 }

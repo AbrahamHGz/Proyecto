@@ -84,6 +84,7 @@ const Editar_Perfil: React.FC = () => {
                 setFechaNac(data.FechaNac || '');
                 setPassword(data.password || '')
                 setSexo(data.sexo || 'Hombre');
+                setImagenPerfil(data.imagen)
                 //setTipoUsu(data.TipoUsu || 'artista');
                 //setEstatus(data.Estatus !== undefined ? data.Estatus : true);
             } catch (error) {

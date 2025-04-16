@@ -1,5 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { AuthContext } from "../auth/autenticacion";
+
 import Publicaciones from "../Objetos/Publicaciones";
 import Menu from "../Objetos/Menu";
 import Acerca_de_mi from "../Objetos/Acerca_de_Mi";
@@ -16,6 +18,9 @@ const Perfil: React.FC = () => {
     const ids = usuarioInfo.id
     const {id} = useParams();
 
+    const authContext = useContext(AuthContext);
+    const navigate = useNavigate();
+
     useEffect(() => {
         if(id){
             cargarPerfil(id)
@@ -29,6 +34,15 @@ const Perfil: React.FC = () => {
             setUsuario(data)
         }catch(error){
             console.log("Error al cargar el perfil:", error);
+        }
+    }
+
+    const Salir = () => {
+        try{
+            authContext?.logout();
+             navigate("/login")
+        }catch(e){
+            alert("Error al intentar salir de la aplicacion")
         }
     }
 
@@ -51,12 +65,16 @@ const Perfil: React.FC = () => {
 
                 </div>
 
-                {usuario?._id === ids && (
+                {usuario?._id === ids ? (
 
                     <div className=" mt-2 flex justify-end space-x-3">
                         <Link to={`/Editar Perfil/${id}`} className="p-2 bg-slate-800 rounded  hover:bg-slate-700 font-bold text-white">Editar Perfil</Link>
-                        <Link to="/Login" className="p-2 bg-red-500 rounded border-red-100 hover:text-black hover:bg-red-400 font-bold text-white px-8">Salir</Link>
-                    
+                        <button onClick={Salir} className="p-2 bg-red-500 rounded border-red-100 hover:text-black hover:bg-red-400 font-bold text-white px-8">Salir
+                        </button>
+                    </div>
+                ): (
+                    <div className=" mt-2 flex justify-end space-x-3">
+                        <button className="p-2 bg-slate-800 rounded  hover:bg-slate-700 font-bold text-white">Seguir</button>
                     </div>
                 )}
             </div>
@@ -79,7 +97,7 @@ const Perfil: React.FC = () => {
             <div className="lg:mx-40 md:mx-20 bg-gray-400 p-4 rounded-b rounded-e">
                 {seccionActiva == "AcercadeMi" && <Acerca_de_mi usuario_i={usuario}></Acerca_de_mi>}
                 {seccionActiva == "Publicaciones" && <Publicaciones usuario_i={usuario}></Publicaciones>}
-                {seccionActiva == "Favoritos" && <Favoritos></Favoritos>}
+                {seccionActiva == "Favoritos" && <Favoritos usuario_i={usuario}></Favoritos>}
             </div>
 
             <div className="p-2">

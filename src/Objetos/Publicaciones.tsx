@@ -1,10 +1,9 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
+
 import CategoriaSelect from "./CategoriaSelect";
 import {obtenerPublicacionUsuario} from "../services/apiPublicacion";
 import {publicacion} from '../interfaces/publicacion';
-
-
 import { I_Usuario } from "../interfaces/usuario";
 
 interface usuarioProps{
@@ -12,8 +11,9 @@ interface usuarioProps{
 }
 const Publicaciones: React.FC<usuarioProps> = ({usuario_i}) => {
     const [categoria, setCategoria] = useState('');
-
     const [publicaciones, setPublicaciones] = useState<publicacion[]>([]);
+    const usuarioInfo = JSON.parse(sessionStorage.getItem("USER_INFO") || "{}");
+    const ids = usuarioInfo.id
 
     const fetchPublicacion = async () => {
         try{
@@ -58,10 +58,12 @@ const Publicaciones: React.FC<usuarioProps> = ({usuario_i}) => {
                 <button className="mt-2 p-2 bg-slate-800 rounded  hover:bg-slate-700 font-bold text-white">Filtrar</button>
 
             </div>
+            {usuario_i?._id === ids && (
+                <div className="mb-4">
+                    <Link to="/Crear publicacion" className="text-white font-bold  bg-blue-800 px-4 p-2 rounded hover:bg-blue-700 ">Publicar</Link>
+                </div>
 
-            <div className="mb-4">
-                <Link to="/Crear publicacion" className="text-white font-bold  bg-blue-800 px-4 p-2 rounded hover:bg-blue-700 ">Publicar</Link>
-            </div>
+            )}
 
             <div className="grid grid-cols-4">
                 {publicaciones.map((pub, index) => (

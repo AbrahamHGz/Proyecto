@@ -1,6 +1,26 @@
-import React  from "react";
+import React, { useState, useRef, useEffect } from "react";
 
+
+import { I_Usuario } from "../interfaces/usuario";
+import { getDataArtistasActivos } from "../services/api"
 const UsuariosAd: React.FC = () => {
+
+    const [usuarios, setUsuarios] = useState<I_Usuario[]>([])
+    
+         const fetchPublicacion = async () => {
+                try{
+                    const data = await getDataArtistasActivos();
+                    setUsuarios(data);
+                }catch(error){
+                    console.error("Error al obtener las publicaciones:", error);
+                }
+            }
+        
+            useEffect(() => {
+                fetchPublicacion();
+            }, [])
+    
+
     return(
         <>
         <h1 className=" font-bold text-2xl">Usuarios</h1>
@@ -27,11 +47,9 @@ const UsuariosAd: React.FC = () => {
             </form>
 
             <div className="grid  lg:grid-cols-4 md:grid-cols-3  grid-cols-2 ">
-                <Usaurioss></Usaurioss>
-                <Usaurioss></Usaurioss>
-                <Usaurioss></Usaurioss>
-                <Usaurioss></Usaurioss>
-                <Usaurioss></Usaurioss>
+                {usuarios.map((usu, index) => (
+                    <Usaurioss key={index} P_Artistas={usu}></Usaurioss>
+                ))}
 
 
             </div>
@@ -42,7 +60,10 @@ const UsuariosAd: React.FC = () => {
 
 export default UsuariosAd;
 
-const Usaurioss: React.FC = () => {
+interface ArteIPropr{
+    P_Artistas:I_Usuario
+}
+const Usaurioss: React.FC<ArteIPropr> = ({P_Artistas}) => {
     return(
         <>
            <div className="bg-slate-300 rounded p-4 mx-2 my-2 ">
@@ -50,12 +71,18 @@ const Usaurioss: React.FC = () => {
                     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTELPl2WQuMBShrQaqe0IWYjLf_y2XRkhGNWcdLfADOPJ6KAJe84GaYOQ51__wkkbGfR78&usqp=CAU"
                      alt="" className="w-full md:h-40 h-40" />
                      <div>
-                        <h1 className="font-bold xl:text-2xl lg:text-xl">UsuarioAdmin123</h1>
-                        <h1 className="font-semibold text-lg">Usuario@mail.com</h1>
+                        <h1 className="font-bold xl:text-2xl lg:text-xl">{P_Artistas?.nombre}</h1>
+                        <h1 className="font-semibold text-lg">{P_Artistas?.email}</h1>
                         <p className="font-semibold">Fecha de ingreso:</p> <p>08/03/2025</p>
                      </div>
-                    <button className="w-full hover:bg-red-400 bg-red-500 rounded p-2 font-bold text-white ">Desactivar</button>
-                    <button className="w-full hover:bg-slate-400 bg-slate-500 rounded p-2 font-bold text-white ">Reactivar</button>
+                     
+                    {P_Artistas.Estatus === "true" ? (
+
+                        <button className="w-full hover:bg-red-400 bg-red-500 rounded p-2 font-bold text-white ">Desactivar</button>
+                    ): (
+                        <button className="w-full hover:bg-slate-400 bg-slate-500 rounded p-2 font-bold text-white ">Reactivar</button>
+
+                    )}
 
                      
                 </div>

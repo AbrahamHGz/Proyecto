@@ -10,8 +10,6 @@ export const crearUsuario = async(
     TipoUsu: string,
     FechaNac: Date,
     Estatus: boolean,
-    //edad: number,
-    
     
 ): Promise<void> =>{
     try {
@@ -22,6 +20,7 @@ export const crearUsuario = async(
         throw error;
     }
 }
+
 
 export const login = async(
     email: string, 
@@ -55,6 +54,15 @@ export const getDataArtistasActivos = async (): Promise<any> => {
     }catch(e){
         console.error("Error al obtener datos: ", e);
         throw e;
+    }
+}
+
+export const getDataAdmins = async () : Promise<any> => {
+    try{
+        const response = await axios.get(`${API_URL}/usuario/admins`)
+        return response.data
+    }catch(e){
+        console.error("Error al obtener datos: ", e)
     }
 }
 

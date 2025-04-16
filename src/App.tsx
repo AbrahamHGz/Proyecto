@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
-import { Route,  Link, Routes,BrowserRouter ,createBrowserRouter, createRoutesFromElements, RouterProvider } from 'react-router-dom'
+import { Route, Link, Routes, BrowserRouter, createBrowserRouter, createRoutesFromElements, RouterProvider } from 'react-router-dom'
 
 import Home from './Pages/Home'
 import Perfil from './Pages/Perfil'
@@ -35,32 +35,34 @@ function App() {
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
-    <Route>
+      <Route>
 
-      {/* Rutas publicas */}
-      <Route path='/' element={<Login />}/>
-      <Route path='/Login' element={<Login />}/>
-      <Route path='/SingUp' element={<Singup />}/>
+        {/* Rutas publicas */}
+        <Route path='/' element={<Login />} />
+        <Route path='/Login' element={<Login />} />
+        <Route path='/SingUp' element={<Singup />} />
 
-      {/* Rutas privadas */}
-      <Route element={<PrivateRoute />}>
-        <Route path='/Home' element={<Home />}/>
-        <Route path='/Perfil/:id' element={<Perfil />}/>
-        <Route path='/Editar Perfil/:id' element={<Editar_Perfil />}/>
-        <Route path='/Publicacion/:id' element={<Publicacion />}/>
-        <Route path='/Crear publicacion' element={<Crear_Publicacion/>}/>
-        <Route path='/Editar publicacion/:id' element={<Editar_Publicacion/>}/>
-        <Route path='/Artistas' element={<Artistas />}/>
-        <Route path='/Administrador' element={<Admin />}/>
-        <Route path='/Agrega Administrador' element={<Agrega_Administrador />}/>
-        <Route path='/PruebaDB' element={<PruebaDb />}/>
-      </Route>        
-    </Route>
-   
-    {/* <Route element={<PrivateRouteWithRole allowedRoles={['admin']} />}>
-      <Route path='/Administrador' element={<Admin />}/>
-      <Route path='/Agrega Administrador' element={<Agrega_Administrador />}/>
-    </Route> */}
+        {/* Rutas privadas */}
+        <Route element={<PrivateRoute />}>
+          <Route path='/Home' element={<Home />} />
+          <Route path='/Editar Perfil/:id' element={<Editar_Perfil />} />
+          <Route path='/Publicacion/:id' element={<Publicacion />} />
+          <Route path='/Artistas' element={<Artistas />} />
+          <Route path='/PruebaDB' element={<PruebaDb />} />
+        </Route>
+      </Route>
+
+      <Route element={<PrivateRouteWithRole allowedRoles={['admin', 'superadmin']} />}>
+        <Route path='/Administrador/:id' element={<Admin />} />
+        <Route path='/Agrega Administrador' element={<Agrega_Administrador />} />
+      </Route>
+
+      <Route element={<PrivateRouteWithRole allowedRoles={['artista']} />}>
+        <Route path='/Crear publicacion' element={<Crear_Publicacion />} />
+        <Route path='/Editar publicacion/:id' element={<Editar_Publicacion />} />
+        <Route path='/Perfil/:id' element={<Perfil />} />
+      </Route>
+
     </>
   )
 )

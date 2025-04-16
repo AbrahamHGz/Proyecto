@@ -14,7 +14,7 @@ export const crearComentario = async(
         const response = await axios.post(`${API_URL}/comentario`, { COMdescripcion, email,id});
         console.log("Respuesta del servidor:", response.data);
     } catch (error) {
-        console.error("Error al crear usuario:", error);
+        console.error("Error al crear comentario:", error);
         throw error;
     }
 }
@@ -29,5 +29,30 @@ export const obtenerComentarios = async(
     }catch(e){
         console.error("Error al obtener datos: ", e);
         throw e;
+    }
+}
+
+export const editarComentario = async(
+    id:string,
+    COMdescripcion:string
+): Promise<void> =>{
+    try {
+        const response = await axios.put(`${API_URL}/comentario/${id}`, { id,COMdescripcion});
+        console.log("Respuesta del servidor:", response.data);
+    } catch (error) {
+        console.error("Error al editar el comentario:", error);
+        throw error;
+    }
+}
+
+export const borrarPublicacion = async(
+    id:string
+): Promise<void> =>{
+    try {
+        const response = await axios.delete(`${API_URL}/comentario/${id}`);
+        console.log("Respuesta del servidor:", response.data);
+    } catch (error) {
+        console.error("Error al borrar el comentario:", error);
+        throw error;
     }
 }

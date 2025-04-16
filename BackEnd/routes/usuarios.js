@@ -13,6 +13,7 @@ route.use(cors({
 route.post('/', usuarioControler.create);
 route.post('/login', usuarioControler.postLogin);
 route.get('/artistas/', usuarioControler.getAllArtistas);
+route.get('/admins/', usuarioControler.getAllAdmins);
 
 
 route.get('/:id', usuarioControler.getOne);

@@ -9,7 +9,7 @@ class usuarioControler {
 
     async create(req, res){
         try{
-            const {nombre , email, password, sexo, TipoUsu, FechaNac} = req.body
+            const {nombre , email, password, sexo, TipoUsu, FechaNac, imagen} = req.body
             const existeUsuario = await usuarioModel.getOneEmail(email)
 
             if(existeUsuario)
@@ -83,6 +83,14 @@ class usuarioControler {
         }
     }
 
+    async getAllAdmins(req, res){
+        try{
+            const data = await usuarioModel.getAllAdmins();
+            res.status(200).json(data);
+        }catch(e){
+            res.status(500).send(e);
+        }
+    }
 
     async getOne(req, res){
         try{

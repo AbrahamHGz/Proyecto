@@ -7,5 +7,6 @@ export interface I_Usuario{
     Seguidores:number,
     Siguiendo:number,
     descripcion: string,
-    imagen:string
+    imagen:string,
+    Estatus:string
 }
