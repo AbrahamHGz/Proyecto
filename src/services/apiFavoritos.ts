@@ -49,7 +49,7 @@ export const borrarFavorito = async(
         const response = await axios.delete(`${API_URL}/favorito/${id}`);
         console.log("Respuesta del servidor:", response.data);
     } catch (error) {
-        console.error("Error al añadir el favorito:", error);
+        console.error("Error al borrar el favorito:", error);
         throw error;
     }
 }

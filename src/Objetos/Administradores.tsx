@@ -65,6 +65,15 @@ interface AdminProps {
     AdminP: I_Usuario
 }
 const Admins: React.FC<AdminProps> = ({AdminP}) => {
+
+    const formatearFecha = (fechaIso: string): string => {
+        const fecha = new Date(fechaIso);
+        const dia = String(fecha.getDate()).padStart(2, '0');
+        const mes = String(fecha.getMonth() + 1).padStart(2, '0'); 
+        const anio = fecha.getFullYear();
+        return `${dia}-${mes}-${anio}`;
+    };
+
     return (
         <>
             <div className="bg-slate-300 rounded p-4 mx-2 my-2 ">
@@ -74,7 +83,7 @@ const Admins: React.FC<AdminProps> = ({AdminP}) => {
                     <div>
                         <h1 className="font-bold xl:text-2xl lg:text-xl">{AdminP?.nombre}</h1>
                         <h1 className="font-semibold text-lg">{AdminP?.email}</h1>
-                        <p className="font-semibold">Fecha de ingreso:</p> <p>08/03/2025</p>
+                        <p className="font-semibold">Fecha de ingreso:</p> <p>{formatearFecha(AdminP.createdAt)}</p>
                     </div>
 
                     {AdminP?.Estatus === 'true' ? (

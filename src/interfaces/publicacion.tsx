@@ -13,5 +13,7 @@ export interface publicacion {
     PUBlikes:number;
     PUBdescripcion:string;
     PUBstatus:Boolean,
-    PUBimagen:string
+    PUBimagen:string,
+    createdAt:string;
+    updatedAt:string
 }

@@ -25,7 +25,7 @@ class usuarioModelo {
     }
 
     async getAllArtistas(){
-        return await Usuario.find({TipoUsu: 'artista'})
+        return await Usuario.find({TipoUsu: 'artista', Estatus: true})
     }
 
     async getAllAdmins(){

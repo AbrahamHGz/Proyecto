@@ -9,6 +9,8 @@ import routePublicacion from './routes/publicacion.js';
 import routeComentario from './routes/comentario.js';
 import routeReporte from './routes/reporte.js';
 import routeFavorito from './routes/favorito.js';
+import routeSeguir from './routes/seguir.js';
+import routeLike from './routes/like.js'
 
 const app = express();
 app.use(bodyParser.json({limit:'50mb'}));
@@ -20,6 +22,8 @@ app.use('/publicacion', routePublicacion)
 app.use('/comentario', routeComentario)
 app.use('/reporte', routeReporte)
 app.use('/favorito', routeFavorito)
+app.use('/seguir', routeSeguir);
+app.use('/like', routeLike);
 
 
 try{

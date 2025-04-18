@@ -115,7 +115,7 @@ class usuarioControler {
 
     async postLogin(req, res){
         try{
-            const {email, password, Estatus} = req.body
+            const {email, password} = req.body
             
             const existeUsuario = await usuarioModel.getOneEmail(email)
 
@@ -123,6 +123,9 @@ class usuarioControler {
                 return res.status(400).json({error: "Las credenciales son incorrectas"})
             if(existeUsuario.password != password)
                 return res.status(400).json({error: "La contraseña es incorrecta"})
+
+            if(existeUsuario.Estatus == false)
+                return res.status(400).json({error: "El usuario ha sido eliminado"});
 
 
             const token = generarToken(email, existeUsuario.TipoUsu);

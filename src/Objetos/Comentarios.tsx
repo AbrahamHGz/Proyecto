@@ -2,15 +2,16 @@ import React, { useState, useRef, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
-import { obtenerComentarios, editarComentario, borrarPublicacion } from "../services/apiComentarios";
+import { obtenerComentarios, editarComentario, borrarComentario } from "../services/apiComentarios";
 import { I_Comentario } from "../interfaces/I_comentarip";
 
 interface ComentarioProps {
     comentario: I_Comentario;
-    onActualizar: () => void
+    onActualizar: () => void;
+    Fecha:(fechaIso:string) => string;
 }
 
-const Comentario: React.FC<ComentarioProps> = ({ comentario, onActualizar }) => {
+const Comentario: React.FC<ComentarioProps> = ({ comentario, onActualizar, Fecha }) => {
     const [mostrarFormulario, setMostrarFormulario] = useState(false);
     const [comenta, setComenta] = useState(comentario?.COMdescripcion)
     
@@ -48,10 +49,10 @@ const Comentario: React.FC<ComentarioProps> = ({ comentario, onActualizar }) => 
         }
     };
 
-    const borrarComentario = async (e: React.FormEvent) => {
+    const borrarComentarios = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            await borrarPublicacion(
+            await borrarComentario(
                 comentario?._id,
             );
             alert("Comentario borrado exitosamente");
@@ -76,7 +77,7 @@ const Comentario: React.FC<ComentarioProps> = ({ comentario, onActualizar }) => 
                     <div className="text-white p-2">
                         <Link to={`/Perfil/${comentario?.COMusuario._id}`} className="hover:underline text-xl font-bold">{comentario?.COMusuario.nombre}</Link>
 
-                        <p><strong>Fecha:</strong> 24/02/2025</p>
+                        <p><strong>Fecha:</strong> {Fecha(comentario?.createdAt)}</p>
 
                         <button className=" mt-2 hover:underline text-red-900">Reportar</button>
                     </div>
@@ -104,7 +105,7 @@ const Comentario: React.FC<ComentarioProps> = ({ comentario, onActualizar }) => 
                     {comentario?.COMusuario._id === ids && (
                         <>
                             <button onClick={toggleFormulario} className="font-bold hover:bg-slate-600  bg-slate-700 text-white px-4 p-2 rounded">Editar</button>
-                            <button onClick={borrarComentario} className="font-bold hover:bg-red-600  bg-red-700 text-white px-4 mx-2 p-2 rounded">Borrar</button>
+                            <button onClick={borrarComentarios} className="font-bold hover:bg-red-600  bg-red-700 text-white px-4 mx-2 p-2 rounded">Borrar</button>
                         </>
 
                     )}

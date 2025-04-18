@@ -20,12 +20,19 @@ class comentarioModelo {
     async getAll(){
         return await Comentario.find()
         .populate('COMusuario', 'nombre')
-        .populate('COMpublicacion', 'PUBnombre')
+        .populate('COMpublicacion', 'PUBnombre ')
     }
 
     async getAllByPub(COMpublicacion){
         return await Comentario.find({COMpublicacion})
-        .populate('COMusuario', 'nombre imagen')
+        .populate({
+            path:'COMusuario', 
+            select:'nombre',
+            match: {Estatus: true}
+        })
+        .then(comentario => {
+            return comentario.filter(com => com.COMusuario !== null);
+        })
     }
 
     async getOne(id){

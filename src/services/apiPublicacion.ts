@@ -73,3 +73,17 @@ export const editarPublicacion = async(
         throw error;
     }
 }
+
+
+export const borrarPublicacion = async(
+    id:string,
+    PUBestatus: boolean
+): Promise<void> => {
+    try{
+        const response = await axios.put(`${API_URL}/publicacion/est/${id}`, {id,PUBestatus});
+        console.log("Respuesta del servidor:", response.data);
+    }catch( error){
+        console.error("Error al borrar la publicacion:", error);
+        throw error;
+    }
+}

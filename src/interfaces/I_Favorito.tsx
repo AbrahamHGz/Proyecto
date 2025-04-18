@@ -7,6 +7,9 @@ export interface I_Favorito{
     FAVpublicacion:{
         _id:string,
         PUBnombre:string,
-        PUBimagen:string
+        PUBimagen:string,
+        PUBusuario: {
+            nombre:string
+        }
     }
 }

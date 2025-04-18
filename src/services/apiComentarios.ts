@@ -45,7 +45,7 @@ export const editarComentario = async(
     }
 }
 
-export const borrarPublicacion = async(
+export const borrarComentario = async(
     id:string
 ): Promise<void> =>{
     try {

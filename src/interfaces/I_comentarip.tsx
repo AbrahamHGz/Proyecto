@@ -10,7 +10,9 @@ export interface I_Comentario {
     COMpublicacion: {
         _id:string,
         nombre:string
-    }
+    },
+    createdAt:string;
+    updatedAt:string
     
 
 }

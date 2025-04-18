@@ -109,3 +109,18 @@ export const EdtiarAcercaMi = async(
         throw error;
     }
 }
+
+
+export const desactivarUsu = async(
+    email: string, 
+    Estatus:boolean
+): Promise<void> => {
+    try{
+        const token = sessionStorage.getItem("TOKEN");
+        const response = await axios.put(`${API_URL}/usuario/email/${email}`, {email, Estatus} ,{headers: {Authorization: `Bearer ${token}`}});
+        console.log("Respuesta del servidor:", response.data);
+    }catch(error) {
+        console.error("Error al desactivar usuario:", error);
+        throw error;
+    }
+}

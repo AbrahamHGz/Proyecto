@@ -26,7 +26,18 @@ class favoritoModelo {
     async getAllByUsu(FAVusuario) {
         return await Favorito.find({FAVusuario})
             .populate('FAVusuario', 'nombre')
-            .populate('FAVpublicacion', 'PUBnombre PUBimagen')
+            .populate({
+                path:'FAVpublicacion', 
+                select:'PUBnombre PUBimagen PUBusuario',
+                match: {PUBestatus: true},
+                populate: {
+                    path: 'PUBusuario',
+                    select: 'nombre'
+                }
+            })
+            .then(favorito => {
+                return favorito.filter(fav => fav.FAVpublicacion !== null);
+            })
     }
 
     async getOne(id) {

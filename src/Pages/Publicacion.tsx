@@ -9,6 +9,7 @@ import { publicacion } from "../interfaces/publicacion";
 import { I_Comentario } from "../interfaces/I_comentarip";
 import { crearComentario, obtenerComentarios } from "../services/apiComentarios";
 import { borrarFavorito, crearFavorito, obtenerFavorito } from "../services/apiFavoritos";
+import { borrarLike, crearLike, obtenerCantidad, obtenerLike } from "../services/apiLike";
 
 
 const Publicacion: React.FC = () => {
@@ -16,6 +17,8 @@ const Publicacion: React.FC = () => {
     const { id } = useParams();
     const [publicacion, setPublicacion] = useState<publicacion | null>(null);
     const [favorito, setFavorito] = useState('');
+    const [likes, setLikes] = useState('');
+    const [cantidad, setCantidad] = useState('');
 
 
     const usuarioInfo = JSON.parse(sessionStorage.getItem("USER_INFO") || "{}");
@@ -43,6 +46,7 @@ const Publicacion: React.FC = () => {
         //Comentarios
         fetchComentarios();
         fetchFavorito();
+        fetchLike();
     }, [id])
 
     //Obtener comentarios
@@ -76,7 +80,6 @@ const Publicacion: React.FC = () => {
                 publicacion?._id || ''
 
             );
-            alert("añadido a favorito");
             fetchFavorito();
 
         } catch (error: any) {
@@ -98,7 +101,6 @@ const Publicacion: React.FC = () => {
             await borrarFavorito(
                 favorito
             );
-            alert("Favorito eliminado");
             fetchFavorito();
 
         } catch (error: any) {
@@ -128,6 +130,85 @@ const Publicacion: React.FC = () => {
         }
     }
 
+    //Likes
+    const handleSubmitLike = async (e: React.FormEvent) => {
+
+        e.preventDefault();
+        try {
+            if (!id) {
+                return alert("No hay publicacion para realizar la acción")
+            }
+            await crearLike(
+                ids,
+                publicacion?._id || ''
+
+            );
+            fetchLike();
+
+        } catch (error: any) {
+            if (error.response && error.response.data && error.response.data.error) {
+                alert(`Error: ${error.response.data.error}`);  // Muestra el mensaje del backend
+            } else {
+                alert("Error inesperado al añadir el like");  // Fallback si el error no tiene mensaje específico
+            }
+        }
+    };
+
+    const handleBorrarLike = async (e: React.FormEvent) => {
+
+        e.preventDefault();
+        try {
+            if (!id) {
+                return alert("No hay publicacion para realizar la acción")
+            }
+            await borrarLike(
+                likes
+            );
+            fetchLike();
+
+        } catch (error: any) {
+            if (error.response && error.response.data && error.response.data.error) {
+                alert(`Error: ${error.response.data.error}`);  // Muestra el mensaje del backend
+            } else {
+                alert("Error inesperado al borrar el like");  // Fallback si el error no tiene mensaje específico
+            }
+        }
+    };
+
+    const fetchLike = async () => {
+        try {
+
+            if (!id) {
+                return alert("No hay publicacion para realizar la acción")
+            }
+            const data = await obtenerLike(
+                ids,
+                id
+            );
+            console.log("like devuelto:", data);
+            setLikes(data?._id || '');
+            const data1 = await obtenerCantidad(
+                id
+            )
+
+            setCantidad(data1?.cantidadLikes);
+            console.log("candidad", data1);
+
+        } catch (error) {
+            console.error("Error al obtener el like:", error);
+        }
+    }
+
+
+
+    const formatearFecha = (fechaIso: string): string => {
+        const fecha = new Date(fechaIso);
+        const dia = String(fecha.getDate()).padStart(2, '0');
+        const mes = String(fecha.getMonth() + 1).padStart(2, '0');
+        const anio = fecha.getFullYear();
+        return `${dia}-${mes}-${anio}`;
+    };
+
 
     return (
         <>
@@ -148,13 +229,22 @@ const Publicacion: React.FC = () => {
                             <div className="text-white p-2">
                                 <Link to={`/Perfil/${publicacion?.PUBusuario._id}`} className="hover:underline text-xl font-bold">{publicacion?.PUBusuario.nombre}</Link>
 
-                                <p><strong>Fecha:</strong> 24/02/2025</p>
+                                <p><strong>Fecha:</strong> {formatearFecha(publicacion?.createdAt || '')}</p>
 
                                 <div className="flex items-center">
-                                    <svg className="size-7 text-red-300  ms-1   " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-                                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
-                                    </svg>
-                                    <p className="p-2 font-bold text-xl">{publicacion?.PUBlikes}</p>
+                                    {likes !== '' ? (
+
+                                        <svg onClick={handleBorrarLike} className="size-7 hover:text-red-300 text-red-500  ms-1   " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                                            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                                        </svg>
+                                    ) : (
+
+                                        <svg onClick={handleSubmitLike} className="size-7 text-red-300 hover:text-red-500  ms-1   " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                                            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                                        </svg>
+
+                                    )}
+                                    <p className="p-2 font-bold text-xl">{cantidad}</p>
 
                                 </div>
                                 <button className=" mt-2 hover:underline text-red-900 text-lg">Reportar</button>
@@ -174,9 +264,9 @@ const Publicacion: React.FC = () => {
                                 ) : (
                                     favorito !== '' ? (
                                         <svg onClick={handleBorrarFavorito} className="size-10 hover:text-gray-800  ms-1 text-yellow-300  " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-                                        <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-                                    </svg>
-                                    ): (
+                                            <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+                                        </svg>
+                                    ) : (
                                         <svg onClick={handleSubmitFavorito} className="size-10 text-gray-800  ms-1 hover:text-yellow-300  " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
                                             <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
                                         </svg>
@@ -197,7 +287,7 @@ const Publicacion: React.FC = () => {
                             <p className="text-center text-white bg-gray-400 p-4">Aún no hay comentarios.</p>
                         ) : (
                             comentarios.map((comentario, index) => (
-                                <Comentario key={index} comentario={comentario} onActualizar={fetchComentarios}/>
+                                <Comentario key={index} comentario={comentario} onActualizar={fetchComentarios} Fecha={formatearFecha} />
                             ))
 
                         )}
@@ -212,10 +302,10 @@ const Publicacion: React.FC = () => {
 
 export default Publicacion;
 
-interface EscribeComProps{
-    onComentarioCreado: () =>void
+interface EscribeComProps {
+    onComentarioCreado: () => void
 }
-const Escribe_Comentario: React.FC<EscribeComProps> = ({onComentarioCreado}) => {
+const Escribe_Comentario: React.FC<EscribeComProps> = ({ onComentarioCreado }) => {
     const { id } = useParams();
 
     const [comentario, setComentario] = useState('');

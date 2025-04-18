@@ -64,6 +64,13 @@ interface ArteIPropr{
     P_Artistas:I_Usuario
 }
 const Usaurioss: React.FC<ArteIPropr> = ({P_Artistas}) => {
+    const formatearFecha = (fechaIso: string): string => {
+        const fecha = new Date(fechaIso);
+        const dia = String(fecha.getDate()).padStart(2, '0');
+        const mes = String(fecha.getMonth() + 1).padStart(2, '0'); 
+        const anio = fecha.getFullYear();
+        return `${dia}-${mes}-${anio}`;
+    };
     return(
         <>
            <div className="bg-slate-300 rounded p-4 mx-2 my-2 ">
@@ -73,7 +80,7 @@ const Usaurioss: React.FC<ArteIPropr> = ({P_Artistas}) => {
                      <div>
                         <h1 className="font-bold xl:text-2xl lg:text-xl">{P_Artistas?.nombre}</h1>
                         <h1 className="font-semibold text-lg">{P_Artistas?.email}</h1>
-                        <p className="font-semibold">Fecha de ingreso:</p> <p>08/03/2025</p>
+                        <p className="font-semibold">Fecha de ingreso:</p> <p>{formatearFecha(P_Artistas.createdAt)}</p>
                      </div>
                      
                     {P_Artistas.Estatus === "true" ? (

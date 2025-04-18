@@ -17,7 +17,16 @@ class publicacionModelo {
     }
 
     async getAll(){
-        return await Publicacion.find().populate('PUBusuario', 'nombre').populate('PUBcategorias', 'CATnombre');
+        return await Publicacion.find({PUBestatus: true})
+            .populate({
+                path:'PUBusuario', 
+                select:'nombre',
+                match: {Estatus: true}
+            })
+            .populate('PUBcategorias', 'CATnombre')
+            .then(publicacion => {
+                return publicacion.filter(pub => pub.PUBusuario !== null);
+            })
     }
     
 
@@ -36,7 +45,7 @@ class publicacionModelo {
     }
 
     async getAllByIdUsu(PUBusuario){
-        return await Publicacion.find({PUBusuario})
+        return await Publicacion.find({PUBusuario, PUBestatus: true})
     }
 }
 

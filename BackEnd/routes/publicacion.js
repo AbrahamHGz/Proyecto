@@ -15,6 +15,7 @@ route.get('/', publicacionController.getAll);
 route.get('/pub/:id',publicacionController.getAllIdUsu);
 route.get('/Nombre/:PUBnombre', publicacionController.getOneByNombre);
 route.put('/:id', publicacionController.update);
+route.put('/est/:id', publicacionController.updateEstatus);
 route.delete('/:id' ,publicacionController.delete);
 
 export default route;
