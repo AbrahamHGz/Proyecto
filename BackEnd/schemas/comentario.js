@@ -18,6 +18,10 @@ const comentarioSchema = new mongoose.Schema(
         COMpublicacion: {
             type:mongoose.Schema.Types.ObjectId, ref: 'publicacion',
             required:true
+        },
+        COMestatus: {
+            type:Boolean,
+            default:true
         }
         
 

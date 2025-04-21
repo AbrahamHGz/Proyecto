@@ -14,6 +14,7 @@ class reporteController {
             const {REPpublicacion, REPcomentario, REPtipo} = req.body
             const existePublicacion = await publicacionModel.getOne(REPpublicacion);
             const existeComentario = await comentarioModel.getOne(REPcomentario);
+            
             if(REPtipo == 'pub' && !existePublicacion){
                 return res.status(400).json({error: "La publicacion no existe"})
             }else if(REPtipo == 'com' && !existeComentario){

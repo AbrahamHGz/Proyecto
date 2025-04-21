@@ -13,7 +13,7 @@ const reporteSchema = new mongoose.Schema(
         REPtipo: {
             type:String,
             enum: ['pub', 'com'],
-            require: true
+            required: true
         },
         REPpublicacion:{
             type:mongoose.Schema.Types.ObjectId, ref: 'publicacion',
@@ -23,7 +23,7 @@ const reporteSchema = new mongoose.Schema(
             type:mongoose.Schema.Types.ObjectId, ref: 'comentario',
             default: null
         },
-        REPespuesta:{
+        REPrespuesta:{
             type:String,
             required:false
         },

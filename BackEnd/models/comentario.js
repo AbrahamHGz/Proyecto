@@ -24,7 +24,7 @@ class comentarioModelo {
     }
 
     async getAllByPub(COMpublicacion){
-        return await Comentario.find({COMpublicacion})
+        return await Comentario.find({COMpublicacion, COMestatus: true})
         .populate({
             path:'COMusuario', 
             select:'nombre',

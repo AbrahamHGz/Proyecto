@@ -10,6 +10,8 @@ import { I_Comentario } from "../interfaces/I_comentarip";
 import { crearComentario, obtenerComentarios } from "../services/apiComentarios";
 import { borrarFavorito, crearFavorito, obtenerFavorito } from "../services/apiFavoritos";
 import { borrarLike, crearLike, obtenerCantidad, obtenerLike } from "../services/apiLike";
+import ModalReporte from "../Objetos/Reporte";
+
 
 
 const Publicacion: React.FC = () => {
@@ -209,11 +211,20 @@ const Publicacion: React.FC = () => {
         return `${dia}-${mes}-${anio}`;
     };
 
+    const [mostrarFormulario, setMostrarFormulario] = useState(false);
+
+    const toggleFormulario = () => {
+        setMostrarFormulario(!mostrarFormulario);
+
+    }
 
     return (
         <>
             <Menu></Menu>
-            <div className="rounded p-4">
+
+            {mostrarFormulario && (<ModalReporte onToggle={toggleFormulario} Tipo="pub" idPublicacion={String(id)} idUsuario={String(ids)} idComentario={null}></ModalReporte>)}
+            
+            <div className={`rounded p-4 ${mostrarFormulario ? 'blur-sm' : ''}`}>
                 <div className="pt-26 md:px-30">
                     <div className=" w-full flex md:bg-gray-400 justify-center p-5">
                         <img src={publicacion?.PUBimagen || "https://res.cloudinary.com/dmcvdsh4c/image/upload/v1711699300/iceebookImage/ciencia/geologia/geologia-montanas-formacion-misterios_iz66pg.webp"}
@@ -247,7 +258,7 @@ const Publicacion: React.FC = () => {
                                     <p className="p-2 font-bold text-xl">{cantidad}</p>
 
                                 </div>
-                                <button className=" mt-2 hover:underline text-red-900 text-lg">Reportar</button>
+                                <button onClick={toggleFormulario} className=" mt-2 hover:underline text-red-900 text-lg">Reportar</button>
 
                             </div>
                         </div>

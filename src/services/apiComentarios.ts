@@ -46,10 +46,11 @@ export const editarComentario = async(
 }
 
 export const borrarComentario = async(
-    id:string
+    id:string,
+    COMestatus:boolean
 ): Promise<void> =>{
     try {
-        const response = await axios.delete(`${API_URL}/comentario/${id}`);
+        const response = await axios.put(`${API_URL}/comentario/${id}`, {id, COMestatus});
         console.log("Respuesta del servidor:", response.data);
     } catch (error) {
         console.error("Error al borrar el comentario:", error);

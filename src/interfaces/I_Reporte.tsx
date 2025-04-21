@@ -1,0 +1,30 @@
+export interface I_Reporte {
+    _id:string,
+    REPusuario:{
+        _id:string,
+        nombre:string,
+        imagen:string,
+        email:string
+    },
+    REPdescripcion:string,
+    REPpublicacion: {
+        _id:string,
+        PUBnombre:string,
+        PUBusuario:{
+            email:string
+        },
+        PUBestatus:boolean
+    },
+    REPcomentario:{
+        _id:string,
+        COMdescripcion:string,
+        COMusuario:{
+            email:string
+        },
+        COMestatus:boolean
+    },
+    REPtipo:string,
+    REPrespuesta:string,
+    createdAt:string;
+    updatedAt:string
+}

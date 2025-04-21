@@ -4,17 +4,18 @@ import { useNavigate } from "react-router-dom";
 
 import { obtenerComentarios, editarComentario, borrarComentario } from "../services/apiComentarios";
 import { I_Comentario } from "../interfaces/I_comentarip";
+import ModalReporte from "./Reporte";
 
 interface ComentarioProps {
     comentario: I_Comentario;
     onActualizar: () => void;
-    Fecha:(fechaIso:string) => string;
+    Fecha: (fechaIso: string) => string;
 }
 
 const Comentario: React.FC<ComentarioProps> = ({ comentario, onActualizar, Fecha }) => {
     const [mostrarFormulario, setMostrarFormulario] = useState(false);
     const [comenta, setComenta] = useState(comentario?.COMdescripcion)
-    
+
 
     const usuarioInfo = JSON.parse(sessionStorage.getItem("USER_INFO") || "{}");
     const ids = usuarioInfo.id
@@ -54,6 +55,7 @@ const Comentario: React.FC<ComentarioProps> = ({ comentario, onActualizar, Fecha
         try {
             await borrarComentario(
                 comentario?._id,
+                false
             );
             alert("Comentario borrado exitosamente");
             onActualizar()
@@ -66,8 +68,17 @@ const Comentario: React.FC<ComentarioProps> = ({ comentario, onActualizar, Fecha
         }
     };
 
+    const [mostrarFormulario1, setMostrarFormulario1] = useState(false);
+
+    const toggleFormulario1 = () => {
+        setMostrarFormulario1(!mostrarFormulario1);
+
+    }
+
     return (
         <>
+            {mostrarFormulario1 && (<ModalReporte onToggle={toggleFormulario1} Tipo="com" idPublicacion={null} idUsuario={String(ids)} idComentario={String(comentario?._id)}></ModalReporte>)}
+            
             <div className="bg-gray-400 mt-4 rounded lg:grid grid-cols-5">
                 <div className="p-2 flex col-span-2">
                     <Link to={`/Perfil/${comentario?.COMusuario._id}`}>
@@ -79,7 +90,7 @@ const Comentario: React.FC<ComentarioProps> = ({ comentario, onActualizar, Fecha
 
                         <p><strong>Fecha:</strong> {Fecha(comentario?.createdAt)}</p>
 
-                        <button className=" mt-2 hover:underline text-red-900">Reportar</button>
+                        <button onClick={toggleFormulario1} className=" mt-2 hover:underline text-red-900">Reportar</button>
                     </div>
                 </div>
                 <div className="p-4 text-white col-span-2">
