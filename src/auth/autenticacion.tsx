@@ -4,6 +4,7 @@ interface AuthContextType {
     login: (usuarioInfo: any, token: string) => void;
     logout: () => void;
     isLogged: () => boolean;
+    getUserType: () => string | null;
 }
 
 export const AuthContext = createContext<AuthContextType | null>(null);
@@ -25,7 +26,7 @@ const AuthProvider: React.FC<{children: ReactNode}> = ({children}) => {
 
     const logout = () =>{
         setUser(null);
-        sessionStorage.removeItem("USUARIO_INFO");
+        sessionStorage.removeItem("USER_INFO");
         sessionStorage.removeItem("TOKEN");
     }
 
@@ -33,10 +34,16 @@ const AuthProvider: React.FC<{children: ReactNode}> = ({children}) => {
         const token = sessionStorage.getItem("TOKEN");
         return !!token ;
     }
+
+    const getUserType = () => {
+        const userInfo = sessionStorage.getItem("USER_INFO")
+        if(!userInfo) return null;
+        return JSON.parse(userInfo).tipo
+    }
     // const isLogged = () => !!user;
     return( 
         
-        <AuthContext.Provider value={{login, logout, isLogged}} >
+        <AuthContext.Provider value={{login, logout, isLogged, getUserType}} >
             {children}
         </AuthContext.Provider>
         

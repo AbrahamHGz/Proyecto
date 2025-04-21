@@ -17,7 +17,27 @@ class reporteModel{
     }
 
     async getAll(){
-        return await Reporte.find();
+        return await Reporte.find({REPrevisado: false})
+        .populate({
+            path: 'REPusuario',
+            select: 'nombre imagen email'
+        })
+        .populate({
+            path: 'REPpublicacion',
+            select: 'PUBnombre PUBusuario PUBestatus',
+            populate: {
+                path: 'PUBusuario',
+                select: 'email'
+            }
+        })
+        .populate({
+            path: 'REPcomentario',
+            select: 'COMdescripcion COMusuario COMestatus',
+            populate: {
+                path: 'COMusuario', // ← aquí parece que intentabas 'PUBusuario', pero debería ser 'COMusuario'
+                select: 'email'
+            }
+        });
     }
 
     async getOne(id){

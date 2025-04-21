@@ -9,7 +9,7 @@ class usuarioControler {
 
     async create(req, res){
         try{
-            const {nombre , email, password, sexo, TipoUsu, FechaNac} = req.body
+            const {nombre , email, password, sexo, TipoUsu, FechaNac, imagen} = req.body
             const existeUsuario = await usuarioModel.getOneEmail(email)
 
             if(existeUsuario)
@@ -74,6 +74,24 @@ class usuarioControler {
         }
     }
 
+    async getAllArtistas(req, res){
+        try{
+            const data = await usuarioModel.getAllArtistas();
+            res.status(200).json(data);
+        }catch(e){
+            res.status(500).send(e);
+        }
+    }
+
+    async getAllAdmins(req, res){
+        try{
+            const data = await usuarioModel.getAllAdmins();
+            res.status(200).json(data);
+        }catch(e){
+            res.status(500).send(e);
+        }
+    }
+
     async getOne(req, res){
         try{
             const {id} = req.params
@@ -97,7 +115,7 @@ class usuarioControler {
 
     async postLogin(req, res){
         try{
-            const {email, password, Estatus} = req.body
+            const {email, password} = req.body
             
             const existeUsuario = await usuarioModel.getOneEmail(email)
 
@@ -106,9 +124,12 @@ class usuarioControler {
             if(existeUsuario.password != password)
                 return res.status(400).json({error: "La contraseña es incorrecta"})
 
+            if(existeUsuario.Estatus == false)
+                return res.status(400).json({error: "El usuario ha sido eliminado"});
 
-            const token = generarToken(email);
-            res.status(200).json({msg: 'Usuario autenticado', token, user: {email: existeUsuario.email}});
+
+            const token = generarToken(email, existeUsuario.TipoUsu);
+            res.status(200).json({msg: 'Usuario autenticado', token, user: {email: existeUsuario.email, tipo: existeUsuario.TipoUsu, id: existeUsuario._id}});
         }catch(e){
             res.status(500).send(e);
         }

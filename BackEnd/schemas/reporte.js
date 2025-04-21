@@ -2,17 +2,34 @@ import mongoose from "mongoose";
 
 const reporteSchema = new mongoose.Schema(
     {
+        REPusuario: {
+            type:mongoose.Schema.Types.ObjectId, ref: 'usuario',
+            required:true
+        },
         REPdescripcion: {
             type:String,
             required:true
         },
-        REPenlace:{
+        REPtipo: {
             type:String,
-            required:true
+            enum: ['pub', 'com'],
+            required: true
         },
-        REPespuesta:{
+        REPpublicacion:{
+            type:mongoose.Schema.Types.ObjectId, ref: 'publicacion',
+            default: null
+        },
+        REPcomentario: {
+            type:mongoose.Schema.Types.ObjectId, ref: 'comentario',
+            default: null
+        },
+        REPrespuesta:{
             type:String,
             required:false
+        },
+        REPrevisado: {
+            type:Boolean,
+            default:false
         }
     },{timestamps:true}
 

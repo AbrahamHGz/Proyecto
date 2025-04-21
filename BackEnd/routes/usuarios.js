@@ -5,13 +5,17 @@ import cors from 'cors';
 import {verificarToken} from '../helpers/authentication.js'
 
 route.use(cors({
-    origin: 'http://localhost:5176', // Permitir solo tu frontend
+    origin: `http://localhost:${process.env.LOCALHOST}`, // Permitir solo tu frontend
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
 }));
 
 route.post('/', usuarioControler.create);
 route.post('/login', usuarioControler.postLogin);
+route.get('/artistas/', usuarioControler.getAllArtistas);
+route.get('/admins/', usuarioControler.getAllAdmins);
+
+
 route.get('/:id', usuarioControler.getOne);
 route.get('/email/:email', usuarioControler.getOneEmail);
 route.get('/', usuarioControler.getAll);

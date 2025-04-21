@@ -1,7 +1,29 @@
-import React from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Menu from "../Objetos/Menu";
 import { Link } from "react-router-dom";
+
+import CategoriaSelect from "../Objetos/CategoriaSelect";
+import {obtenerPublicaciones} from "../services/apiPublicacion";
+import {publicacion} from '../interfaces/publicacion';
+
 const Home: React.FC = () => {
+    
+    //Mostrar las publicaciones
+    const [publicaciones, setPublicaciones] = useState<publicacion[]>([]);
+ 
+    const fetchPublicacion = async () => {
+        try{
+            const data = await obtenerPublicaciones();
+            setPublicaciones(data);
+        }catch(error){
+            console.error("Error al obtener las publicaciones:", error);
+        }
+    }
+
+    useEffect(() => {
+        fetchPublicacion();
+    }, [])
+
     return(
         <>
             <Menu></Menu>
@@ -28,11 +50,9 @@ const Home: React.FC = () => {
 
                     <div id="Publicaciones" className="grid grid-cols-3 md:grid-cols-4 my-10">
 
-                       <ArtesPublic></ArtesPublic>
-                       <ArtesPublic></ArtesPublic>
-                       <ArtesPublic></ArtesPublic>
-                       <ArtesPublic></ArtesPublic>
-                       <ArtesPublic></ArtesPublic>
+                        {publicaciones.map((pub, index) => (
+                            <ArtesPublic key={index} P_publicacion={pub}></ArtesPublic>
+                        ))}
                       
 
                     </div>
@@ -48,16 +68,18 @@ const Home: React.FC = () => {
 
 export default Home
 
-
-const ArtesPublic:React.FC = () => {
+interface Props {
+    P_publicacion:publicacion
+}
+const ArtesPublic:React.FC<Props> = ({P_publicacion}) => {
     return(
         <>
-         <Link to="/Publicacion" className="p-2 bg-gray-700 text-white mr-3 mb-3 rounded
+         <Link to={`/Publicacion/${P_publicacion._id}`} className="p-2 bg-gray-700 text-white mr-3 mb-3 rounded
          hover:drop-shadow-xl hover:bg-gray-500">
-            <img src="https://res.cloudinary.com/dmcvdsh4c/image/upload/v1711699300/iceebookImage/ciencia/geologia/geologia-montanas-formacion-misterios_iz66pg.webp" alt="" 
+            <img src={P_publicacion?.PUBimagen || "https://res.cloudinary.com/dmcvdsh4c/image/upload/v1711699300/iceebookImage/ciencia/geologia/geologia-montanas-formacion-misterios_iz66pg.webp"} alt="" 
             className="sm:h-45 sm:w-84 h-24 w-full"/>
-            <p className="sm:flex justify-center sm:text-lg text-sm font-bold">"Arte de ejemplo"</p>
-            <p className="sm:flex justify-start text-xs">"Por: Usuario 123"</p>
+            <p className="sm:flex justify-center sm:text-lg text-sm font-bold">{P_publicacion.PUBnombre}</p>
+            <p className="sm:flex justify-start text-xs">Por: {P_publicacion.PUBusuario.nombre}</p>
         </Link>
         </>
     )
@@ -81,13 +103,12 @@ const UsuariosPopulares: React.FC = () => {
 }
 
 const FiltroPantallaMD: React.FC = () => {
+    const [categoria, setCategoria] = useState('');
     return (
         <>
             <form action="" className="hidden md:block">
                 <label htmlFor="" className="text-lg text-slate-300 font-semibold">Categoria:</label>
-                <select name="" id="" className="bg-gray-200 rounded mx-2 p-1 px-2">
-                    <option value="">paisajes llamativos</option>
-                </select>
+                <CategoriaSelect value={categoria} onChange={setCategoria}/>
                 <label htmlFor="" className="text-lg text-slate-300 font-semibold">Desde:</label>
                 <input type="date" className="bg-gray-200 rounded mx-2 p-1 px-2" />
 
@@ -102,14 +123,17 @@ const FiltroPantallaMD: React.FC = () => {
 
 
 const FiltroPantallaSM: React.FC = () => {
+    const [categoria, setCategoria] = useState('');
+
     return (
         <>
             <form action="" className="md:hidden grid grid-cols-1 space-y-2">
                 <div>
                     <label htmlFor="" className="text-lg text-slate-300 font-semibold">Categoria:</label>
-                    <select name="" id="" className="bg-gray-200 rounded md:mx-2 p-1 px-2 w-full">
-                        <option value="">paisajes llamativos</option>
-                    </select>
+                
+                    <CategoriaSelect value={categoria} onChange={setCategoria}/>
+                   
+
 
                 </div>
 

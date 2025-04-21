@@ -17,7 +17,8 @@ class categoriaModelo {
     }
 
     async getAll(){
-        return await Categoria.find();
+        return await Categoria.find()
+        .populate('CATusuario', 'nombre')
     }
 
     async getAllNombre( categoriasnombre){

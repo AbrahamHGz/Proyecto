@@ -1,4 +1,7 @@
 import reporteModel from "../models/reporte.js";
+import publicacionModel from "../models/publicacion.js";
+import usuarioModel from "../models/usuarios.js";
+import comentarioModel from "../models/comentario.js"
 
 class reporteController {
     constructor(){
@@ -7,6 +10,17 @@ class reporteController {
 
     async create(req, res){
         try{
+
+            const {REPpublicacion, REPcomentario, REPtipo} = req.body
+            const existePublicacion = await publicacionModel.getOne(REPpublicacion);
+            const existeComentario = await comentarioModel.getOne(REPcomentario);
+            
+            if(REPtipo == 'pub' && !existePublicacion){
+                return res.status(400).json({error: "La publicacion no existe"})
+            }else if(REPtipo == 'com' && !existeComentario){
+                return res.status(400).json({error: "El comentario no existe"})
+            }
+            
             const data = await reporteModel.create(req.body);
             res.status(201).json(data);
         }catch(e){

@@ -9,13 +9,13 @@ class comentarioController {
 
     async create(req, res){
         try{
-            const {email, COMdescripcion, publicacion} = req.body;
+            const {email, COMdescripcion, id} = req.body;
 
              const existeUsuario = await usuarioModel.getOneEmail(email)
              if(!existeUsuario)
                 return res.status(400).json({error: "El usuario no existe"})
 
-             const existePublicacion = await publicacionModel.getOnebyNombre(publicacion);
+             const existePublicacion = await publicacionModel.getOne(id);
              if(!existePublicacion)
                 return res.status(400).json({error: "La publicacion no existe"})
 
@@ -50,6 +50,16 @@ class comentarioController {
     async getAll(req, res){
         try{
             const data = await comentarioModel.getAll();
+            res.status(200).json(data);
+        }catch(e){
+            res.status(500).send(e);
+        }
+    }
+
+    async getAllByPub(req, res){
+        try{
+            const {id} = req.params
+            const data = await comentarioModel.getAllByPub(id);
             res.status(200).json(data);
         }catch(e){
             res.status(500).send(e);

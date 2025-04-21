@@ -22,10 +22,18 @@ const Login:React.FC =() => {
             sessionStorage.setItem("TOKEN", token);
             sessionStorage.setItem("USER_INFO", JSON.stringify(user))
 
+            const usuarioInfo = JSON.parse(sessionStorage.getItem("USER_INFO") || "{}");
+            const id = usuarioInfo.id
+
             alert("Puede ingresar");
             setEmail("");
             setPassword("");
-            navigate('/Perfil');
+            if(user.tipo == "artista"){
+                navigate(`/Perfil/${id}`);
+            }else{
+                navigate(`/Administrador/${id}`);
+                
+            }
         } catch (error: any) {
             if (error.response && error.response.data && error.response.data.error) {
                 alert(`Error: ${error.response.data.error}`);  // Muestra el mensaje del backend

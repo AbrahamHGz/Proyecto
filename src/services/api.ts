@@ -10,8 +10,6 @@ export const crearUsuario = async(
     TipoUsu: string,
     FechaNac: Date,
     Estatus: boolean,
-    //edad: number,
-    
     
 ): Promise<void> =>{
     try {
@@ -22,6 +20,7 @@ export const crearUsuario = async(
         throw error;
     }
 }
+
 
 export const login = async(
     email: string, 
@@ -48,13 +47,80 @@ export const getData = async (): Promise<any> => {
     }
 }
 
-export const getDataPerfil = async (email:string): Promise<any> => {
+export const getDataArtistasActivos = async (): Promise<any> => {
     try{
-        const response = await axios.get(`${API_URL}/usuario/email/${email}`)
+        const response = await axios.get(`${API_URL}/usuario/artistas`)
+        return response.data;
+    }catch(e){
+        console.error("Error al obtener datos: ", e);
+        throw e;
+    }
+}
+
+export const getDataAdmins = async () : Promise<any> => {
+    try{
+        const response = await axios.get(`${API_URL}/usuario/admins`)
+        return response.data
+    }catch(e){
+        console.error("Error al obtener datos: ", e)
+    }
+}
+
+export const getDataPerfil = async (id:string): Promise<any> => {
+    try{
+        const response = await axios.get(`${API_URL}/usuario/${id}`)
         return response.data;
 
     }catch(e){
         console.error("Error al obtener datos: ", e);
         throw e;
+    }
+}
+
+export const EditarPerfil = async(
+    nombre:string, 
+    email: string, 
+    password: String,
+    sexo: string,
+    FechaNac: Date,
+    imagen: string | null
+    
+): Promise<void> =>{
+    try {
+        const token = sessionStorage.getItem("TOKEN");
+        const response = await axios.put(`${API_URL}/usuario/email/${email}`, { nombre, email, password, sexo, FechaNac, imagen} ,{headers: {Authorization: `Bearer ${token}`}});
+        console.log("Respuesta del servidor:", response.data);
+    } catch (error) {
+        console.error("Error al editar usuario:", error);
+        throw error;
+    }
+}
+
+export const EdtiarAcercaMi = async(
+    email: string, 
+    descripcion: string
+): Promise<void> => {
+    try{
+        const token = sessionStorage.getItem("TOKEN");
+        const response = await axios.put(`${API_URL}/usuario/email/${email}`, {email, descripcion} ,{headers: {Authorization: `Bearer ${token}`}});
+        console.log("Respuesta del servidor:", response.data);
+    }catch(error) {
+        console.error("Error al editar usuario:", error);
+        throw error;
+    }
+}
+
+
+export const desactivarUsu = async(
+    email: string, 
+    Estatus:boolean
+): Promise<void> => {
+    try{
+        const token = sessionStorage.getItem("TOKEN");
+        const response = await axios.put(`${API_URL}/usuario/email/${email}`, {email, Estatus} ,{headers: {Authorization: `Bearer ${token}`}});
+        console.log("Respuesta del servidor:", response.data);
+    }catch(error) {
+        console.error("Error al desactivar usuario:", error);
+        throw error;
     }
 }
