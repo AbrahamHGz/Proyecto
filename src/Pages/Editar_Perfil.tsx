@@ -132,7 +132,8 @@ const Editar_Perfil: React.FC = () => {
                 password,
                 sexo,
                 new Date(FechaNac),
-                imagenPerfil
+                imagenPerfil,
+                "Perfil"
             );
             alert("Usuario editado exitosamente");
             setNombre("");

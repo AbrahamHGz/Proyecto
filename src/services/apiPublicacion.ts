@@ -13,7 +13,8 @@ export const crearPublicacion = async(
     
 ): Promise<void> =>{
     try {
-        const response = await axios.post(`${API_URL}/publicacion`, { PUBnombre, CATnombre, email, PUBdescripcion, PUBimagen});
+        const token = sessionStorage.getItem("TOKEN");
+        const response = await axios.post(`${API_URL}/publicacion`, { PUBnombre, CATnombre, email, PUBdescripcion, PUBimagen}, {headers: {Authorization: `Bearer ${token}`}});
         console.log("Respuesta del servidor:", response.data);
     } catch (error) {
         console.error("Error al crear publicacion:", error);
@@ -66,10 +67,17 @@ export const editarPublicacion = async(
     
 ): Promise<void> =>{
     try {
-        const response = await axios.put(`${API_URL}/publicacion/${id}`, {id, PUBnombre, CATnombre, PUBdescripcion, PUBimagen});
+        const token = sessionStorage.getItem("TOKEN");
+        const response = await axios.put(`${API_URL}/publicacion/${id}`, {id, PUBnombre, CATnombre, PUBdescripcion, PUBimagen}, {headers: {Authorization: `Bearer ${token}`}});
         console.log("Respuesta del servidor:", response.data);
-    } catch (error) {
+    } catch (error: any) {
         console.error("Error al editar publicacion:", error);
+        if (error.response && error.response.status === 401) {
+            alert("Tu sesión ha expirado. Por favor, inicia sesión nuevamente.");
+            sessionStorage.removeItem("USER_INFO");
+            sessionStorage.removeItem("TOKEN");
+            window.location.href = "/Login";
+        }
         throw error;
     }
 }
@@ -80,10 +88,18 @@ export const borrarPublicacion = async(
     PUBestatus: boolean
 ): Promise<void> => {
     try{
-        const response = await axios.put(`${API_URL}/publicacion/est/${id}`, {id,PUBestatus});
+        const token = sessionStorage.getItem("TOKEN");
+        const response = await axios.put(`${API_URL}/publicacion/est/${id}`, {id,PUBestatus},  {headers: {Authorization: `Bearer ${token}`}});
         console.log("Respuesta del servidor:", response.data);
-    }catch( error){
+    }catch( error: any){
         console.error("Error al borrar la publicacion:", error);
+
+        if (error.response && error.response.status === 401) {
+            alert("Tu sesión ha expirado. Por favor, inicia sesión nuevamente.");
+            sessionStorage.removeItem("USER_INFO");
+            sessionStorage.removeItem("TOKEN");
+            window.location.href = "/Login";
+        }
         throw error;
     }
 }

@@ -83,12 +83,12 @@ export const EditarPerfil = async(
     password: String,
     sexo: string,
     FechaNac: Date,
-    imagen: string | null
-    
+    imagen: string | null,
+    caso:string
 ): Promise<void> =>{
     try {
         const token = sessionStorage.getItem("TOKEN");
-        const response = await axios.put(`${API_URL}/usuario/email/${email}`, { nombre, email, password, sexo, FechaNac, imagen} ,{headers: {Authorization: `Bearer ${token}`}});
+        const response = await axios.put(`${API_URL}/usuario/email/${email}`, { nombre, password, sexo, FechaNac, imagen, caso} ,{headers: {Authorization: `Bearer ${token}`}});
         console.log("Respuesta del servidor:", response.data);
     } catch (error) {
         console.error("Error al editar usuario:", error);
@@ -98,11 +98,12 @@ export const EditarPerfil = async(
 
 export const EdtiarAcercaMi = async(
     email: string, 
-    descripcion: string
+    descripcion: string,
+    caso:string
 ): Promise<void> => {
     try{
         const token = sessionStorage.getItem("TOKEN");
-        const response = await axios.put(`${API_URL}/usuario/email/${email}`, {email, descripcion} ,{headers: {Authorization: `Bearer ${token}`}});
+        const response = await axios.put(`${API_URL}/usuario/email/${email}`, { descripcion, caso} ,{headers: {Authorization: `Bearer ${token}`}});
         console.log("Respuesta del servidor:", response.data);
     }catch(error) {
         console.error("Error al editar usuario:", error);
@@ -117,7 +118,7 @@ export const desactivarUsu = async(
 ): Promise<void> => {
     try{
         const token = sessionStorage.getItem("TOKEN");
-        const response = await axios.put(`${API_URL}/usuario/email/${email}`, {email, Estatus} ,{headers: {Authorization: `Bearer ${token}`}});
+        const response = await axios.put(`${API_URL}/usuario/email/${email}`, { Estatus} ,{headers: {Authorization: `Bearer ${token}`}});
         console.log("Respuesta del servidor:", response.data);
     }catch(error) {
         console.error("Error al desactivar usuario:", error);

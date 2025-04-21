@@ -16,6 +16,7 @@ export function verificarToken(req, res, next){
     try{
 
         const dataToken = jsonwebtoken.verify(token, process.env.JWT_TOKEN_SECRET );
+        req.user = dataToken
         next();
     }catch(e){
         res.status(401).json({error: 'Token no valido'})

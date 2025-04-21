@@ -46,7 +46,8 @@ const Acerca_de_mi: React.FC<usuarioProps> = ({usuario_i}) => {
         try {
             await EdtiarAcercaMi(
                 usuario_i?.email,
-                acercami
+                acercami,
+                "Acerca"
             );
             alert("Usuario editado exitosamente");
             toggleFormulario();

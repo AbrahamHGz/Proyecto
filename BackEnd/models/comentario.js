@@ -37,7 +37,7 @@ class comentarioModelo {
 
     async getOne(id){
        return await Comentario.findById({_id: new mongoose.Types.ObjectId(id)})
-       .populate('COMusuario', 'nombre')
+       .populate('COMusuario', 'nombre email')
        .populate('COMpublicacion', 'PUBnombre')
     }
 }

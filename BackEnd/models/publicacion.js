@@ -31,7 +31,7 @@ class publicacionModelo {
     
 
     async getOne(id){
-       return await Publicacion.findById({_id: new mongoose.Types.ObjectId(id)}).populate('PUBusuario', 'nombre imagen').populate('PUBcategorias', 'CATnombre');
+       return await Publicacion.findById({_id: new mongoose.Types.ObjectId(id)}).populate('PUBusuario', 'nombre imagen email').populate('PUBcategorias', 'CATnombre');
     }
 
     async getOnebyNombre(PUBnombre){

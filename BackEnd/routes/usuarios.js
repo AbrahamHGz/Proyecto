@@ -19,7 +19,7 @@ route.get('/admins/', usuarioControler.getAllAdmins);
 route.get('/:id', usuarioControler.getOne);
 route.get('/email/:email', usuarioControler.getOneEmail);
 route.get('/', usuarioControler.getAll);
-route.put('/:id', usuarioControler.update);
+route.put('/:id',verificarToken ,usuarioControler.update);
 route.put('/email/:email',verificarToken, usuarioControler.updateForEmail);
 route.delete('/:id' ,verificarToken,usuarioControler.delete);
 

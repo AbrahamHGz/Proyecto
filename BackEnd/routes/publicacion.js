@@ -2,6 +2,7 @@ import express from 'express';
 import publicacionController from '../controllers/publicacion.js';
 const route = express.Router();
 import cors from 'cors';
+import {verificarToken} from '../helpers/authentication.js'
 
 route.use(cors({
     origin: 'http://localhost:5173', // Permitir solo tu frontend
@@ -9,13 +10,13 @@ route.use(cors({
     allowedHeaders: ['Content-Type', 'Authorization'],
 }));
 
-route.post('/', publicacionController.create);
+route.post('/',verificarToken ,publicacionController.create);
 route.get('/:id', publicacionController.getOne);
 route.get('/', publicacionController.getAll);
 route.get('/pub/:id',publicacionController.getAllIdUsu);
 route.get('/Nombre/:PUBnombre', publicacionController.getOneByNombre);
-route.put('/:id', publicacionController.update);
-route.put('/est/:id', publicacionController.updateEstatus);
-route.delete('/:id' ,publicacionController.delete);
+route.put('/:id',verificarToken ,publicacionController.update);
+route.put('/est/:id',verificarToken ,publicacionController.updateEstatus);
+route.delete('/:id' ,verificarToken ,publicacionController.delete);
 
 export default route;

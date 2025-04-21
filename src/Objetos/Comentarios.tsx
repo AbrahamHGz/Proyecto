@@ -36,7 +36,8 @@ const Comentario: React.FC<ComentarioProps> = ({ comentario, onActualizar, Fecha
         try {
             await editarComentario(
                 comentario?._id,
-                comenta
+                comenta,
+                "Editar"
             );
             alert("Comentario editado exitosamente");
             toggleFormulario();
@@ -55,7 +56,8 @@ const Comentario: React.FC<ComentarioProps> = ({ comentario, onActualizar, Fecha
         try {
             await borrarComentario(
                 comentario?._id,
-                false
+                false,
+                "Borrar"
             );
             alert("Comentario borrado exitosamente");
             onActualizar()
@@ -78,7 +80,7 @@ const Comentario: React.FC<ComentarioProps> = ({ comentario, onActualizar, Fecha
     return (
         <>
             {mostrarFormulario1 && (<ModalReporte onToggle={toggleFormulario1} Tipo="com" idPublicacion={null} idUsuario={String(ids)} idComentario={String(comentario?._id)}></ModalReporte>)}
-            
+
             <div className="bg-gray-400 mt-4 rounded lg:grid grid-cols-5">
                 <div className="p-2 flex col-span-2">
                     <Link to={`/Perfil/${comentario?.COMusuario._id}`}>

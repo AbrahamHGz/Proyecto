@@ -111,11 +111,12 @@ const Editar_Publicacion: React.FC = () => {
 
             alert(id ? 'Publicación actualizada' : 'Publicación creada');
             navigate(`/Publicacion/${id}`);
-        } catch (err) {
-            console.error("Error:", err);
-            setError('Error al procesar la publicación');
-        } finally {
-            setIsSubmitting(false);
+        } catch (error: any) {
+            if (error.response && error.response.data && error.response.data.error) {
+                alert(`Error: ${error.response.data.error}`);  // Muestra el mensaje del backend
+            } else {
+                alert("Error inesperado al editar la publicacion");  // Fallback si el error no tiene mensaje específico
+            }
         }
     };
 
@@ -134,11 +135,12 @@ const Editar_Publicacion: React.FC = () => {
 
             alert('Publicacion borradoa')
             navigate(`/Home`);
-        } catch (err) {
-            console.error("Error:", err);
-            setError('Error al procesar la publicación');
-        } finally {
-            setIsSubmitting(false);
+        } catch (error: any) {
+            if (error.response && error.response.data && error.response.data.error) {
+                alert(`Error: ${error.response.data.error}`);  // Muestra el mensaje del backend
+            } else {
+                alert("Error inesperado al borrar la publicación");  // Fallback si el error no tiene mensaje específico
+            }
         }
     };
 

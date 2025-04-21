@@ -122,7 +122,8 @@ const Report: React.FC<ReporteProps> = ({ reporteP, fetch }) => {
         try {
             await borrarComentario(
                 reporteP?.REPcomentario._id,
-                false
+                false,
+                "Borrar"
             )
             alert('Comentario borradoa')
             fetch();
