@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 const Login:React.FC =() => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [intentosFallidos, setIntentosFallidos] = useState(0);
     const navigate = useNavigate();
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -28,6 +29,8 @@ const Login:React.FC =() => {
             alert("Puede ingresar");
             setEmail("");
             setPassword("");
+            setIntentosFallidos(0);
+
             if(user.tipo == "artista"){
                 navigate(`/Perfil/${id}`);
             }else{
@@ -35,10 +38,15 @@ const Login:React.FC =() => {
                 
             }
         } catch (error: any) {
-            if (error.response && error.response.data && error.response.data.error) {
-                alert(`Error: ${error.response.data.error}`);  // Muestra el mensaje del backend
+            setIntentosFallidos((prev) => prev + 1); 
+
+            if (intentosFallidos + 1 >= 3) {
+                alert("Demasiados intentos fallidos. Serás redirigido a recuperar tu contraseña.");
+                navigate("/RecuperarContraseña");
+            } else if (error.response && error.response.data && error.response.data.error) {
+                alert(`Error: ${error.response.data.error}`);
             } else {
-                alert("Error inesperado al crear usuario");  // Fallback si el error no tiene mensaje específico
+                alert("Error inesperado al iniciar sesión");
             }
         }
     };

@@ -4,79 +4,43 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../auth/autenticacion";
 
 import Menu from "../Objetos/Menu";
+
 const Editar_Perfil: React.FC = () => {
-    const authContext = useContext(AuthContext);
+    // Alert state and helper
+    const [alerts, setAlerts] = useState<string[]>([]);
+    const showAlert = (msg: string) => {
+        setAlerts([msg]);
+        setTimeout(() => setAlerts([]), 3000);
+    };
 
+    // Profile fields
     const [nombre, setNombre] = useState('');
-    const [nombreValid, setNombreValid] = useState<boolean | null>(null);
-
     const [email, setEmail] = useState('');
-    const [emailValid, setEmailValid] = useState<boolean | null>(null);
-
     const [password, setPassword] = useState('');
-    const [passwordValid, setPasswordValid] = useState<boolean | null>(null)
-
     const [sexo, setSexo] = useState('Hombre');
-
     const [FechaNac, setFechaNac] = useState('');
-    const [FechaNacValid, setFechaNacValid] = useState<boolean | null>(null);
-
     const [imagenPerfil, setImagenPerfil] = useState<string | null>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
-    const usuarioInfo = JSON.parse(sessionStorage.getItem("USER_INFO") || "{}");
-    const ids = usuarioInfo.id
-
     const navigate = useNavigate();
+    const authContext = useContext(AuthContext);
+    const usuarioInfo = JSON.parse(sessionStorage.getItem("USER_INFO") || "{}");
+    const ids = usuarioInfo.id;
 
-    const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const value = e.target.value;
-        setPassword(value);
-        const Letra = /[a-zA-Z]/.test(value);
-        const Numero = /[0-9]/.test(value);
-        setPasswordValid(Letra && Numero);
-    };
+    // Validation before submitting edits
+    const validateFields = (): boolean => {
+        if (!email.includes("@")) { showAlert("❌ El correo debe contener '@'."); return false; }
+        const hasMinLength = password.length >= 8;
+        const hasUpperCase = /[A-Z]/.test(password);
+        const hasLowerCase = /[a-z]/.test(password);
+        const hasNumber = /[0-9]/.test(password);
+        const hasSpecialChar = /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>\/?]/.test(password);
 
-    const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const value = e.target.value;
-        setEmail(value);
-        setEmailValid(value.includes("@"));
-    };
+        if (!hasMinLength || !hasUpperCase || !hasLowerCase || !hasNumber || !hasSpecialChar) { showAlert("❌ La contraseña debe tener mínimo 8 caracteres, mayúscula, minúscula, número y carácter especial."); return false; }
+        if (!/^[a-zA-Z\s]+$/.test(nombre)) { showAlert("❌ El nombre solo debe contener letras y espacios."); return false;}
+        if (!FechaNac) { showAlert("❌ Selecciona una fecha de nacimiento."); return false;}
+        return true; };
 
-    const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const value = e.target.value;
-        setNombre(value);
-        setNombreValid(/^[a-zA-Z\s]+$/.test(value));
-    };
-
-    const handleBirthdateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const value = e.target.value;
-        setFechaNac(value);
-        setFechaNacValid(value !== "");
-    };
-
-    const handleImageButtonClick = () => {
-        fileInputRef.current?.click();
-    };
-
-    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = (event) => {
-                if (event.target?.result) {
-                    setImagenPerfil(event.target.result as string);
-                }
-            };
-            reader.readAsDataURL(file);
-        }
-    };
-
-    useEffect(() => {
-
-        if (usuarioInfo?.id) {
-            cargarPerfil(usuarioInfo.id);
-        }
-    }, []);
+    useEffect(() => {if (usuarioInfo?.id) cargarPerfil(usuarioInfo.id);}, []);
 
     const cargarPerfil = async (id: string) => {
         try {
@@ -84,47 +48,30 @@ const Editar_Perfil: React.FC = () => {
             setNombre(data.nombre || '');
             setEmail(data.email || '');
             setFechaNac(data.FechaNac || '');
-            setPassword(data.password || '')
+            setPassword(data.password || '');
             setSexo(data.sexo || 'Hombre');
-            setImagenPerfil(data.imagen)
-            //setTipoUsu(data.TipoUsu || 'artista');
-            //setEstatus(data.Estatus !== undefined ? data.Estatus : true);
+            setImagenPerfil(data.imagen);
         } catch (error) {
-            console.error("Error al cargar el perfil:", error);
-        }
+            console.error("Error al cargar el perfil:", error); }
     };
 
-    const Salir = () => {
-        try{
-            authContext?.logout();
-             navigate("/login")
-        }catch(e){
-            alert("Error al intentar salir de la aplicacion")
-        }
-    }
+    const Salir = () => { try { authContext?.logout(); navigate("/login");} catch (e) {alert("Error al intentar salir de la aplicacion");}};
 
-    const handelDesactivar  = async (e: React.FormEvent) => {
-
+    const handelDesactivar = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            await desactivarUsu(
-                email,
-                false
-            );
+            await desactivarUsu(email, false);
             alert("Usuario borrado exitosamente");
             Salir();
         } catch (error: any) {
-            if (error.response && error.response.data && error.response.data.error) {
-                alert(`Error: ${error.response.data.error}`);  // Muestra el mensaje del backend
-            } else {
-                alert("Error inesperado al borrar el usuario");  // Fallback si el error no tiene mensaje específico
-            }
+            if (error.response?.data?.error) alert(`Error: ${error.response.data.error}`);
+            else alert("Error inesperado al borrar el usuario");
         }
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
-
         e.preventDefault();
+        if (!validateFields()) return;
         try {
             await EditarPerfil(
                 nombre,
@@ -136,124 +83,93 @@ const Editar_Perfil: React.FC = () => {
                 "Perfil"
             );
             alert("Usuario editado exitosamente");
-            setNombre("");
-            setEmail("");
-            setPassword("");
-            setSexo("");
-            setFechaNac("");
             navigate(`/Perfil/${ids}`);
         } catch (error: any) {
-            if (error.response && error.response.data && error.response.data.error) {
-                alert(`Error: ${error.response.data.error}`);  // Muestra el mensaje del backend
-            } else {
-                alert("Error inesperado al editar el usuario");  // Fallback si el error no tiene mensaje específico
-            }
+            if (error.response?.data?.error) alert(`Error: ${error.response.data.error}`);
+            else alert("Error inesperado al editar el usuario");
         }
     };
 
-    const formatFecha = (dateStr:string) => {
-        return dateStr.split("T")[0];
+    const handleImageButtonClick = () => fileInputRef.current?.click();
+    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                if (event.target?.result) setImagenPerfil(event.target.result as string);
+            };
+            reader.readAsDataURL(file);
+        }
     };
+
+    const formatFecha = (dateStr: string) => dateStr.split("T")[0];
+
     return (
         <>
-            <Menu></Menu>
+            <Menu />
+            {/* Floating alerts */}
+            {alerts.map((msg, idx) => (
+                <div key={idx} className="fixed top-5 left-1/2 transform -translate-x-1/2 bg-red-600 text-white px-6 py-2 rounded-lg shadow-lg z-50">
+                    {msg}
+                </div>
+            ))}
 
             <div className="pt-40">
-                <div className="grid md:grid-cols-5 ">
-                    <p></p>
+                <div className="grid md:grid-cols-5">
+                    <div></div>
                     <div className="md:bg-gray-400 rounded col-span-3 py-2">
-
-                        <form action="/Perfil" onSubmit={handleSubmit}>
-                            <h1 className="pt-4 text-4xl font-bold text-white  flex justify-center">Editar Perfil</h1>
-                            <ol className="p-2 md:px-30">
+                        <form onSubmit={handleSubmit}>
+                            <h1 className="pt-4 text-4xl font-bold text-white flex justify-center">Editar Perfil</h1>
+                            <ol className="p-2 md:px-30 space-y-4">
                                 <li>
-                                    <label htmlFor="" className="text-white text-lg">Correo:</label>
-                                    <br />
-                                    <input type="text" className="bg-slate-200 w-full rounded px-2 p-1" placeholder="usuario@mail.com"
-                                        value={email} onChange={handleEmailChange} required readOnly />
-                                    {email.length > 0 && (<div className="text-sm mt-1">
-                                        {emailValid ? (<p className="text-green-200">✅ El correo es válido.</p>) : (<p className="text-red-700">
-                                            ❌ Debe contener "@".</p>)}
-                                    </div>)}
+                                    <label className="text-white text-lg">Correo:</label><br />
+                                    <input type="text" className="bg-slate-200 w-full rounded px-2 p-1" value={email} onChange={(e) => setEmail(e.target.value)} required/>
                                 </li>
                                 <li>
-                                    <label htmlFor="" className="text-white text-lg">Contraseña:</label>
-                                    <br />
-                                    <input type="password" className="bg-slate-200 w-full rounded px-2 p-1" placeholder="Contraseña"
-                                        value={password} onChange={handlePasswordChange} required />
-                                    {password.length > 0 && (<div className="text-sm mt-1">
-                                        {passwordValid ? (<p className="text-green-200">✅ La contraseña es válida.</p>) : (<div className="text-red-700">
-                                            {!/[a-zA-Z]/.test(password) && <p>❌ Debe contener letras.</p>}
-                                            {!/[0-9]/.test(password) && <p>❌ Debe contener números.</p>} </div>)}
-                                    </div>)}
+                                    <label className="text-white text-lg">Contraseña:</label><br />
+                                    <input type="password" className="bg-slate-200 w-full rounded px-2 p-1" value={password} onChange={(e) => setPassword(e.target.value)} required/>
                                 </li>
                                 <li>
-                                    <label htmlFor="" className="text-white text-lg">Nombre:</label>
-                                    <br />
-                                    <input type="text" className="bg-slate-200 w-full rounded px-2 p-1" placeholder="Nombre Apellido"
-                                        value={nombre} onChange={handleNameChange} required />
-                                    {nombre.length > 0 && (<div className="text-sm mt-1">
-                                        {nombreValid ? (<p className="text-green-200">✅ Nombre válido.</p>) : (<p className="text-red-700">
-                                            ❌ Solo letras y espacios permitidos. </p>)} </div>)}
+                                    <label className="text-white text-lg">Nombre:</label><br />
+                                    <input type="text" className="bg-slate-200 w-full rounded px-2 p-1" value={nombre} onChange={(e) => setNombre(e.target.value)}  required/>
                                 </li>
-                                <li className="flex  space-x-10">
+                                <li className="flex space-x-10">
                                     <div>
-                                        <label htmlFor="" className="text-white text-lg">Fecha de Nacimiento:</label>
-                                        <br />
-                                        <input type="date" name="" className="bg-slate-200 rounded px-2 p-1" id=""
-                                            value={formatFecha(FechaNac)} onChange={handleBirthdateChange} />
-                                        {FechaNac.length > 0 && (<div className="text-sm mt-1">
-                                            {FechaNacValid ? (<p className="text-green-200">✅ Fecha seleccionada.</p>) : (<p className="text-red-700">
-                                                ❌ Selecciona una fecha válida. </p>)} </div>)}
+                                        <label className="text-white text-lg">Fecha de Nacimiento:</label><br />
+                                        <input type="date" className="bg-slate-200 rounded px-2 p-1" value={formatFecha(FechaNac)} onChange={(e) => setFechaNac(e.target.value)} required/>
                                     </div>
                                     <div>
-                                        <label htmlFor="" className="text-white text-lg">Genero:</label>
-                                        <br />
-                                        <select name="" className="bg-slate-200 rounded px-2 p-1" id=""
-                                            value={sexo} onChange={(e) => setSexo(e.target.value)}>
-                                            <option value="Hombre">Hombre</option>
-                                            <option value="Mujer">Mujer</option>
-
-                                        </select>
+                                        <label className="text-white text-lg">Género:</label><br />
+                                        <select className="bg-slate-200 rounded px-2 p-1" value={sexo} onChange={(e) => setSexo(e.target.value)}> <option value="Hombre">Hombre</option> <option value="Mujer">Mujer</option> </select>
                                     </div>
                                 </li>
-                                <li className="mt-4">
-                                    <div className="flex flex-col items-center">
-                                        {imagenPerfil && (
-                                            <div className="mb-2">
-                                                <img
-                                                    src={imagenPerfil}
-                                                    alt="Imagen de perfil"
-                                                    className="w-32 h-32 rounded-full object-cover border-2 border-white" />
-                                            </div>
-                                        )}
-                                        <input
-                                            type="file"
-                                            ref={fileInputRef}
-                                            onChange={handleImageChange}
-                                            accept="image/*"
-                                            className="hidden" />
-                                        <button
-                                            type="button"
-                                            onClick={handleImageButtonClick}
-                                            className="md:bg-slate-600 bg-slate-700 text-white font-bold p-2 rounded hover:bg-slate-500" >
-                                            {imagenPerfil ? 'Cambiar imagen' : 'Seleccionar imagen'}
-                                        </button>
-                                    </div>
+                                <li className="flex flex-col items-center">
+                                    {imagenPerfil && (
+                                        <img src={imagenPerfil} alt="Imagen de perfil" className="w-32 h-32 rounded-full object-cover border-2 border-white mb-2"/>)}
+                                    <input type="file" ref={fileInputRef} accept="image/*" onChange={handleImageChange} className="hidden"/>
+                                    <button type="button" onClick={handleImageButtonClick} className="bg-slate-700 text-white font-bold p-2 rounded hover:bg-slate-500"> {imagenPerfil ? 'Cambiar imagen' : 'Seleccionar imagen'}
+                                    </button>
                                 </li>
                                 <li>
-                                    <input type="submit" value="Editar" className="p-2 bg-slate-800 rounded  hover:bg-slate-700 font-bold text-white w-full my-2" />
+                                    <input
+                                        type="submit"
+                                        value="Editar"
+                                        className="w-full p-2 bg-slate-800 rounded hover:bg-slate-700 font-bold text-white" />
                                 </li>
                             </ol>
                         </form>
-                                <li className="flex justify-end">
-                                    <button onClick={handelDesactivar} className="mt-4 mx-4 text-red-300 md:text-red-800 font-bold hover:underline hover:text-red-200">Borrar perfil</button>
-                                </li>
-
+                        <div className="flex justify-end">
+                            <button
+                                onClick={handelDesactivar}
+                                className="mt-4 mx-4 text-red-300 md:text-red-800 font-bold hover:underline hover:text-red-200">
+                                Borrar perfil
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
         </>
-    )
-}
+    );
+};
+
 export default Editar_Perfil;
