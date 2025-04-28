@@ -125,3 +125,10 @@ export const desactivarUsu = async(
         throw error;
     }
 }
+
+export const recuperarContrasena = async (
+    email: string
+  ): Promise<{ nombre: string; email: string; password: string }> => {
+    const url = `${API_URL}/usuario/email/${encodeURIComponent(email)}`;
+    const response = await axios.get(url);
+    return response.data;}; 

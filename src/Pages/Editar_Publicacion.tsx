@@ -97,7 +97,6 @@ const Editar_Publicacion: React.FC = () => {
                     : 'Usando imagen existente'
             });
 
-            // await new Promise(resolve => setTimeout(resolve, 1500));
             if (!id) {
                 return alert("No se pude modificar la publicacion, ID inexistente");
             }
@@ -113,9 +112,9 @@ const Editar_Publicacion: React.FC = () => {
             navigate(`/Publicacion/${id}`);
         } catch (error: any) {
             if (error.response && error.response.data && error.response.data.error) {
-                alert(`Error: ${error.response.data.error}`);  // Muestra el mensaje del backend
+                alert(`Error: ${error.response.data.error}`);
             } else {
-                alert("Error inesperado al editar la publicacion");  // Fallback si el error no tiene mensaje específico
+                alert("Error inesperado al editar la publicacion");  
             }
         }
     };
@@ -124,7 +123,6 @@ const Editar_Publicacion: React.FC = () => {
         e.preventDefault();
 
         try {
-            // await new Promise(resolve => setTimeout(resolve, 1500));
             if (!id) {
                 return alert("No se pude modificar la publicacion, ID inexistente");
             }

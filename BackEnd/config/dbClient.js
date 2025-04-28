@@ -5,6 +5,8 @@ class dbClient {
     constructor(){
         this.conectarBaseDatos();
     }
+
+
     async conectarBaseDatos(){
         try{
             const queryString = `mongodb+srv://${process.env.USER_DB}:${process.env.PASS_DB}@${process.env.SERVER_DB}/?retryWrites=true&w=majority&appName=artropolisCluster`;

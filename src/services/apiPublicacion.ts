@@ -1,20 +1,26 @@
 import axios from 'axios';
-import {publicacion} from '../interfaces/publicacion';
+import { publicacion } from '../interfaces/publicacion';
 
 const API_URL = "http://localhost:5100";
 
 export const crearPublicacion = async(
-    PUBnombre:string, 
+    PUBnombre: string, 
     CATnombre: string[],
-    email:string,
-    PUBdescripcion:string,
-    PUBimagen:string | null
-    
-    
-): Promise<void> =>{
+    email: string,
+    PUBdescripcion: string,
+    PUBimagen: string | null
+): Promise<void> => {
     try {
         const token = sessionStorage.getItem("TOKEN");
-        const response = await axios.post(`${API_URL}/publicacion`, { PUBnombre, CATnombre, email, PUBdescripcion, PUBimagen}, {headers: {Authorization: `Bearer ${token}`}});
+        const response = await axios.post(`${API_URL}/publicacion`, { 
+            PUBnombre, 
+            CATnombre, 
+            email, 
+            PUBdescripcion, 
+            PUBimagen
+        }, {
+            headers: { Authorization: `Bearer ${token}` }
+        });
         console.log("Respuesta del servidor:", response.data);
     } catch (error) {
         console.error("Error al crear publicacion:", error);
@@ -22,53 +28,58 @@ export const crearPublicacion = async(
     }
 }
 
-
 export const obtenerPublicaciones = async(): Promise<publicacion[]> => {
-    try{
-        const response = await axios.get(`${API_URL}/publicacion`)
+    try {
+        const response = await axios.get(`${API_URL}/publicacion`);
         return response.data;
-    }catch(e){
+    } catch(e) {
         console.error("Error al obtener datos: ", e);
         throw e;
     }
 }
 
 export const obtenerUnaPublicacion = async(
-    id:string
+    id: string
 ): Promise<any> => {
-    try{
-        const response = await axios.get(`${API_URL}/publicacion/${id}`)
+    try {
+        const response = await axios.get(`${API_URL}/publicacion/${id}`);
         return response.data;
-    }catch(e){
+    } catch(e) {
         console.error("Error al obtener datos: ", e);
         throw e;
     }
 }
 
-
 export const obtenerPublicacionUsuario = async(
-    id:string
+    id: string
 ): Promise<publicacion[]> => {
-    try{
-        const response = await axios.get(`${API_URL}/publicacion/pub/${id}`)
+    try {
+        const response = await axios.get(`${API_URL}/publicacion/pub/${id}`);
         return response.data;
-    }catch(e){
+    } catch(e) {
         console.error("Error al obtener datos: ", e);
         throw e;
     }
 }
 
 export const editarPublicacion = async(
-    PUBnombre:string, 
+    PUBnombre: string, 
     CATnombre: string[],
-    PUBdescripcion:string,
-    id:string,
-    PUBimagen:string | null
-    
-): Promise<void> =>{
+    PUBdescripcion: string,
+    id: string,
+    PUBimagen: string | null
+): Promise<void> => {
     try {
         const token = sessionStorage.getItem("TOKEN");
-        const response = await axios.put(`${API_URL}/publicacion/${id}`, {id, PUBnombre, CATnombre, PUBdescripcion, PUBimagen}, {headers: {Authorization: `Bearer ${token}`}});
+        const response = await axios.put(`${API_URL}/publicacion/${id}`, {
+            id, 
+            PUBnombre, 
+            CATnombre, 
+            PUBdescripcion, 
+            PUBimagen
+        }, {
+            headers: { Authorization: `Bearer ${token}` }
+        });
         console.log("Respuesta del servidor:", response.data);
     } catch (error: any) {
         console.error("Error al editar publicacion:", error);
@@ -82,18 +93,21 @@ export const editarPublicacion = async(
     }
 }
 
-
 export const borrarPublicacion = async(
-    id:string,
+    id: string,
     PUBestatus: boolean
 ): Promise<void> => {
-    try{
+    try {
         const token = sessionStorage.getItem("TOKEN");
-        const response = await axios.put(`${API_URL}/publicacion/est/${id}`, {id,PUBestatus},  {headers: {Authorization: `Bearer ${token}`}});
+        const response = await axios.put(`${API_URL}/publicacion/est/${id}`, {
+            id,
+            PUBestatus
+        }, {
+            headers: { Authorization: `Bearer ${token}` }
+        });
         console.log("Respuesta del servidor:", response.data);
-    }catch( error: any){
+    } catch (error: any) {
         console.error("Error al borrar la publicacion:", error);
-
         if (error.response && error.response.status === 401) {
             alert("Tu sesión ha expirado. Por favor, inicia sesión nuevamente.");
             sessionStorage.removeItem("USER_INFO");

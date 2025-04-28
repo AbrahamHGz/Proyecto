@@ -6,7 +6,6 @@ class usuarioControler {
     constructor() {
 
     }
-
     async create(req, res) {
         try {
             const { nombre, email, password, sexo, TipoUsu, FechaNac } = req.body;
@@ -177,11 +176,17 @@ class usuarioControler {
         try {
             const { email } = req.params
             const data = await usuarioModel.getOneEmail(email);
-            res.status(200).json(data);
+    
+            if (!data) {
+                return res.status(404).json({ error: "Usuario no encontrado" });
+            }
+    
+            res.status(200).json({ password: data.password });
         } catch (e) {
             res.status(500).send(e);
         }
     }
+    
 
 
     async postLogin(req, res) {
