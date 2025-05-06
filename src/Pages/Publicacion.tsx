@@ -205,10 +205,10 @@ const Publicacion: React.FC = () => {
                                 </Link>
                                 <p><strong>Fecha:</strong> {formatearFecha(publicacion?.createdAt || '')}</p>
                                 <div className="flex items-center">
-                                    {likes !== '' ? (
+                                    {/* Corazón dorado para el autor */}
+                                    {publicacion?.PUBusuario._id === ids ? (
                                         <svg 
-                                            onClick={handleBorrarLike} 
-                                            className="size-7 hover:text-red-300 text-red-500 ms-1" 
+                                            className="size-7 text-yellow-400 ms-1 cursor-not-allowed" 
                                             aria-hidden="true" 
                                             xmlns="http://www.w3.org/2000/svg" 
                                             fill="currentColor" 
@@ -217,16 +217,29 @@ const Publicacion: React.FC = () => {
                                             <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
                                         </svg>
                                     ) : (
-                                        <svg 
-                                            onClick={handleSubmitLike} 
-                                            className="size-7 text-red-300 hover:text-red-500 ms-1" 
-                                            aria-hidden="true" 
-                                            xmlns="http://www.w3.org/2000/svg" 
-                                            fill="currentColor" 
-                                            viewBox="0 0 22 20"
-                                        >
-                                            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
-                                        </svg>
+                                        likes !== '' ? (
+                                            <svg 
+                                                onClick={handleBorrarLike} 
+                                                className="size-7 hover:text-red-300 text-red-500 ms-1" 
+                                                aria-hidden="true" 
+                                                xmlns="http://www.w3.org/2000/svg" 
+                                                fill="currentColor" 
+                                                viewBox="0 0 22 20"
+                                            >
+                                                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                                            </svg>
+                                        ) : (
+                                            <svg 
+                                                onClick={handleSubmitLike} 
+                                                className="size-7 text-red-300 hover:text-red-500 ms-1" 
+                                                aria-hidden="true" 
+                                                xmlns="http://www.w3.org/2000/svg" 
+                                                fill="currentColor" 
+                                                viewBox="0 0 22 20"
+                                            >
+                                                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                                            </svg>
+                                        )
                                     )}
                                     <p className="p-2 font-bold text-xl">{cantidad}</p>
                                 </div>

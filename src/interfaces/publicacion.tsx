@@ -16,4 +16,5 @@ export interface publicacion {
     PUBimagen:string,
     createdAt:string;
     updatedAt:string
+    likesCount: number;
 }
