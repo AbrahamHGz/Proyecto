@@ -245,8 +245,8 @@ const Crear_Publicacion: React.FC = () => {
                 </div>
 
                 {showConfirm && (
-                    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-                        <div className="bg-white p-6 rounded-lg shadow-lg space-y-4">
+                    <div className="fixed inset-0 flex items-center justify-center backdrop-blur-sm bg-gray-900/50 z-50">
+                    <div className="bg-white/90 p-6 rounded-lg shadow-lg space-y-4 backdrop-blur-sm">
                             <p className="text-lg font-semibold">¿Seguro que deseas crear esta publicacion?</p>
                             <div className="flex justify-end space-x-4">
                                 <button

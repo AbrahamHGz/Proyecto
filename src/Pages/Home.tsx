@@ -3,6 +3,7 @@ import Menu from "../Objetos/Menu";
 import { Link } from "react-router-dom";
 import CategoriaSelect from "../Objetos/CategoriaSelect";
 import { obtenerPublicaciones } from "../services/apiPublicacion";
+import { obtenerCantidad } from "../services/apiLike";
 import { publicacion } from '../interfaces/publicacion';
 
 const Home: React.FC = () => {
@@ -13,6 +14,7 @@ const Home: React.FC = () => {
 
     const [loading, setLoading] = useState(true);
     const [loadingDots, setLoadingDots] = useState('');
+    const [topUsuarios, setTopUsuarios] = useState<Array<{ _id: string; nombre: string; imagen: string; totalLikes: number }>>([]);
 
     const fetchPublicacion = async () => {
         setLoading(true);
@@ -26,19 +28,67 @@ const Home: React.FC = () => {
         }
     }
 
-    useEffect(() => { fetchPublicacion(); }, []);
+    useEffect(() => {
+        fetchPublicacion();
+    }, []);
 
-    useEffect(() => { if (!loading) { setLoadingDots(''); return;}
+    useEffect(() => {
+        if (!loading) { setLoadingDots(''); return; }
         const interval = setInterval(() => { setLoadingDots(prev => prev.length < 3 ? prev + '.' : ''); }, 500);
-        return () => clearInterval(interval); }, [loading]);
+        return () => clearInterval(interval);
+    }, [loading]);
 
+    useEffect(() => {
+        const fetchTopUsers = async () => {
+            try {
+                const allPublicaciones = await obtenerPublicaciones();
+
+                const userLikesMap: { [userId: string]: { nombre: string; imagen: string; totalLikes: number } } = {};
+
+                for (const pub of allPublicaciones) {
+                    if (pub.PUBusuario && pub.PUBusuario._id) {
+                        const likeCountData = await obtenerCantidad(pub._id);
+                        const likes = likeCountData?.cantidadLikes || 0;
+                        const userId = pub.PUBusuario._id;
+                        const userName = pub.PUBusuario.nombre;
+                        const userImage = pub.PUBusuario.imagen;
+                        if (!userLikesMap[userId]) {
+                            userLikesMap[userId] = {
+                                nombre: userName,
+                                imagen: userImage,
+                                totalLikes: 0
+                            };
+                        }
+                        userLikesMap[userId].totalLikes += likes;
+                    }
+                }
+
+                const sortedUsers = Object.entries(userLikesMap)
+                    .map(([id, data]) => ({
+                        _id: id,
+                        nombre: data.nombre,
+                        imagen: data.imagen,
+                        totalLikes: data.totalLikes
+                    }))
+                    .sort((a, b) => b.totalLikes - a.totalLikes)
+                    .slice(0, 10);
+
+                setTopUsuarios(sortedUsers);
+            } catch (error) {
+                console.error("Error al obtener el top de usuarios:", error);
+            }
+        };
+
+        fetchTopUsers();
+    }, []);
     const publicacionesFiltradas = publicaciones.filter(pub => {
         const tieneCategorias = pub.PUBcategorias && pub.PUBcategorias.length > 0;
         if (!tieneCategorias) return false;
 
         if (filtroCategoria &&
             !pub.PUBcategorias.some(cat => cat.CATnombre === filtroCategoria)) {
-            return false;  }
+            return false;
+        }
 
         if (fechaDesde && new Date(pub.createdAt) < new Date(fechaDesde)) return false;
         if (fechaHasta && new Date(pub.createdAt) > new Date(fechaHasta)) return false;
@@ -56,10 +106,13 @@ const Home: React.FC = () => {
                         Top 10 Usuarios
                     </h1>
                     <ol className="p-2 ml-3">
-                        <UsuariosPopulares />
-                        <UsuariosPopulares />
-                        <UsuariosPopulares />
-                        <UsuariosPopulares />
+                        {topUsuarios.length > 0 ? (
+                            topUsuarios.map((user, index) => (
+                                <UsuariosPopulares key={user._id || index} usuario={user} puesto={index + 1} />
+                            ))
+                        ) : (
+                            <li className="text-white text-center">Cargando Top Usuarios...</li>
+                        )}
                     </ol>
                 </aside>
 
@@ -117,7 +170,7 @@ const ArtesPublic: React.FC<Props> = ({ P_publicacion }) => {
                     "https://res.cloudinary.com/dmcvdsh4c/image/upload/v1711699300/iceebookImage/ciencia/geologia/geologia-montanas-formacion-misterios_iz66pg.webp"
                 }
                 alt={P_publicacion.PUBnombre}
-                className="sm:h-45 sm:w-84 h-24 w-full"
+                className="sm:h-45 sm:w-84 h-24 w-full object-cover"
             />
             <p className="sm:flex justify-center sm:text-lg text-sm font-bold">
                 {P_publicacion.PUBnombre}
@@ -129,12 +182,46 @@ const ArtesPublic: React.FC<Props> = ({ P_publicacion }) => {
     );
 }
 
-const UsuariosPopulares: React.FC = () => {
+interface UsuarioPopularProps {
+    usuario: {
+        _id: string;
+        nombre: string;
+        imagen: string;
+        totalLikes: number;
+    };
+    puesto: number;
+}
+
+const UsuariosPopulares: React.FC<UsuarioPopularProps> = ({ usuario, puesto }) => {
+    let puestoColorClass = "text-white";
+    if (puesto === 1) {
+        puestoColorClass = "text-yellow-500"; // Oro
+    } else if (puesto === 2) {
+        puestoColorClass = "text-gray-400"; // Plata
+    } else if (puesto === 3) {
+        puestoColorClass = "text-amber-700"; // Bronce/Café
+    }
+
     return (
-        <li className="flex justify-center"> <Link to="/Perfil"  className="p-2 bg-gray-700 text-white mr-3 mb-3 rounded hover:drop-shadow-xl hover:bg-gray-500" >
-                <img src="https://res.cloudinary.com/dmcvdsh4c/image/upload/v1711699300/iceebookImage/ciencia/geologia/geologia-montanas-formacion-misterios_iz66pg.webp" alt="Usuario popular" className="sm:h-31 w-full h-20"/>
-                <p className="flex justify-center text-lg font-bold">Usuario 123</p> </Link>
-        </li> );}
+        <li className="flex justify-center">
+            <Link
+                to={`/Perfil/${usuario._id}`}
+                className="p-2 bg-gray-700 text-white mr-3 mb-3 rounded hover:drop-shadow-xl hover:bg-gray-500 flex flex-col items-center w-full">
+                {/* Aquí va la imagen del usuario */}
+                <img
+                    src={usuario.imagen || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTELPl2WQuMBShrQaqe0IWYjLf_y2XRkhGNWcdLfADOPJ6KAJe84GaYOQ51__wkkbGfR78&usqp=CAU"}
+                    alt={usuario.nombre}
+                    className="h-40 w-40 object-cover mb-2" // Consistent square size
+                />
+
+                <p className="text-lg font-bold text-center">
+                    <span className={`mr-2 text-xl ${puestoColorClass}`}>{puesto}.</span> {usuario.nombre}
+                </p>
+                <p className="text-sm text-center">Likes: {usuario.totalLikes} ❤️</p>
+            </Link>
+        </li>
+    );
+}
 
 interface FiltroProps {
     categoria: string;
@@ -175,6 +262,7 @@ const FiltroPantallaMD: React.FC<FiltroProps> = ({
     );
 }
 
+// Componente de filtro para pantallas pequeñas
 const FiltroPantallaSM: React.FC<FiltroProps> = ({
     categoria,
     setCategoria,
@@ -205,7 +293,7 @@ const FiltroPantallaSM: React.FC<FiltroProps> = ({
                     type="date"
                     className="bg-gray-200 rounded p-1 px-2 w-full"
                     value={fechaHasta}
-                    onChange={(e) => setFechaHasta(e.target.value)}/>
+                    onChange={(e) => setFechaHasta(e.target.value)} />
             </div>
         </form>
     );

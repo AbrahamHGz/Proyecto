@@ -125,6 +125,7 @@ class publicacionController {
     async getAll(req, res){
         try{
             const data = await publicacionModel.getAll();
+            console.log("Datos de publicaciones con usuario populado:", JSON.stringify(data, null, 2));
             res.status(200).json(data);
         }catch(e){
             res.status(500).send(e);
@@ -136,7 +137,6 @@ class publicacionController {
             const {id} = req.params
             const data = await publicacionModel.getAllByIdUsu(id);
             res.status(200).json(data);
-
         }catch(e){
             res.status(500).send(e);
         }

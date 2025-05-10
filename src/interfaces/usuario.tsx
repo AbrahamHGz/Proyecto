@@ -8,7 +8,7 @@ export interface I_Usuario{
     Siguiendo:number,
     descripcion: string,
     imagen:string,
-    Estatus:string,
+    Estatus:boolean,
     createdAt:string;
     updatedAt:string
 }

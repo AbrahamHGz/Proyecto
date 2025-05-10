@@ -54,10 +54,8 @@ const Acerca_de_mi: React.FC<usuarioProps> = ({usuario_i}) => {
             await cargarPerfil(usuario_i._id)
         } catch (error: any) {
             if (error.response && error.response.data && error.response.data.error) {
-                alert(`Error: ${error.response.data.error}`);  // Muestra el mensaje del backend
-            } else {
-                alert("Error inesperado al editar el usuario");  // Fallback si el error no tiene mensaje específico
-            }
+                alert(`Error: ${error.response.data.error}`);    } else {
+                alert("Error inesperado al editar el usuario");     }
         }
     };
 

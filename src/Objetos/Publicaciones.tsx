@@ -36,7 +36,7 @@ const Publicaciones: React.FC<usuarioProps> = ({ usuario_i }) => {
         const tieneCategorias = pub.PUBcategorias && pub.PUBcategorias.length > 0;
         if (!tieneCategorias) return false;
 
-        if (categoria && 
+        if (categoria &&
             !pub.PUBcategorias?.some(cat => cat.CATnombre === categoria)
         ) return false;
 
@@ -52,12 +52,13 @@ const Publicaciones: React.FC<usuarioProps> = ({ usuario_i }) => {
                 <h1 className="text-2xl font-semibold">Publicaciones</h1>
 
                 <div className="grid md:grid-cols-3 gap-4">
+                    {/*
                     <div>
-                        <label className="font-semibold">Categoría:</label>
-                        <br />
-                        <CategoriaSelect value={categoria} onChange={setCategoria} />
+                    <label className="font-semibold">Categoría:</label>
+                    <br />
+                    <CategoriaSelect value={categoria} onChange={setCategoria} />
                     </div>
-
+                    */}
                     <div>
                         <label className="font-semibold">Desde:</label>
                         <br />
@@ -70,14 +71,12 @@ const Publicaciones: React.FC<usuarioProps> = ({ usuario_i }) => {
                         <input type="date" className="bg-white rounded px-2" value={fechaHasta} onChange={e => setFechaHasta(e.target.value)}/>
                     </div>
                 </div>
-
-                <button className="mt-2 p-2 bg-slate-800 rounded hover:bg-slate-700 font-bold text-white" onClick={e => e.preventDefault()}>Filtrar</button>
             </div>
 
             {usuario_i?._id === ids && (
                 <div className="mb-4">
                     <Link to="/Crear publicacion" className="text-white font-bold bg-blue-800 px-4 py-2 rounded hover:bg-blue-700">
-                        Publicar
+                        Crear Nueva Publicacion
                     </Link>
                 </div>
             )}
@@ -101,7 +100,7 @@ const PublicaUsu: React.FC<Props> = ({ P_publicacion }) => (
     <Link
         to={`/Publicacion/${P_publicacion._id}`}
         className="p-2 bg-gray-700 text-white rounded hover:drop-shadow-xl hover:bg-gray-500">
-        <img src={P_publicacion.PUBimagen || "https://res.cloudinary.com/dmcvdsh4c/image/upload/v1711699300/iceebookImage/ciencia/geologia/geologia-montanas-formacion-misterios_iz66pg.webp"} alt={P_publicacion.PUBnombre}  className="md:h-45 w-full rounded"/>
+        <img src={P_publicacion.PUBimagen || "https://res.cloudinary.com/dmcvdsh4c/image/upload/v1711699300/iceebookImage/ciencia/geologia/geologia-montanas-formacion-misterios_iz66pg.webp"} alt={P_publicacion.PUBnombre}  className="md:h-45 w-full rounded"/>
         <p className="text-center text-lg font-bold mt-2">{P_publicacion.PUBnombre}</p>
-        <p className="text-center text-sm mt-1">Likes: {P_publicacion.PUBlikes}</p>
+        {/* <p className="text-center text-sm mt-1">Likes: {P_publicacion.PUBlikes}</p> */}
     </Link> );

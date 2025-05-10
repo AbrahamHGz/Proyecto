@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { crearReporte } from "../services/apiReporte";
 
-/// Pantalla modal
 interface ModalProps {
     onToggle: () => void;
     Tipo: string;
@@ -33,9 +32,9 @@ const ModalReporte: React.FC<ModalProps> = ({onToggle, Tipo, idPublicacion, idUs
 
         } catch (error: any) {
             if (error.response && error.response.data && error.response.data.error) {
-                alert(`Error: ${error.response.data.error}`);  // Muestra el mensaje del backend
+                alert(`Error: ${error.response.data.error}`); 
             } else {
-                alert("Error inesperado al reportar");  // Fallback si el error no tiene mensaje específico
+                alert("Error inesperado al reportar");  
             }
         }
     };
@@ -44,9 +43,7 @@ const ModalReporte: React.FC<ModalProps> = ({onToggle, Tipo, idPublicacion, idUs
 
     return (
         <>
-            {/* Fondo oscuro semitransparente */}
             <div className="fixed inset-0 backdrop-blur-sm  bg-opacity-50 z-50 flex items-center justify-center">
-                {/* Contenido del modal */}
                 <div className="bg-gray-200 rounded-lg p-6 shadow-md w-full max-w-md mx-4">
                     <p className="text-gray-800 font-semibold text-2xl text-center mb-6">
                         ¿Estás seguro que quieres proceder con esta acción?

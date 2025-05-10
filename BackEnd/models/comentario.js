@@ -27,7 +27,7 @@ class comentarioModelo {
         return await Comentario.find({COMpublicacion, COMestatus: true})
         .populate({
             path:'COMusuario', 
-            select:'nombre',
+            select:'nombre imagen',
             match: {Estatus: true}
         })
         .then(comentario => {

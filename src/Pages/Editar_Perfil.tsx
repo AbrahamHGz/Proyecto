@@ -245,7 +245,6 @@ const Editar_Perfil: React.FC = () => {
                 </div>
             </div>
 
-            {/* Ventana Emergente de Confirmación */}
             {showConfirm && (
                 <div className="fixed inset-0 flex items-center justify-center backdrop-blur-sm bg-gray-900/50 z-50">
                     <div className="bg-white/90 p-6 rounded-lg shadow-lg space-y-4 backdrop-blur-sm">

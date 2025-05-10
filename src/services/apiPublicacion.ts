@@ -4,7 +4,7 @@ import { publicacion } from '../interfaces/publicacion';
 const API_URL = "http://localhost:5100";
 
 export const crearPublicacion = async(
-    PUBnombre: string, 
+    PUBnombre: string,
     CATnombre: string[],
     email: string,
     PUBdescripcion: string,
@@ -12,11 +12,11 @@ export const crearPublicacion = async(
 ): Promise<void> => {
     try {
         const token = sessionStorage.getItem("TOKEN");
-        const response = await axios.post(`${API_URL}/publicacion`, { 
-            PUBnombre, 
-            CATnombre, 
-            email, 
-            PUBdescripcion, 
+        const response = await axios.post(`${API_URL}/publicacion`, {
+            PUBnombre,
+            CATnombre,
+            email,
+            PUBdescripcion,
             PUBimagen
         }, {
             headers: { Authorization: `Bearer ${token}` }
@@ -63,7 +63,7 @@ export const obtenerPublicacionUsuario = async(
 }
 
 export const editarPublicacion = async(
-    PUBnombre: string, 
+    PUBnombre: string,
     CATnombre: string[],
     PUBdescripcion: string,
     id: string,
@@ -72,10 +72,10 @@ export const editarPublicacion = async(
     try {
         const token = sessionStorage.getItem("TOKEN");
         const response = await axios.put(`${API_URL}/publicacion/${id}`, {
-            id, 
-            PUBnombre, 
-            CATnombre, 
-            PUBdescripcion, 
+            id,
+            PUBnombre,
+            CATnombre,
+            PUBdescripcion,
             PUBimagen
         }, {
             headers: { Authorization: `Bearer ${token}` }

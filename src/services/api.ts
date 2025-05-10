@@ -114,14 +114,17 @@ export const EdtiarAcercaMi = async(
 
 export const desactivarUsu = async(
     email: string, 
-    Estatus:boolean
+    Estatus:boolean // Recibe el valor booleano directamente
 ): Promise<void> => {
     try{
         const token = sessionStorage.getItem("TOKEN");
-        const response = await axios.put(`${API_URL}/usuario/email/${email}`, { Estatus} ,{headers: {Authorization: `Bearer ${token}`}});
+        // Se envía solo el campo 'Estatus'.
+        // El backend en 'controllers/usuarios.js' ya está adaptado para manejar
+        // el 'Estatus' directamente antes del 'switch(caso)'.
+        const response = await axios.put(`${API_URL}/usuario/email/${email}`, { Estatus } ,{headers: {Authorization: `Bearer ${token}`}});
         console.log("Respuesta del servidor:", response.data);
     }catch(error) {
-        console.error("Error al desactivar usuario:", error);
+        console.error("Error al cambiar el estado del usuario:", error);
         throw error;
     }
 }
@@ -131,4 +134,16 @@ export const recuperarContrasena = async (
   ): Promise<{ nombre: string; email: string; password: string }> => {
     const url = `${API_URL}/usuario/email/${encodeURIComponent(email)}`;
     const response = await axios.get(url);
-    return response.data;}; 
+    return response.data;
+};
+
+export const getDataArtistasParaAdmin = async (): Promise<any> => {
+    try {
+        const token = sessionStorage.getItem("TOKEN");
+        const response = await axios.get(`${API_URL}/usuario/admin/artistas`, {headers: {Authorization: `Bearer ${token}`}});
+        return response.data;
+    } catch (e) {
+        console.error("Error al obtener todos los artistas para admin: ", e);
+        throw e;
+    }
+}

@@ -14,15 +14,15 @@ class comentarioController {
             if (!existeUsuario)
                 return res.status(400).json({ error: "El usuario no existe" })
 
-            if(req.user.email !== email && req.user.TipoUsu !== 'artista')
-                return res.status(403).json({error: "No tienes permisos para comentar"})
+            if (req.user.email !== email && req.user.TipoUsu !== 'artista')
+                return res.status(403).json({ error: "No tienes permisos para comentar" })
 
             const existePublicacion = await publicacionModel.getOne(id);
             if (!existePublicacion)
                 return res.status(400).json({ error: "La publicación no existe" })
 
-            if(!COMdescripcion || COMdescripcion.trim() == "")
-                return res.status(400).json({error: "La descripción no puede estar vacia"})
+            if (!COMdescripcion || COMdescripcion.trim() == "")
+                return res.status(400).json({ error: "La descripción no puede estar vacia" })
 
             const data = await comentarioModel.create({ COMdescripcion, COMpublicacion: existePublicacion._id, COMusuario: existeUsuario._id });
             res.status(201).json(data);
@@ -34,19 +34,19 @@ class comentarioController {
     async update(req, res) {
         try {
             const { id } = req.params;
-            const {COMdescripcion, caso} = req.body;
+            const { COMdescripcion, caso } = req.body;
 
             const existeComentario = await comentarioModel.getOne(id);
 
             const esPropietario = req.user.email === existeComentario.COMusuario.email;
             const esAdmin = req.user.TipoUsu === 'admin' || req.user.TipoUsu === 'superadmin';
-            
+
             if (!(esPropietario && req.user.TipoUsu === 'artista') && !esAdmin) {
                 return res.status(403).json({ error: "No tienes permisos para editar el comentario" });
             }
-            if(caso === "Editar"){
-                if(!COMdescripcion || COMdescripcion.trim() == "")
-                    return res.status(400).json({error: "La descripción no puede estar vacia"})
+            if (caso === "Editar") {
+                if (!COMdescripcion || COMdescripcion.trim() == "")
+                    return res.status(400).json({ error: "La descripción no puede estar vacia" })
 
             }
 
@@ -79,6 +79,8 @@ class comentarioController {
     async getAllByPub(req, res) {
         try {
             const { id } = req.params
+            // ESTA ES LA LÍNEA CLAVE:
+            // El método getAllByPub() del modelo debe encargarse de poblar 'COMusuario'
             const data = await comentarioModel.getAllByPub(id);
             res.status(200).json(data);
         } catch (e) {

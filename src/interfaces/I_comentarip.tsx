@@ -5,7 +5,7 @@ export interface I_Comentario {
     COMusuario: {    
         _id:string,
         nombre:string,
-        imagen:string
+        imagen:string;
     },
     COMpublicacion: {
         _id:string,

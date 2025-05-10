@@ -187,7 +187,15 @@ class usuarioControler {
         }
     }
     
-
+ // ¡NUEVA FUNCIÓN AQUÍ! Para el admin.
+ async getAllArtistasForAdmin(req, res) {
+    try {
+        const data = await usuarioModel.getAllArtistasAdmin();
+        res.status(200).json(data);
+    } catch (e) {
+        res.status(500).send(e);
+    }
+}
 
     async postLogin(req, res) {
         try {
@@ -201,7 +209,7 @@ class usuarioControler {
                 return res.status(400).json({ error: "La contraseña es incorrecta" })
 
             if (existeUsuario.Estatus == false)
-                return res.status(400).json({ error: "El usuario ha sido eliminado" });
+                return res.status(400).json({ error: "Cuenta restringida indefinidamente" });
 
 
             const token = generarToken(email, existeUsuario.TipoUsu);

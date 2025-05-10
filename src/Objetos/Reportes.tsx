@@ -109,10 +109,9 @@ const Report: React.FC<ReporteProps> = ({ reporteP, fetch }) => {
             fetch();
         } catch (error: any) {
             if (error.response && error.response.data && error.response.data.error) {
-                alert(`Error: ${error.response.data.error}`);  // Muestra el mensaje del backend
+                alert(`Error: ${error.response.data.error}`);  
             } else {
-                alert("Error inesperado al borrar la publicacion");  // Fallback si el error no tiene mensaje específico
-            }
+                alert("Error inesperado al borrar la publicacion");  }
         }
     };
 
@@ -129,10 +128,8 @@ const Report: React.FC<ReporteProps> = ({ reporteP, fetch }) => {
             fetch();
         } catch (error: any) {
             if (error.response && error.response.data && error.response.data.error) {
-                alert(`Error: ${error.response.data.error}`);  // Muestra el mensaje del backend
-            } else {
-                alert("Error inesperado al borrar el comentario");  // Fallback si el error no tiene mensaje específico
-            }
+                alert(`Error: ${error.response.data.error}`);   } else {
+                alert("Error inesperado al borrar el comentario");   }
         }
     };
 

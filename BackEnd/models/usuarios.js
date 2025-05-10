@@ -28,6 +28,10 @@ class usuarioModelo {
         return await Usuario.find({TipoUsu: 'artista', Estatus: true})
     }
 
+    async getAllArtistasAdmin(){
+        return await Usuario.find({TipoUsu: 'artista'});
+    }
+
     async getAllAdmins(){
         return await Usuario.find({TipoUsu: 'admin'})
     }
@@ -51,8 +55,6 @@ class usuarioModelo {
     async getOneName(nombre){
         return await Usuario.findOne({nombre})
     }
-
-
 }
 
 export default new usuarioModelo;

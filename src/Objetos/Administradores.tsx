@@ -86,7 +86,7 @@ const Admins: React.FC<AdminProps> = ({AdminP}) => {
                         <p className="font-semibold">Fecha de ingreso:</p> <p>{formatearFecha(AdminP.createdAt)}</p>
                     </div>
 
-                    {AdminP?.Estatus === 'true' ? (
+                    {AdminP?.Estatus ? (
                         <button className="w-full hover:bg-red-400 bg-red-500 rounded p-2 font-bold text-white ">Desactivar</button>
 
                     ): (

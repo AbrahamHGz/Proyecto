@@ -99,9 +99,7 @@ const Categorias: React.FC = () => {
     <>
       <h1 className="font-bold text-2xl">Categorías</h1>
 
-      {/* Sección Crear y Eliminar */}
       <div className="flex flex-wrap gap-4 items-center justify-between mb-6">
-        {/* Formulario de creación */}
         <form onSubmit={handleSubmit} className="flex items-center space-x-2">
           <input
             type="text"
@@ -174,7 +172,6 @@ const Categorias: React.FC = () => {
   );
 };
 
-// Componente de tarjeta de categoría
 interface Props {
   categoria: Categoria;
   onToggle: (id: string, currentState: boolean) => void;
@@ -194,21 +191,7 @@ const Categori: React.FC<Props> = ({ categoria, onToggle }) => {
         <p className="font-semibold inline">Fecha de creación: </p>
         <span>{fecha}</span>
       </div>
-      {categoria.CATactivo ? (
-        <button
-          onClick={() => onToggle(categoria._id, categoria.CATactivo)}
-          className="w-full bg-red-500 hover:bg-red-400 rounded p-2 font-bold text-white"
-        >
-          Desactivar
-        </button>
-      ) : (
-        <button
-          onClick={() => onToggle(categoria._id, categoria.CATactivo)}
-          className="w-full bg-green-500 hover:bg-green-400 rounded p-2 font-bold text-white"
-        >
-          Activar
-        </button>
-      )}
+      
     </div>
   );
 };

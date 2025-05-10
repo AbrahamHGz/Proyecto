@@ -14,6 +14,8 @@ const Editar_Publicacion: React.FC = () => {
     const [imagenFile, setImagenFile] = useState<File | null>(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [error, setError] = useState('');
+    const [showConfirmEdit, setShowConfirmEdit] = useState(false); 
+    const [showConfirmDelete, setShowConfirmDelete] = useState(false); 
     const fileInputRef = useRef<HTMLInputElement>(null);
     const navigate = useNavigate();
 
@@ -31,11 +33,9 @@ const Editar_Publicacion: React.FC = () => {
                 const data = await obtenerUnaPublicacion(id);
                 setTitulo(data.PUBnombre);
                 setDescripcion(data.PUBdescripcion);
-                setCategoriaSeleccionada(data.PUBcategorias.map((cat: any) => cat.CATnombre)); //las categorias que obtengo aqui
+                setCategoriaSeleccionada(data.PUBcategorias.map((cat: any) => cat.CATnombre));
                 setImagen(data.PUBimagen)
                 console.log("Categorías recibidas:", data.PUBcategorias);
-                // setCategoria(publicacionEjemplo.categoria);
-                // setImagen(publicacionEjemplo.imagenUrl);
             }
 
         } catch (error) {
@@ -77,7 +77,7 @@ const Editar_Publicacion: React.FC = () => {
         }
     };
 
-    const handleSubmit = async (e: React.FormEvent) => {
+    const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         setIsSubmitting(true);
 
@@ -86,7 +86,11 @@ const Editar_Publicacion: React.FC = () => {
             setIsSubmitting(false);
             return;
         }
+        setShowConfirmEdit(true); 
+    };
 
+    const handleConfirmEdit = async () => {
+        setShowConfirmEdit(false);
         try {
             console.log('Datos a enviar:', {
                 titulo,
@@ -98,7 +102,7 @@ const Editar_Publicacion: React.FC = () => {
             });
 
             if (!id) {
-                return alert("No se pude modificar la publicacion, ID inexistente");
+                return alert("No se puede modificar la publicacion, ID inexistente");
             }
             await editarPublicacion(
                 titulo,
@@ -108,39 +112,54 @@ const Editar_Publicacion: React.FC = () => {
                 imagen
             )
 
-            alert(id ? 'Publicación actualizada' : 'Publicación creada');
+            alert('Publicación actualizada');
             navigate(`/Publicacion/${id}`);
         } catch (error: any) {
             if (error.response && error.response.data && error.response.data.error) {
                 alert(`Error: ${error.response.data.error}`);
             } else {
-                alert("Error inesperado al editar la publicacion");  
+                alert("Error inesperado al editar la publicacion");
             }
+        } finally {
+            setIsSubmitting(false);
         }
     };
 
-    const handleborrarPublicacion = async(e: React.FormEvent) => {
-        e.preventDefault();
+    const handleCancelEdit = () => {
+        setShowConfirmEdit(false);
+        setIsSubmitting(false);
+    };
 
+    const handleDeleteClick = (e: React.FormEvent) => {
+        e.preventDefault();
+        setShowConfirmDelete(true); 
+    };
+
+    const handleConfirmDelete = async () => {
+        setShowConfirmDelete(false);
         try {
             if (!id) {
-                return alert("No se pude modificar la publicacion, ID inexistente");
+                return alert("No se puede borrar la publicacion, ID inexistente");
             }
             await borrarPublicacion(
                 id,
                 false
             )
 
-            alert('Publicacion borradoa')
+            alert('Publicacion borrada');
             navigate(`/Home`);
         } catch (error: any) {
             if (error.response && error.response.data && error.response.data.error) {
-                alert(`Error: ${error.response.data.error}`);  // Muestra el mensaje del backend
+                alert(`Error: ${error.response.data.error}`);
             } else {
-                alert("Error inesperado al borrar la publicación");  // Fallback si el error no tiene mensaje específico
+                alert("Error inesperado al borrar la publicación");
             }
         }
     };
+
+    const handleCancelDelete = () => {
+        setShowConfirmDelete(false);   };
+
 
     const añadirCategoria = () => {
         if (categoria && !categriasSeleccionadas.includes(categoria)) {
@@ -154,34 +173,26 @@ const Editar_Publicacion: React.FC = () => {
     return (
         <>
             <Menu></Menu>
-            <Menu></Menu>
             <div className="pt-26 ">
                 <div className="mt-2 p-4 rounded md:mx-20 md:bg-gray-400">
-                    <h1 className="flex justify-center text-white font-bold  text-3xl">Editar Publicación</h1>
+                    <h1 className="flex justify-center text-white font-bold  text-3xl">Editar Publicación</h1>
+                    {error && (
+                        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4">
+                            {error}
+                        </div>
+                    )}
                     <form onSubmit={handleSubmit} className="grid xl:grid-cols-3 my-2">
 
                         <ol className="">
                             <li>
-                                <label htmlFor="" className="font-semibold text-white text-2xl">Titulo:</label>
+                                <label htmlFor="titulo" className="font-semibold text-white text-2xl">Titulo:</label>
                                 <br />
-                                <input
-                                    type="text"
-                                    id="titulo"
-                                    className="xl:w-95 w-full rounded bg-slate-200 px-2 p-1"
-                                    placeholder="Título"
-                                    value={titulo}
-                                    onChange={(e) => setTitulo(e.target.value)}
-                                    required />
+                                <input type="text" id="titulo" className="xl:w-95 w-full rounded bg-slate-200 px-2 p-1" placeholder="Título" value={titulo} onChange={(e) => setTitulo(e.target.value)} required />
                             </li>
                             <li>
-                                <label htmlFor="" className="font-semibold text-white text-2xl">Descripción:</label>
+                                <label htmlFor="descripcion" className="font-semibold text-white text-2xl">Descripción:</label>
                                 <br />
-                                <textarea
-                                    id="descripcion"
-                                    className="xl:w-95 w-full rounded bg-slate-200 px-2 p-1 h-32"
-                                    placeholder="Descripción"
-                                    value={descripcion}
-                                    onChange={(e) => setDescripcion(e.target.value)}
+                                <textarea id="descripcion" className="xl:w-95 w-full rounded bg-slate-200 px-2 p-1 h-32"  placeholder="Descripción" value={descripcion} onChange={(e) => setDescripcion(e.target.value)}
                                 ></textarea>
                             </li>
                             <li>
@@ -200,9 +211,7 @@ const Editar_Publicacion: React.FC = () => {
                                             onClick={() => eliminarCategoria(cat)} title="Haz click para eliminar esta categoria">
                                             {cat}
                                         </span>
-                                    ))
-
-                                    }
+                                    ))}
                                 </p>
                             </li>
                             <li className="mt-4">
@@ -240,7 +249,12 @@ const Editar_Publicacion: React.FC = () => {
 
 
                             <li className="mt-4">
-                                <input type="submit" value="Editar" className="mb-2 text-white font-bold  bg-slate-800 px-4 p-2 rounded hover:bg-slate-700  md:w-96 w-full p-1" />
+                                <input
+                                    type="submit"
+                                    value="Editar"
+                                    disabled={isSubmitting}
+                                    className="mb-2 text-white font-bold bg-slate-800 px-4 p-2 rounded hover:bg-slate-700 md:w-96 w-full p-1"
+ />
                             </li>
                         </ol>
                         <div className="hidden xl:block col-span-2">
@@ -256,13 +270,57 @@ const Editar_Publicacion: React.FC = () => {
                         </div>
                     </form>
 
-                    <button onClick={handleborrarPublicacion} className="text-red-800 hover:underline hover:text-red-900 font-bold">
-                        borrar
+                    <button onClick={handleDeleteClick} className="text-red-800 hover:underline hover:text-red-900 font-bold">
+                        Borrar
                     </button>
 
                 </div>
                 <p className="p-2"></p>
             </div>
+
+            {showConfirmEdit && (
+                <div className="fixed inset-0 flex items-center justify-center backdrop-blur-sm bg-gray-900/50 z-50">
+                    <div className="bg-white/90 p-6 rounded-lg shadow-lg space-y-4 backdrop-blur-sm">
+                        <p className="text-lg font-semibold">¿Seguro que deseas editar esta publicación?</p>
+                        <div className="flex justify-end space-x-4">
+                            <button
+                                onClick={handleCancelEdit}
+                                className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400"
+                            >
+                                Cancelar
+                            </button>
+                            <button
+                                onClick={handleConfirmEdit}
+                                className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+                            >
+                                Confirmar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {showConfirmDelete && (
+                <div className="fixed inset-0 flex items-center justify-center backdrop-blur-sm bg-gray-900/50 z-50">
+                    <div className="bg-white/90 p-6 rounded-lg shadow-lg space-y-4 backdrop-blur-sm">
+                        <p className="text-lg font-semibold">¿Estás seguro que deseas borrar esta publicación?</p>
+                        <div className="flex justify-end space-x-4">
+                            <button
+                                onClick={handleCancelDelete}
+                                className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400"
+                            >
+                                Cancelar
+                            </button>
+                            <button
+                                onClick={handleConfirmDelete}
+                                className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
+                            >
+                                Borrar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </>
     )
 }

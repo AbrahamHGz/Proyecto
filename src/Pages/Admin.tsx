@@ -32,7 +32,6 @@ const Admin: React.FC = () => {
 
     useEffect(() => {
         if (usuario) {
-            // Si es admin, mostrar "Administradores", si no, mostrar "Usuarios"
             if (usuario.TipoUsu !== "admin") {
                 setSeccionActiva("Administradores");
             } else {
