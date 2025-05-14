@@ -11,6 +11,14 @@ const Categorias: React.FC = () => {
   const [selectedCategoriaId, setSelectedCategoriaId] = useState<string>('');
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
+  const [alerts, setAlerts] = useState<{ msg: string, type: 'success' | 'error' }[]>([]);
+
+
+  const showAlert = (msg: string, type: 'success' | 'error' = 'error') => {
+    setAlerts([{ msg, type }]);
+    setTimeout(() => setAlerts([]), 3000);
+  };
+
 
   useEffect(() => {
     const usuarioInfo = JSON.parse(sessionStorage.getItem("USER_INFO") || "{}");
@@ -41,12 +49,12 @@ const Categorias: React.FC = () => {
     if (!email) return;
     try {
       await crearCategoria(CATnombre, email);
-      alert("Categoría creada con éxito");
+      showAlert("¡Categoría creada con éxito!", "success");
       setCATnombre("");
       fetchCategorias();
     } catch (error: any) {
       if (error.response?.data?.error) {
-        alert(`Error: ${error.response.data.error}`);
+        showAlert(`❌ ${error.response.data.error}`, "success");
       } else {
         alert("Error inesperado al crear la categoría");
       }
@@ -56,11 +64,11 @@ const Categorias: React.FC = () => {
   const handleToggle = async (id: string, currentState: boolean) => {
     try {
       await actualizarEstadoCategoria(id, !currentState);
-      setCategorias(prev => prev.map(cat => 
+      setCategorias(prev => prev.map(cat =>
         cat._id === id ? { ...cat, CATactivo: !currentState } : cat
       ));
     } catch (error) {
-      alert("Error al actualizar el estado de la categoría");
+      showAlert("❌  Error al actualizar el estado de la categoría", "error");
       console.error(error);
     }
   };
@@ -69,11 +77,11 @@ const Categorias: React.FC = () => {
     if (!selectedCategoriaId) return;
     try {
       await eliminarCategoria(selectedCategoriaId);
-      alert("Categoría eliminada con éxito");
+      showAlert("❌ Categoría eliminada con éxito", "error");
       setSelectedCategoriaId('');
       fetchCategorias();
     } catch (error) {
-      alert("Error al eliminar la categoría");
+      showAlert("❌ Error al eliminar la categoría", "error");
       console.error(error);
     }
   };
@@ -97,6 +105,11 @@ const Categorias: React.FC = () => {
 
   return (
     <>
+          {alerts.map((alert, idx) => (
+        <div key={idx} className={`fixed top-5 left-1/2 transform -translate-x-1/2 ${ alert.type === 'error' ? 'bg-red-600' : 'bg-green-600'} text-white px-6 py-2 rounded-lg shadow-lg z-50`}>
+          {alert.msg}
+        </div>
+      ))}
       <h1 className="font-bold text-2xl">Categorías</h1>
 
       <div className="flex flex-wrap gap-4 items-center justify-between mb-6">
@@ -128,7 +141,7 @@ const Categorias: React.FC = () => {
               </option>
             ))}
           </select>
-          
+
           <button
             onClick={handleEliminar}
             disabled={!selectedCategoriaId}
@@ -142,17 +155,17 @@ const Categorias: React.FC = () => {
       {/* Filtros de fecha - Posición modificada */}
       <div className="lg:flex items-center lg:justify-center space-x-4 py-4">
         <label>Desde:</label>
-        <input 
-          type="date" 
-          className="bg-slate-200 rounded p-1" 
+        <input
+          type="date"
+          className="bg-slate-200 rounded p-1"
           onChange={handleStartDateChange}
           max={endDate?.toISOString().split('T')[0]}
         />
-        
+
         <label>Hasta:</label>
-        <input 
-          type="date" 
-          className="bg-slate-200 rounded p-1 mb-2 lg:mb-0" 
+        <input
+          type="date"
+          className="bg-slate-200 rounded p-1 mb-2 lg:mb-0"
           onChange={handleEndDateChange}
           min={startDate?.toISOString().split('T')[0]}
         />
@@ -191,7 +204,7 @@ const Categori: React.FC<Props> = ({ categoria, onToggle }) => {
         <p className="font-semibold inline">Fecha de creación: </p>
         <span>{fecha}</span>
       </div>
-      
+
     </div>
   );
 };

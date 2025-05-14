@@ -5,9 +5,9 @@ import { AuthContext } from "../auth/autenticacion";
 import Menu from "../Objetos/Menu";
 
 const Editar_Perfil: React.FC = () => {
-    const [alerts, setAlerts] = useState<string[]>([]);
-    const showAlert = (msg: string) => {
-        setAlerts([msg]);
+    const [alerts, setAlerts] = useState<{ msg: string, type: 'success' | 'error' }[]>([]);
+    const showAlert = (msg: string, type: 'success' | 'error' = 'error') => {
+        setAlerts([{ msg, type }]);
         setTimeout(() => setAlerts([]), 3000);
     };
 
@@ -30,7 +30,7 @@ const Editar_Perfil: React.FC = () => {
     // Validation before submitting edits
     const validateFields = (): boolean => {
         if (!email.includes("@")) {
-            showAlert("❌ El correo debe contener '@'.");
+            showAlert("❌ El correo debe contener '@'.", "error");
             return false;
         }
         const hasMinLength = password.length >= 8;
@@ -39,15 +39,15 @@ const Editar_Perfil: React.FC = () => {
         const hasNumber = /[0-9]/.test(password);
         const hasSpecialChar = /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>\/?]/.test(password);
         if (!hasMinLength || !hasUpperCase || !hasLowerCase || !hasNumber || !hasSpecialChar) {
-            showAlert("❌ La contraseña debe tener mínimo 8 caracteres, mayúscula, minúscula, número y carácter especial.");
+            showAlert("❌ La contraseña debe tener mínimo 8 caracteres, mayúscula, minúscula, número y carácter especial.", "error");
             return false;
         }
         if (!/^[a-zA-Z\s]+$/.test(nombre)) {
-            showAlert("❌ El nombre solo debe contener letras y espacios.");
+            showAlert("❌ El nombre solo debe contener letras y espacios.", "error");
             return false;
         }
         if (!FechaNac) {
-            showAlert("❌ Selecciona una fecha de nacimiento.");
+            showAlert("❌ Selecciona una fecha de nacimiento.", "error");
             return false;
         }
         return true;
@@ -84,7 +84,7 @@ const Editar_Perfil: React.FC = () => {
         e.preventDefault();
         try {
             await desactivarUsu(email, false);
-            alert("Usuario borrado exitosamente");
+            showAlert("Usuario borrado exitosamente.", "success");
             Salir();
         } catch (error: any) {
             if (error.response?.data?.error) alert(`Error: ${error.response.data.error}`);
@@ -111,10 +111,13 @@ const Editar_Perfil: React.FC = () => {
                 imagenPerfil,
                 "Perfil"
             );
-            alert("Usuario editado exitosamente");
-            navigate(`/Perfil/${ids}`);
+            showAlert("Usuario editado exitosamente.", "success");
+            setTimeout(() => {
+                navigate(`/Perfil/${ids}`);
+                
+            }, 1000);
         } catch (error: any) {
-            if (error.response?.data?.error) alert(`Error: ${error.response.data.error}`);
+            if (error.response?.data?.error) showAlert(`❌ ${error.response.data.error}`, "error");
             else alert("Error inesperado al editar el usuario");
         }
     };
@@ -141,11 +144,12 @@ const Editar_Perfil: React.FC = () => {
         <>
             <Menu />
             {/* Floating alerts */}
-            {alerts.map((msg, idx) => (
-                <div key={idx} className="fixed top-5 left-1/2 transform -translate-x-1/2 bg-red-600 text-white px-6 py-2 rounded-lg shadow-lg z-50">
-                    {msg}
+            {alerts.map((alert, idx) => (
+                <div key={idx} className={`fixed top-5 left-1/2 transform -translate-x-1/2 ${alert.type === 'error' ? 'bg-red-600' : 'bg-green-600'} text-white px-6 py-2 rounded-lg shadow-lg z-50`}>
+                    {alert.msg}
                 </div>
             ))}
+
 
             <div className="pt-40">
                 <div className="grid md:grid-cols-5">
@@ -157,6 +161,7 @@ const Editar_Perfil: React.FC = () => {
                                 <li>
                                     <label className="text-white text-lg">Correo:</label><br />
                                     <input
+                                        readOnly
                                         type="text"
                                         className="bg-slate-200 w-full rounded px-2 p-1"
                                         value={email}
@@ -248,17 +253,17 @@ const Editar_Perfil: React.FC = () => {
             {showConfirm && (
                 <div className="fixed inset-0 flex items-center justify-center backdrop-blur-sm bg-gray-900/50 z-50">
                     <div className="bg-white/90 p-6 rounded-lg shadow-lg space-y-4 backdrop-blur-sm">
-                    <p className="text-lg font-semibold">¿Seguro que deseas guardar estos cambios?</p>
-                    <div className="flex justify-end space-x-4">
-                 <button onClick={handleCancel} className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400">
-             Cancelar </button>
-            <button onClick={handleConfirm} className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
-             Confirmar </button>
+                        <p className="text-lg font-semibold">¿Seguro que deseas guardar estos cambios?</p>
+                        <div className="flex justify-end space-x-4">
+                            <button onClick={handleCancel} className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400">
+                                Cancelar </button>
+                            <button onClick={handleConfirm} className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+                                Confirmar </button>
 
-      </div>
-    </div>
-  </div>
-)}
+                        </div>
+                    </div>
+                </div>
+            )}
         </>
     );
 };

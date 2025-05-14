@@ -16,6 +16,7 @@ const Comentario: React.FC<ComentarioProps> = ({ comentario, onActualizar, Fecha
     const [mostrarFormulario, setMostrarFormulario] = useState(false);
     const [comenta, setComenta] = useState(comentario?.COMdescripcion)
     const [showConfirmDeleteComent, setShowConfirmDeleteComent] = useState(false);
+    const [alerts, setAlerts] = useState<{ msg: string, type: 'success' | 'error' }[]>([]);
     const usuarioInfo = JSON.parse(sessionStorage.getItem("USER_INFO") || "{}");
     const ids = usuarioInfo.id
 
@@ -28,6 +29,12 @@ const Comentario: React.FC<ComentarioProps> = ({ comentario, onActualizar, Fecha
         setMostrarFormulario(!mostrarFormulario);
     }
 
+
+    const showAlert = (msg: string, type: 'success' | 'error' = 'error') => {
+        setAlerts([{ msg, type }]);
+        setTimeout(() => setAlerts([]), 3000);
+    };
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
@@ -36,19 +43,21 @@ const Comentario: React.FC<ComentarioProps> = ({ comentario, onActualizar, Fecha
                 comenta,
                 "Editar"
             );
-            alert("Comentario editado exitosamente");
+            showAlert("Comentario editado exitosamente", "success");
             toggleFormulario();
             onActualizar()
         } catch (error: any) {
             if (error.response && error.response.data && error.response.data.error) {
-                alert(`Error: ${error.response.data.error}`);       } else {
-                alert("Error inesperado al editar el comentario");      }
+                showAlert(`❌ ${error.response.data.error}`, "error");
+            } else {
+                alert("Error inesperado al editar el comentario");
+            }
         }
     };
 
     const handleDeleteClick = (e: React.FormEvent) => {
         e.preventDefault();
-        setShowConfirmDeleteComent(true); 
+        setShowConfirmDeleteComent(true);
     };
 
     const handleConfirmDelete = async () => {
@@ -59,17 +68,20 @@ const Comentario: React.FC<ComentarioProps> = ({ comentario, onActualizar, Fecha
                 false,
                 "Borrar"
             );
-            alert("Comentario borrado exitosamente");
+            showAlert("Comentario borrado exitosamente", "success");
             onActualizar();
         } catch (error: any) {
             if (error.response && error.response.data && error.response.data.error) {
-                alert(`Error: ${error.response.data.error}`);    } else {
-                alert("Error inesperado al borrar el comentario");   }
+                showAlert(`❌ ${error.response.data.error}`, "error");
+            } else {
+                alert("Error inesperado al borrar el comentario");
+            }
         }
     };
 
     const handleCancelDelete = () => {
-        setShowConfirmDeleteComent(false);  };
+        setShowConfirmDeleteComent(false);
+    };
 
     const [mostrarFormulario1, setMostrarFormulario1] = useState(false);
 
@@ -80,6 +92,11 @@ const Comentario: React.FC<ComentarioProps> = ({ comentario, onActualizar, Fecha
 
     return (
         <>
+            {alerts.map((alert, idx) => (
+                <div key={idx} className={`fixed top-5 left-1/2 transform -translate-x-1/2 ${alert.type === 'error' ? 'bg-red-600' : 'bg-green-600'} text-white px-6 py-2 rounded-lg shadow-lg z-50`}>
+                    {alert.msg}
+                </div>
+            ))}
             {mostrarFormulario1 && (<ModalReporte onToggle={toggleFormulario1} Tipo="com" idPublicacion={null} idUsuario={String(ids)} idComentario={String(comentario?._id)}></ModalReporte>)}
 
             <div className="bg-gray-400 mt-4 rounded lg:grid grid-cols-5">

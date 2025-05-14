@@ -8,6 +8,7 @@ const Reportes: React.FC = () => {
 
     const [report, setReport] = useState<I_Reporte[]>([])
 
+
     const fetchReport = async () => {
         try {
             const data = await obtenerReporte();
@@ -69,6 +70,13 @@ const Report: React.FC<ReporteProps> = ({ reporteP, fetch }) => {
         return `${dia}-${mes}-${anio}`;
     };
 
+    const [alerts, setAlerts] = useState<{msg: string, type: 'success' | 'error'}[]>([]);
+
+    const showAlert = (msg: string, type: 'success' | 'error' = 'error') => {
+        setAlerts([{msg, type}]);
+        setTimeout(() => setAlerts([]), 3000);
+    };
+    
 
     const [respuesta, setRespuesta] = useState('');
     const handleRespuesta = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -85,14 +93,14 @@ const Report: React.FC<ReporteProps> = ({ reporteP, fetch }) => {
                 respuesta,
                 true
             );
-            alert("Reporte actualizado");
+            showAlert("¡Reporte actualizado!", "success");
             setRespuesta('')
             fetch();
         } catch (error: any) {
             if (error.response && error.response.data && error.response.data.error) {
-                alert(`Error: ${error.response.data.error}`);  // Muestra el mensaje del backend
+                showAlert(`❌ ${error.response.data.error}`, "error");  // Muestra el mensaje del backend
             } else {
-                alert("Error inesperado al actualizar el reporte");  // Fallback si el error no tiene mensaje específico
+                console.log("Error inesperado al actualizar el reporte");  // Fallback si el error no tiene mensaje específico
             }
         }
     };
@@ -105,13 +113,14 @@ const Report: React.FC<ReporteProps> = ({ reporteP, fetch }) => {
                 reporteP?.REPpublicacion._id,
                 false
             )
-            alert('Publicacion borradoa')
+            showAlert('Publicacion borradoa', "success")
             fetch();
         } catch (error: any) {
             if (error.response && error.response.data && error.response.data.error) {
-                alert(`Error: ${error.response.data.error}`);  
+               showAlert(`❌ ${error.response.data.error}`, "error");
             } else {
-                alert("Error inesperado al borrar la publicacion");  }
+                console.log("Error inesperado al borrar la publicacion");
+            }
         }
     };
 
@@ -124,18 +133,25 @@ const Report: React.FC<ReporteProps> = ({ reporteP, fetch }) => {
                 false,
                 "Borrar"
             )
-            alert('Comentario borradoa')
+            showAlert(' Comentario borrado', "success")
             fetch();
         } catch (error: any) {
             if (error.response && error.response.data && error.response.data.error) {
-                alert(`Error: ${error.response.data.error}`);   } else {
-                alert("Error inesperado al borrar el comentario");   }
+                showAlert(`❌ ${error.response.data.error}`, "error");
+            } else {
+                console.log("Error inesperado al borrar el comentario");
+            }
         }
     };
 
 
     return (
         <>
+            {alerts.map((alert, idx) => (
+                <div key={idx} className={`fixed top-5 left-1/2 transform -translate-x-1/2 ${alert.type === 'error' ? 'bg-red-600' : 'bg-green-600'} text-white px-6 py-2 rounded-lg shadow-lg z-50`}>
+                    {alert.msg}
+                </div>
+            ))}
             <div className="bg-slate-300 p-2 rounded mt-2">
                 <div className="flex items-center space-x-2">
                     <img src={reporteP?.REPusuario.imagen || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTELPl2WQuMBShrQaqe0IWYjLf_y2XRkhGNWcdLfADOPJ6KAJe84GaYOQ51__wkkbGfR78&usqp=CAU"}
@@ -157,7 +173,7 @@ const Report: React.FC<ReporteProps> = ({ reporteP, fetch }) => {
                             {reporteP?.REPpublicacion.PUBestatus ? (
                                 <button onClick={desactivarPublicacion} className="bg-red-500 hover:bg-red-400 p-2 font-bold text-white rounded">Borrar</button>
 
-                            ): (
+                            ) : (
                                 <p className="flex justify-center font-semibold text-xl">¡Publicación borrada!</p>
                             )}
                         </div>
@@ -165,10 +181,10 @@ const Report: React.FC<ReporteProps> = ({ reporteP, fetch }) => {
                         <div className={`${reporteP?.REPcomentario.COMestatus ? `bg-red-300` : `bg-green-300`} p-2 m-2 rounded`}>
                             <p><strong>Correo:</strong> {reporteP?.REPcomentario.COMusuario.email}</p>
                             <p><strong>Comentario:</strong>  {reporteP?.REPcomentario.COMdescripcion}</p>
-                            
+
                             {reporteP?.REPcomentario.COMestatus ? (
                                 <button onClick={desactivarComentario} className="bg-red-500 hover:bg-red-400 p-2 font-bold text-white rounded">Borrar</button>
-                            ): (
+                            ) : (
                                 <p className="flex justify-center font-semibold text-xl">¡Comentario borrado!</p>
                             )}
                         </div>

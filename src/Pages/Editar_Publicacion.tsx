@@ -14,10 +14,16 @@ const Editar_Publicacion: React.FC = () => {
     const [imagenFile, setImagenFile] = useState<File | null>(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [error, setError] = useState('');
-    const [showConfirmEdit, setShowConfirmEdit] = useState(false); 
-    const [showConfirmDelete, setShowConfirmDelete] = useState(false); 
+    const [showConfirmEdit, setShowConfirmEdit] = useState(false);
+    const [showConfirmDelete, setShowConfirmDelete] = useState(false);
+    const [alerts, setAlerts] = useState<{ msg: string, type: 'success' | 'error' }[]>([]);
     const fileInputRef = useRef<HTMLInputElement>(null);
     const navigate = useNavigate();
+
+    const showAlert = (msg: string, type: 'success' | 'error' = 'error') => {
+        setAlerts([{ msg, type }]);
+        setTimeout(() => setAlerts([]), 3000);
+    };
 
     const { id } = useParams<{ id: string }>();
 
@@ -86,7 +92,7 @@ const Editar_Publicacion: React.FC = () => {
             setIsSubmitting(false);
             return;
         }
-        setShowConfirmEdit(true); 
+        setShowConfirmEdit(true);
     };
 
     const handleConfirmEdit = async () => {
@@ -112,11 +118,14 @@ const Editar_Publicacion: React.FC = () => {
                 imagen
             )
 
-            alert('Publicación actualizada');
-            navigate(`/Publicacion/${id}`);
+            showAlert('Publicación actualizada', "success");
+            setTimeout(() => {
+                navigate(`/Publicacion/${id}`);
+                
+            }, 1000);
         } catch (error: any) {
             if (error.response && error.response.data && error.response.data.error) {
-                alert(`Error: ${error.response.data.error}`);
+                showAlert(`❌ ${error.response.data.error}`, "error");
             } else {
                 alert("Error inesperado al editar la publicacion");
             }
@@ -132,7 +141,7 @@ const Editar_Publicacion: React.FC = () => {
 
     const handleDeleteClick = (e: React.FormEvent) => {
         e.preventDefault();
-        setShowConfirmDelete(true); 
+        setShowConfirmDelete(true);
     };
 
     const handleConfirmDelete = async () => {
@@ -146,11 +155,14 @@ const Editar_Publicacion: React.FC = () => {
                 false
             )
 
-            alert('Publicacion borrada');
-            navigate(`/Home`);
+            showAlert('Publicacion borrada', "success");
+            setTimeout(() => {
+                navigate(`/Home`);
+                
+            }, 1000);
         } catch (error: any) {
             if (error.response && error.response.data && error.response.data.error) {
-                alert(`Error: ${error.response.data.error}`);
+                showAlert(`❌ ${error.response.data.error}`, "error");
             } else {
                 alert("Error inesperado al borrar la publicación");
             }
@@ -158,7 +170,8 @@ const Editar_Publicacion: React.FC = () => {
     };
 
     const handleCancelDelete = () => {
-        setShowConfirmDelete(false);   };
+        setShowConfirmDelete(false);
+    };
 
 
     const añadirCategoria = () => {
@@ -173,6 +186,12 @@ const Editar_Publicacion: React.FC = () => {
     return (
         <>
             <Menu></Menu>
+
+            {alerts.map((alert, idx) => (
+                <div key={idx} className={`fixed top-5 left-1/2 transform -translate-x-1/2 ${alert.type === 'error' ? 'bg-red-600' : 'bg-green-600'} text-white px-6 py-2 rounded-lg shadow-lg z-50`}>
+                    {alert.msg}
+                </div>
+            ))}
             <div className="pt-26 ">
                 <div className="mt-2 p-4 rounded md:mx-20 md:bg-gray-400">
                     <h1 className="flex justify-center text-white font-bold  text-3xl">Editar Publicación</h1>
@@ -192,7 +211,7 @@ const Editar_Publicacion: React.FC = () => {
                             <li>
                                 <label htmlFor="descripcion" className="font-semibold text-white text-2xl">Descripción:</label>
                                 <br />
-                                <textarea id="descripcion" className="xl:w-95 w-full rounded bg-slate-200 px-2 p-1 h-32"  placeholder="Descripción" value={descripcion} onChange={(e) => setDescripcion(e.target.value)}
+                                <textarea id="descripcion" className="xl:w-95 w-full rounded bg-slate-200 px-2 p-1 h-32" placeholder="Descripción" value={descripcion} onChange={(e) => setDescripcion(e.target.value)}
                                 ></textarea>
                             </li>
                             <li>
@@ -254,7 +273,7 @@ const Editar_Publicacion: React.FC = () => {
                                     value="Editar"
                                     disabled={isSubmitting}
                                     className="mb-2 text-white font-bold bg-slate-800 px-4 p-2 rounded hover:bg-slate-700 md:w-96 w-full p-1"
- />
+                                />
                             </li>
                         </ol>
                         <div className="hidden xl:block col-span-2">

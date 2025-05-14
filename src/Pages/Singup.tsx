@@ -11,19 +11,19 @@ const Singup: React.FC = () => {
   const [TipoUsu, setTipoUsu] = useState('artista');
   const [FechaNac, setFechaNac] = useState('');
   const [Estatus, setEstatus] = useState(true);
-  const [alerts, setAlerts] = useState<string[]>([]);
+  const [alerts, setAlerts] = useState<{msg: string, type: 'success' | 'error'}[]>([]);
   const [showConfirm, setShowConfirm] = useState(false);
 
   const navigate = useNavigate();
 
-  const showAlert = (msg: string) => {
-    setAlerts([msg]);
+  const showAlert = (msg: string, type: 'success' | 'error' = 'error') => {
+    setAlerts([{msg, type}]);
     setTimeout(() => setAlerts([]), 3000);
   };
 
   const validateFields = (): boolean => {
     if (!email.includes("@")) {
-      showAlert("❌ El correo debe contener '@'.");
+      showAlert("❌ El correo debe contener '@'.", 'error');
       return false;
     }
 
@@ -34,17 +34,17 @@ const Singup: React.FC = () => {
     const hasSpecialChar = /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>\/?]/.test(password);
 
     if (!hasMinLength || !hasUpperCase || !hasLowerCase || !hasNumber || !hasSpecialChar) {
-      showAlert("❌ La contraseña debe tener mínimo 8 caracteres, mayúscula, minúscula, número y carácter especial.");
+      showAlert("❌ La contraseña debe tener mínimo 8 caracteres, mayúscula, minúscula, número y carácter especial.", 'error');
       return false;
     }
 
     if (!/^[a-zA-Z\s]+$/.test(nombre)) {
-      showAlert("❌ El nombre solo debe contener letras y espacios.");
+      showAlert("❌ El nombre solo debe contener letras y espacios.", 'error');
       return false;
     }
 
     if (!FechaNac) {
-      showAlert("❌ Selecciona una fecha de nacimiento.");
+      showAlert("❌ Selecciona una fecha de nacimiento.", 'error');
       return false;
     }
 
@@ -61,7 +61,7 @@ const Singup: React.FC = () => {
     setShowConfirm(false);
     try {
       await crearUsuario(nombre, email, password, sexo, TipoUsu, new Date(FechaNac), Estatus);
-      alert("Usuario creado exitosamente");
+      showAlert("Usuario creado exitosamente", 'success');
       // reset form
       setNombre("");
       setEmail("");
@@ -70,10 +70,12 @@ const Singup: React.FC = () => {
       setTipoUsu("artista");
       setFechaNac("");
       setEstatus(true);
-      navigate('/Login');
+      setTimeout(() => {
+        navigate('/Login');
+      }, 1000)
     } catch (error: any) {
       if (error.response?.data?.error) {
-        alert(`Error: ${error.response.data.error}`);
+        showAlert(`❌ ${error.response.data.error}`, 'error')
       } else {
         alert("Error inesperado al crear usuario");
       }
@@ -87,9 +89,9 @@ const Singup: React.FC = () => {
   return (
     <>
       <Menu_LogSing />
-      {alerts.map((msg, idx) => (
-        <div key={idx} className="fixed top-5 left-1/2 transform -translate-x-1/2 bg-red-600 text-white px-6 py-2 rounded-lg shadow-lg z-50">
-          {msg}
+      {alerts.map((alert, idx) => (
+        <div key={idx} className={`fixed top-5 left-1/2 transform -translate-x-1/2 ${ alert.type === 'error' ? 'bg-red-600' : 'bg-green-600'} text-white px-6 py-2 rounded-lg shadow-lg z-50`}>
+          {alert.msg}
         </div>
       ))}
 

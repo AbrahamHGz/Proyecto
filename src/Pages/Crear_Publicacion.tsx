@@ -17,12 +17,19 @@ const Crear_Publicacion: React.FC = () => {
     const fileInputRef = useRef<HTMLInputElement>(null);
     const navigate = useNavigate();
     const { id } = useParams();
+    const [alerts, setAlerts] = useState<{ msg: string, type: 'success' | 'error' }[]>([]);
 
     const usuarioInfo = JSON.parse(sessionStorage.getItem("USER_INFO") || "{}");
     const email = usuarioInfo.email;
     const ids = usuarioInfo.id;
 
     const MAX_IMAGE_SIZE = 5 * 1024 * 1024;
+
+    const showAlert = (msg: string, type: 'success' | 'error' = 'error') => {
+        setAlerts([{ msg, type }]);
+        setTimeout(() => setAlerts([]), 3000);
+    };
+
 
     useEffect(() => {
         if (id) {
@@ -65,7 +72,8 @@ const Crear_Publicacion: React.FC = () => {
         if (!titulo.trim()) {
             setError('El título es requerido');
             setIsSubmitting(false);
-            return; }
+            return;
+        }
         setShowConfirm(true);
     };
 
@@ -88,11 +96,13 @@ const Crear_Publicacion: React.FC = () => {
                 descripcion,
                 imagen
             );
-            alert(id ? 'Publicación actualizada' : 'Publicación creada');
-            navigate(`/Perfil/${ids}`);
+            showAlert(id ? 'Publicación actualizada' : 'Publicación creada', "success");
+            setTimeout(() => {
+                navigate(`/Perfil/${ids}`);
+            }, 1000);
         } catch (error: any) {
             if (error.response && error.response.data && error.response.data.error) {
-                alert(`Error: ${error.response.data.error}`);
+                showAlert(`❌ ${error.response.data.error}`);
             } else {
                 alert("Error inesperado al crear la publicación");
             }
@@ -119,6 +129,11 @@ const Crear_Publicacion: React.FC = () => {
     return (
         <>
             <Menu />
+            {alerts.map((alert, idx) => (
+                <div key={idx} className={`fixed top-5 left-1/2 transform -translate-x-1/2 ${alert.type === 'error' ? 'bg-red-600' : 'bg-green-600'} text-white px-6 py-2 rounded-lg shadow-lg z-50`}>
+                    {alert.msg}
+                </div>
+            ))}
             <div className="pt-26">
                 <div className="mt-2 p-4 rounded md:mx-20 md:bg-gray-400">
                     <h1 className="flex justify-center text-white font-bold text-3xl">
@@ -246,7 +261,7 @@ const Crear_Publicacion: React.FC = () => {
 
                 {showConfirm && (
                     <div className="fixed inset-0 flex items-center justify-center backdrop-blur-sm bg-gray-900/50 z-50">
-                    <div className="bg-white/90 p-6 rounded-lg shadow-lg space-y-4 backdrop-blur-sm">
+                        <div className="bg-white/90 p-6 rounded-lg shadow-lg space-y-4 backdrop-blur-sm">
                             <p className="text-lg font-semibold">¿Seguro que deseas crear esta publicacion?</p>
                             <div className="flex justify-end space-x-4">
                                 <button
