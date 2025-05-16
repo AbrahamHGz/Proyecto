@@ -114,6 +114,12 @@ export const EdtiarAcercaMi = async(
 
 export const desactivarUsu = async(
     email: string, 
+<<<<<<< HEAD
+    Estatus:boolean 
+): Promise<void> => {
+    try{
+        const token = sessionStorage.getItem("TOKEN");
+=======
     Estatus:boolean // Recibe el valor booleano directamente
 ): Promise<void> => {
     try{
@@ -121,6 +127,7 @@ export const desactivarUsu = async(
         // Se envía solo el campo 'Estatus'.
         // El backend en 'controllers/usuarios.js' ya está adaptado para manejar
         // el 'Estatus' directamente antes del 'switch(caso)'.
+>>>>>>> c942114410c855e0e02cbf53a00c516ef6ffec6a
         const response = await axios.put(`${API_URL}/usuario/email/${email}`, { Estatus } ,{headers: {Authorization: `Bearer ${token}`}});
         console.log("Respuesta del servidor:", response.data);
     }catch(error) {

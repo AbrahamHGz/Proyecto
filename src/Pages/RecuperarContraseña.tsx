@@ -53,10 +53,8 @@ const RecuperarContraseña: React.FC = () => {
           {usuario && (
             <div className="mt-6 bg-gray-700 p-4 rounded text-white">
               <h2 className="text-xl font-semibold mb-2 text-center">
-                Usuario encontrado:
+                Constraseña Encontrada:
               </h2>
-              <p><strong>Nombre:</strong> {usuario.nombre}</p>
-              <p><strong>Correo:</strong> {usuario.email}</p>
               <p><strong>Contraseña:</strong> {usuario.password}</p>
             </div>
           )}

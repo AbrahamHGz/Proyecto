@@ -11,7 +11,7 @@ export const crearCategoria = async(
         const response = await axios.post(`${API_URL}/categoria`, {
             CATnombre,
             email,
-            CATactivo: true // Nueva categoría creada como activa
+            CATactivo: true 
         });
         console.log("Respuesta del servidor:", response.data);
     }catch(error){
@@ -39,7 +39,6 @@ export const eliminarCategoria = async(id: string): Promise<void> => {
     }
 };
 
-// Usamos PUT en lugar de PATCH para coincidir con la ruta en el servidor
 export const actualizarEstadoCategoria = async(id: string, estado: boolean): Promise<void> => {
     try {
       const response = await axios.put(

@@ -33,7 +33,6 @@ const Crear_Publicacion: React.FC = () => {
 
     useEffect(() => {
         if (id) {
-            // lógica de edición si es necesario
         }
     }, [id]);
 

@@ -1,7 +1,6 @@
 import React,{ useState} from "react";
 import { crearUsuario } from "../services/api";
 
-// Esta es una prueba de un formulario hacia mongoDB
 const PruebaDb: React.FC = () =>{
     const [nombre, setNombre] = useState('');
     const [email, setEmail] = useState('');

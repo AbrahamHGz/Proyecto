@@ -78,14 +78,20 @@ class usuarioControler {
     async updateForEmail(req, res) {
         try {
             const { email } = req.params
-            const { nombre, password, sexo, descripcion, caso, FechaNac } = req.body
+            const { nombre, password, sexo, descripcion, caso, FechaNac, Estatus } = req.body
 
-            if(req.user.email !== email && req.user.TipoUsu !== 'admin')
-                return res.status(403).json({error: "No tienes permisos para modificar este usuario"})
+            if(req.user.email !== email && req.user.TipoUsu !== 'admin' && req.user.TipoUsu !== 'superadmin') {
+                return res.status(403).json({error: "No tienes permisos para modificar este usuario"});
+            }
             
             const existeUsuario = await usuarioModel.getOneEmail(email);
             if (!existeUsuario)
                 return res.status(400).json({ error: "El usuario no existe" });
+
+            if (typeof Estatus === 'boolean' && Object.keys(req.body).length === 1) { 
+                const data = await usuarioModel.updateForEmail(email, { Estatus });
+                return res.status(200).json(data);
+            }
 
             switch (caso) {
                 case "Perfil":
@@ -116,6 +122,8 @@ class usuarioControler {
                         return res.status(400).json({ error: "La descripcion es obligatoria" });
 
                     break;
+                default: // Si no hay caso definido o es un caso desconocido
+                    return res.status(400).json({ error: "Caso de actualización no válido o no especificado." });
             }
 
             const data = await usuarioModel.updateForEmail(email, req.body);
@@ -187,7 +195,10 @@ class usuarioControler {
         }
     }
     
+<<<<<<< HEAD
+=======
  // ¡NUEVA FUNCIÓN AQUÍ! Para el admin.
+>>>>>>> c942114410c855e0e02cbf53a00c516ef6ffec6a
  async getAllArtistasForAdmin(req, res) {
     try {
         const data = await usuarioModel.getAllArtistasAdmin();

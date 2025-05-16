@@ -154,7 +154,11 @@ const Usaurioss: React.FC<ArteIPropr> = ({ P_Artistas, onStatusToggle }) => {
                         }`}
                         onClick={() => onStatusToggle(P_Artistas.email, isUserActive)}
                     >
+<<<<<<< HEAD
+                        {isUserActive ? "Activo" : "Desactivo"}
+=======
                         {isUserActive ? "Activo" : "Desactivar"}
+>>>>>>> c942114410c855e0e02cbf53a00c516ef6ffec6a
                     </button>
                 </div>
             </div>

@@ -34,7 +34,7 @@ class reporteModel{
             path: 'REPcomentario',
             select: 'COMdescripcion COMusuario COMestatus',
             populate: {
-                path: 'COMusuario', // ← aquí parece que intentabas 'PUBusuario', pero debería ser 'COMusuario'
+                path: 'COMusuario',
                 select: 'email'
             }
         });

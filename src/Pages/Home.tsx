@@ -37,6 +37,54 @@ const Home: React.FC = () => {
         const interval = setInterval(() => { setLoadingDots(prev => prev.length < 3 ? prev + '.' : ''); }, 500);
         return () => clearInterval(interval);
     }, [loading]);
+<<<<<<< HEAD
+
+    useEffect(() => {
+        const fetchTopUsers = async () => {
+            try {
+                const allPublicaciones = await obtenerPublicaciones();
+
+                const userLikesMap: { [userId: string]: { nombre: string; imagen: string; totalLikes: number } } = {};
+
+                for (const pub of allPublicaciones) {
+                    // Solo considera publicaciones de usuarios con estatus true para el top de usuarios
+                    if (pub.PUBusuario && pub.PUBusuario._id && pub.PUBusuario.Estatus) {
+                        const likeCountData = await obtenerCantidad(pub._id);
+                        const likes = likeCountData?.cantidadLikes || 0;
+                        const userId = pub.PUBusuario._id;
+                        const userName = pub.PUBusuario.nombre;
+                        const userImage = pub.PUBusuario.imagen;
+                        if (!userLikesMap[userId]) {
+                            userLikesMap[userId] = {
+                                nombre: userName,
+                                imagen: userImage,
+                                totalLikes: 0
+                            };
+                        }
+                        userLikesMap[userId].totalLikes += likes;
+                    }
+                }
+
+                const sortedUsers = Object.entries(userLikesMap)
+                    .map(([id, data]) => ({
+                        _id: id,
+                        nombre: data.nombre,
+                        imagen: data.imagen,
+                        totalLikes: data.totalLikes
+                    }))
+                    .sort((a, b) => b.totalLikes - a.totalLikes)
+                    .slice(0, 10);
+
+                setTopUsuarios(sortedUsers);
+            } catch (error) {
+                console.error("Error al obtener el top de usuarios:", error);
+            }
+        };
+
+        fetchTopUsers();
+    }, []);
+=======
+>>>>>>> c942114410c855e0e02cbf53a00c516ef6ffec6a
 
     useEffect(() => {
         const fetchTopUsers = async () => {
@@ -82,6 +130,11 @@ const Home: React.FC = () => {
         fetchTopUsers();
     }, []);
     const publicacionesFiltradas = publicaciones.filter(pub => {
+        // Asegúrate de que el usuario exista y su estatus sea true
+        if (!pub.PUBusuario || !pub.PUBusuario.Estatus) {
+            return false;
+        }
+
         const tieneCategorias = pub.PUBcategorias && pub.PUBcategorias.length > 0;
         if (!tieneCategorias) return false;
 
@@ -207,7 +260,11 @@ const UsuariosPopulares: React.FC<UsuarioPopularProps> = ({ usuario, puesto }) =
             <Link
                 to={`/Perfil/${usuario._id}`}
                 className="p-2 bg-gray-700 text-white mr-3 mb-3 rounded hover:drop-shadow-xl hover:bg-gray-500 flex flex-col items-center w-full">
+<<<<<<< HEAD
+
+=======
                 {/* Aquí va la imagen del usuario */}
+>>>>>>> c942114410c855e0e02cbf53a00c516ef6ffec6a
                 <img
                     src={usuario.imagen || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTELPl2WQuMBShrQaqe0IWYjLf_y2XRkhGNWcdLfADOPJ6KAJe84GaYOQ51__wkkbGfR78&usqp=CAU"}
                     alt={usuario.nombre}
