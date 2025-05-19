@@ -43,14 +43,14 @@ const Comentario: React.FC<ComentarioProps> = ({ comentario, onActualizar, Fecha
                 comenta,
                 "Editar"
             );
-            showAlert("Comentario editado exitosamente", "success");
+            showAlert("¡Comentario editado exitosamente!", "success");
             toggleFormulario();
             onActualizar()
         } catch (error: any) {
             if (error.response && error.response.data && error.response.data.error) {
                 showAlert(`❌ ${error.response.data.error}`, "error");
             } else {
-                alert("Error inesperado al editar el comentario");
+                console.error("Error inesperado al editar el comentario");
             }
         }
     };
@@ -68,13 +68,13 @@ const Comentario: React.FC<ComentarioProps> = ({ comentario, onActualizar, Fecha
                 false,
                 "Borrar"
             );
-            showAlert("Comentario borrado exitosamente", "success");
+            showAlert("¡Comentario borrado exitosamente!", "success");
             onActualizar();
         } catch (error: any) {
             if (error.response && error.response.data && error.response.data.error) {
                 showAlert(`❌ ${error.response.data.error}`, "error");
             } else {
-                alert("Error inesperado al borrar el comentario");
+                console.error("Error inesperado al borrar el comentario");
             }
         }
     };

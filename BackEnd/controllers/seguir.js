@@ -1,5 +1,6 @@
 import seguirModelo from "../models/seguir.js";
 import usuarioModel from "../models/usuarios.js";
+import logger from "../helpers/logger.js";
 
 class seguirController {
     constructor(){
@@ -20,6 +21,7 @@ class seguirController {
             const data = await seguirModelo.create(req.body)
             res.status(201).json(data);
         }catch(e){
+            logger.error(e);
             res.status(500).send(e)
         }
     }
@@ -30,6 +32,7 @@ class seguirController {
             const data = await seguirModelo.delete(id);
             res.status(206).json(data);
         }catch(e){
+            logger.error(e);
             res.status(500).send(e);
         }
     }
@@ -40,6 +43,7 @@ class seguirController {
             const data = await seguirModelo.getOneSiguiendo(SEGusuario, SEGsiguiendoA);
             res.status(206).json(data);
         }catch(e){
+            logger.error(e);
             res.status(500).send(e);
         }
     }
@@ -56,6 +60,7 @@ class seguirController {
                 seguidores
             })
         }catch(e){
+            logger.error(e);
             res.status(500).send(e)
         }
     }

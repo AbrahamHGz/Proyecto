@@ -1,6 +1,7 @@
 import favoritoModel from "../models/favorito.js";
 import usuarioModel from "../models/usuarios.js";
 import publicacionModel from "../models/publicacion.js";
+import logger from "../helpers/logger.js";
 
 class favoritoController {
     constructor() {
@@ -21,6 +22,7 @@ class favoritoController {
             const data = await favoritoModel.create({ FAVusuario: existeUsuario._id, FAVpublicacion: existePublicacion._id });
             res.status(201).json(data);
         } catch (e) {
+            logger.error(e);
             res.status(500).send(e);
         }
     }
@@ -31,6 +33,7 @@ class favoritoController {
             const data = await favoritoModel.update(id, req.body);
             res.status(200).json(data);
         } catch (e) {
+            logger.error(e);
             res.status(500).send(e);
         }
     }
@@ -41,6 +44,7 @@ class favoritoController {
             const data = await favoritoModel.delete(id);
             res.status(206).json(data);
         } catch (e) {
+            logger.error(e);
             res.status(500).send(e);
         }
     }
@@ -51,6 +55,7 @@ class favoritoController {
             const data = await favoritoModel.getAll();
             res.status(201).json(data);
         } catch (e) {
+            logger.error(e);
             res.status(500).send(e);
         }
     }
@@ -61,6 +66,7 @@ class favoritoController {
             const data = await favoritoModel.getAllByUsu(FAVusuario);
             res.status(201).json(data);
         } catch (e) {
+            logger.error(e);
             res.status(500).send(e);
         }
     }
@@ -71,6 +77,7 @@ class favoritoController {
             const data = await favoritoModel.getOne(id);
             res.status(206).json(data);
         } catch (e) {
+            logger.error(e);
             res.status(500).send(e);
         }
     }
@@ -81,6 +88,7 @@ class favoritoController {
             const data = await favoritoModel.getOneFav(FAVusuario,FAVpublicacion);
             res.status(206).json(data);
         } catch (e) {
+            logger.error(e);
             res.status(500).send(e);
         }
     }

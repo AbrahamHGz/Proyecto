@@ -1,6 +1,7 @@
 import { generarToken } from "../helpers/authentication.js";
 import usuarioModel from "../models/usuarios.js";
 import jsonwebtoken from 'jsonwebtoken';
+import logger from "../helpers/logger.js";
 
 class usuarioControler {
     constructor() {
@@ -42,6 +43,7 @@ class usuarioControler {
             const data = await usuarioModel.create(req.body);
             res.status(201).json(data);
         } catch (e) {
+            logger.error(e);
             res.status(500).send(e);
         }
     }
@@ -70,6 +72,7 @@ class usuarioControler {
             const data = await usuarioModel.update(id, req.body);
             res.status(200).json(data);
         } catch (e) {
+            logger.error(e);
             res.status(500).send(e);
         }
     }
@@ -129,6 +132,7 @@ class usuarioControler {
             const data = await usuarioModel.updateForEmail(email, req.body);
             res.status(200).json(data);
         } catch (e) {
+            logger.error(e);
             res.status(500).send(e);
         }
     }
@@ -139,6 +143,7 @@ class usuarioControler {
             const data = await usuarioModel.delete(id);
             res.status(206).json(data);
         } catch (e) {
+            logger.error(e);
             res.status(500).send(e);
         }
     }
@@ -148,6 +153,7 @@ class usuarioControler {
             const data = await usuarioModel.getAll();
             res.status(200).json(data);
         } catch (e) {
+            logger.error(e);
             res.status(500).send(e);
         }
     }
@@ -157,6 +163,7 @@ class usuarioControler {
             const data = await usuarioModel.getAllArtistas();
             res.status(200).json(data);
         } catch (e) {
+            logger.error(e);
             res.status(500).send(e);
         }
     }
@@ -166,6 +173,7 @@ class usuarioControler {
             const data = await usuarioModel.getAllAdmins();
             res.status(200).json(data);
         } catch (e) {
+            logger.error(e);
             res.status(500).send(e);
         }
     }
@@ -195,15 +203,12 @@ class usuarioControler {
         }
     }
     
-<<<<<<< HEAD
-=======
- // ¡NUEVA FUNCIÓN AQUÍ! Para el admin.
->>>>>>> c942114410c855e0e02cbf53a00c516ef6ffec6a
  async getAllArtistasForAdmin(req, res) {
     try {
         const data = await usuarioModel.getAllArtistasAdmin();
         res.status(200).json(data);
     } catch (e) {
+        logger.error(e);
         res.status(500).send(e);
     }
 }
@@ -226,6 +231,7 @@ class usuarioControler {
             const token = generarToken(email, existeUsuario.TipoUsu);
             res.status(200).json({ msg: 'Usuario autenticado', token, user: { email: existeUsuario.email, tipo: existeUsuario.TipoUsu, id: existeUsuario._id } });
         } catch (e) {
+            logger.error(e);
             res.status(500).send(e);
         }
     }

@@ -154,7 +154,6 @@ const Admins: React.FC<AdminProps> = ({ AdminP, onStatusToggle }) => {
                         <p className="font-semibold">Fecha de ingreso:</p> <p>{formatearFecha(AdminP.createdAt)}</p>
                     </div>
 
-<<<<<<< HEAD
                     <button
                         className={`w-full rounded p-2 font-bold text-white ${
                             isUserActive ? "bg-green-500 hover:bg-green-400" : "bg-red-500 hover:bg-red-400"
@@ -163,17 +162,6 @@ const Admins: React.FC<AdminProps> = ({ AdminP, onStatusToggle }) => {
                     >
                         {isUserActive ? "Activo" : "Desactivo"}
                     </button>
-=======
-                    {AdminP?.Estatus ? (
-                        <button className="w-full hover:bg-red-400 bg-red-500 rounded p-2 font-bold text-white ">Desactivar</button>
-
-                    ): (
-                        <button className="w-full hover:bg-slate-400 bg-slate-500 rounded p-2 font-bold text-white ">Reactivar</button>
-
-                    )}
-
-
->>>>>>> c942114410c855e0e02cbf53a00c516ef6ffec6a
                 </div>
             </div>
         </>

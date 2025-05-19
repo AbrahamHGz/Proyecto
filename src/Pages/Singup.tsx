@@ -61,7 +61,7 @@ const Singup: React.FC = () => {
     setShowConfirm(false);
     try {
       await crearUsuario(nombre, email, password, sexo, TipoUsu, new Date(FechaNac), Estatus);
-      showAlert("Usuario creado exitosamente", 'success');
+      showAlert("¡Usuario creado exitosamente!", 'success');
       // reset form
       setNombre("");
       setEmail("");
@@ -77,7 +77,7 @@ const Singup: React.FC = () => {
       if (error.response?.data?.error) {
         showAlert(`❌ ${error.response.data.error}`, 'error')
       } else {
-        alert("Error inesperado al crear usuario");
+        console.log("Error inesperado al crear usuario");
       }
     }
   };

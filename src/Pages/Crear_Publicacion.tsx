@@ -95,7 +95,7 @@ const Crear_Publicacion: React.FC = () => {
                 descripcion,
                 imagen
             );
-            showAlert(id ? 'Publicación actualizada' : 'Publicación creada', "success");
+            showAlert(id ? '¡Publicación actualizada!' : '¡Publicación creada!', "success");
             setTimeout(() => {
                 navigate(`/Perfil/${ids}`);
             }, 1000);
@@ -103,7 +103,7 @@ const Crear_Publicacion: React.FC = () => {
             if (error.response && error.response.data && error.response.data.error) {
                 showAlert(`❌ ${error.response.data.error}`);
             } else {
-                alert("Error inesperado al crear la publicación");
+                console.error("Error inesperado al crear la publicación");
             }
         } finally {
             setIsSubmitting(false);

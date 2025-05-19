@@ -56,7 +56,7 @@ const Categorias: React.FC = () => {
       if (error.response?.data?.error) {
         showAlert(`❌ ${error.response.data.error}`, "success");
       } else {
-        alert("Error inesperado al crear la categoría");
+        console.error("Error inesperado al crear la categoría");
       }
     }
   };

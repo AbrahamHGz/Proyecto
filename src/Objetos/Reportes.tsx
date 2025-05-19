@@ -11,14 +11,7 @@ const Reportes: React.FC = () => {
     const [startDateFilter, setStartDateFilter] = useState<string>("");
     const [endDateFilter, setEndDateFilter] = useState<string>("");
 
-<<<<<<< HEAD
     const fetchReports = async () => {
-=======
-    const [report, setReport] = useState<I_Reporte[]>([])
-
-
-    const fetchReport = async () => {
->>>>>>> c942114410c855e0e02cbf53a00c516ef6ffec6a
         try {
             const data = await obtenerReporte();
             setReports(data);
@@ -132,17 +125,6 @@ const Report: React.FC<ReporteProps> = ({ reporteP, fetch }) => {
         return `${dia}-${mes}-${anio}`;
     };
 
-<<<<<<< HEAD
-=======
-    const [alerts, setAlerts] = useState<{msg: string, type: 'success' | 'error'}[]>([]);
-
-    const showAlert = (msg: string, type: 'success' | 'error' = 'error') => {
-        setAlerts([{msg, type}]);
-        setTimeout(() => setAlerts([]), 3000);
-    };
-    
-
->>>>>>> c942114410c855e0e02cbf53a00c516ef6ffec6a
     const [respuesta, setRespuesta] = useState('');
     const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
     const [actionToDelete, setActionToDelete] = useState<'publicacion' | 'comentario' | null>(null);
@@ -160,7 +142,6 @@ const Report: React.FC<ReporteProps> = ({ reporteP, fetch }) => {
                 respuesta,
                 true
             );
-<<<<<<< HEAD
             alert("Reporte actualizado");
             setRespuesta('');
             fetch();
@@ -169,16 +150,6 @@ const Report: React.FC<ReporteProps> = ({ reporteP, fetch }) => {
                 alert(`Error: ${error.response.data.error}`);
             } else {
                 alert("Error inesperado al actualizar el reporte");
-=======
-            showAlert("¡Reporte actualizado!", "success");
-            setRespuesta('')
-            fetch();
-        } catch (error: any) {
-            if (error.response && error.response.data && error.response.data.error) {
-                showAlert(`❌ ${error.response.data.error}`, "error");  // Muestra el mensaje del backend
-            } else {
-                console.log("Error inesperado al actualizar el reporte");  // Fallback si el error no tiene mensaje específico
->>>>>>> c942114410c855e0e02cbf53a00c516ef6ffec6a
             }
         }
     };
@@ -208,7 +179,6 @@ const Report: React.FC<ReporteProps> = ({ reporteP, fetch }) => {
             await borrarPublicacion(
                 reporteP?.REPpublicacion._id,
                 false
-<<<<<<< HEAD
             );
             alert('Publicación borrada');
             fetch();
@@ -217,16 +187,6 @@ const Report: React.FC<ReporteProps> = ({ reporteP, fetch }) => {
                 alert(`Error: ${error.response.data.error}`);
             } else {
                 alert("Error inesperado al borrar la publicación");
-=======
-            )
-            showAlert('Publicacion borradoa', "success")
-            fetch();
-        } catch (error: any) {
-            if (error.response && error.response.data && error.response.data.error) {
-               showAlert(`❌ ${error.response.data.error}`, "error");
-            } else {
-                console.log("Error inesperado al borrar la publicacion");
->>>>>>> c942114410c855e0e02cbf53a00c516ef6ffec6a
             }
         }
     };
@@ -237,7 +197,6 @@ const Report: React.FC<ReporteProps> = ({ reporteP, fetch }) => {
                 reporteP?.REPcomentario._id,
                 false,
                 "Borrar"
-<<<<<<< HEAD
             );
             alert('Comentario borrado');
             fetch();
@@ -246,27 +205,17 @@ const Report: React.FC<ReporteProps> = ({ reporteP, fetch }) => {
                 alert(`Error: ${error.response.data.error}`);
             } else {
                 alert("Error inesperado al borrar el comentario");
-=======
-            )
-            showAlert(' Comentario borrado', "success")
-            fetch();
-        } catch (error: any) {
-            if (error.response && error.response.data && error.response.data.error) {
-                showAlert(`❌ ${error.response.data.error}`, "error");
-            } else {
-                console.log("Error inesperado al borrar el comentario");
->>>>>>> c942114410c855e0e02cbf53a00c516ef6ffec6a
             }
         }
     };
 
     return (
         <>
-            {alerts.map((alert, idx) => (
+            {/* {alerts.map((alert, idx) => (
                 <div key={idx} className={`fixed top-5 left-1/2 transform -translate-x-1/2 ${alert.type === 'error' ? 'bg-red-600' : 'bg-green-600'} text-white px-6 py-2 rounded-lg shadow-lg z-50`}>
                     {alert.msg}
                 </div>
-            ))}
+            ))} */}
             <div className="bg-slate-300 p-2 rounded mt-2">
                 <div className="flex items-center space-x-2">
                     <img src={reporteP?.REPusuario.imagen || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTELPl2WQuMBShrQaqe0IWYjLf_y2XRkhGNWcdLfADOPJ6KAJe84GaYOQ51__wkkbGfR78&usqp=CAU"}
@@ -286,12 +235,7 @@ const Report: React.FC<ReporteProps> = ({ reporteP, fetch }) => {
                             <p><strong>Correo:</strong> {reporteP?.REPpublicacion.PUBusuario.email}</p>
                             <p><strong>Nombre de la publicación:</strong> {reporteP?.REPpublicacion.PUBnombre}</p>
                             {reporteP?.REPpublicacion.PUBestatus ? (
-<<<<<<< HEAD
                                 <button onClick={() => handleShowDeleteConfirm('publicacion')} className="bg-red-500 hover:bg-red-400 p-2 font-bold text-white rounded">Borrar Publicación</button>
-=======
-                                <button onClick={desactivarPublicacion} className="bg-red-500 hover:bg-red-400 p-2 font-bold text-white rounded">Borrar</button>
-
->>>>>>> c942114410c855e0e02cbf53a00c516ef6ffec6a
                             ) : (
                                 <p className="flex justify-center font-semibold text-xl">¡Publicación borrada!</p>
                             )}
@@ -299,16 +243,9 @@ const Report: React.FC<ReporteProps> = ({ reporteP, fetch }) => {
                     ) : (
                         <div className={`${reporteP?.REPcomentario.COMestatus ? `bg-red-300` : `bg-green-300`} p-2 m-2 rounded`}>
                             <p><strong>Correo:</strong> {reporteP?.REPcomentario.COMusuario.email}</p>
-<<<<<<< HEAD
                             <p><strong>Comentario:</strong> {reporteP?.REPcomentario.COMdescripcion}</p>
                             {reporteP?.REPcomentario.COMestatus ? (
                                 <button onClick={() => handleShowDeleteConfirm('comentario')} className="bg-red-500 hover:bg-red-400 p-2 font-bold text-white rounded">Borrar Comentario</button>
-=======
-                            <p><strong>Comentario:</strong>  {reporteP?.REPcomentario.COMdescripcion}</p>
-
-                            {reporteP?.REPcomentario.COMestatus ? (
-                                <button onClick={desactivarComentario} className="bg-red-500 hover:bg-red-400 p-2 font-bold text-white rounded">Borrar</button>
->>>>>>> c942114410c855e0e02cbf53a00c516ef6ffec6a
                             ) : (
                                 <p className="flex justify-center font-semibold text-xl">¡Comentario borrado!</p>
                             )}

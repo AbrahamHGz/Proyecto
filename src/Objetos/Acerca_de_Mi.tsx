@@ -62,7 +62,7 @@ const Acerca_de_mi: React.FC<usuarioProps> = ({ usuario_i }) => {
             if (error.response && error.response.data && error.response.data.error) {
                 showAlert(`${error.response.data.error}`,"error");
             } else {
-                alert("Error inesperado al editar el usuario");
+                console.error("Error inesperado al editar el usuario");
             }
         }
     };

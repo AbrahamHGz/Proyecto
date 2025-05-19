@@ -62,7 +62,7 @@ const UsuariosAd: React.FC = () => {
             fetchPublicacion();
         } catch (error) {
             console.error("Error al cambiar el estado del usuario:", error);
-            alert("Hubo un error al cambiar el estado del usuario.");
+            console.error("Hubo un error al cambiar el estado del usuario.");
         }
     };
 
@@ -154,11 +154,7 @@ const Usaurioss: React.FC<ArteIPropr> = ({ P_Artistas, onStatusToggle }) => {
                         }`}
                         onClick={() => onStatusToggle(P_Artistas.email, isUserActive)}
                     >
-<<<<<<< HEAD
                         {isUserActive ? "Activo" : "Desactivo"}
-=======
-                        {isUserActive ? "Activo" : "Desactivar"}
->>>>>>> c942114410c855e0e02cbf53a00c516ef6ffec6a
                     </button>
                 </div>
             </div>

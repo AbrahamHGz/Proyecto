@@ -22,7 +22,6 @@ const Favoritos: React.FC<UsuarioProps> = ({ usuario_i }) => {
   return (
     <> <div className="items-center space-x-5 mb-4">
         <h1 className="text-2xl font-semibold">Favoritos</h1>
-<<<<<<< HEAD
 
          {/*  <div className="grid md:grid-cols-3 gap-4">
           <div>
@@ -33,21 +32,6 @@ const Favoritos: React.FC<UsuarioProps> = ({ usuario_i }) => {
 
     
           {/* <div> <label className="font-semibold">Desde:</label>    <br />  <input type="date" className="bg-white rounded px-2" />   </div>
-=======
-          <div className="grid md:grid-cols-3 gap-4">
-          <div>
-            <label className="font-semibold">Categoría:</label>
-            <br />
-            <CategoriaSelect value={categoria} onChange={setCategoria} />
-          </div>
-
-          <div>
-            <label className="font-semibold">Desde:</label>
-            <br />
-            <input type="date" className="bg-white rounded px-2" />
-          </div>
-
->>>>>>> c942114410c855e0e02cbf53a00c516ef6ffec6a
           <div>
             <label className="font-semibold">Hasta:</label>
             <br />
@@ -57,19 +41,12 @@ const Favoritos: React.FC<UsuarioProps> = ({ usuario_i }) => {
 
         <button
           className="mt-2 p-2 bg-slate-800 rounded hover:bg-slate-700 font-bold text-white"
-<<<<<<< HEAD
           onClick={e => e.preventDefault()}> Filtrar  
         </button >*/}
 
         
       </div>
 
-=======
-          onClick={e => e.preventDefault()}> Filtrar
-        </button>
-      </div>
-
->>>>>>> c942114410c855e0e02cbf53a00c516ef6ffec6a
       <div className="grid md:grid-cols-4 grid-cols-3">
         {favoritos
           .filter( fav => fav.FAVpublicacion != null && fav.FAVpublicacion.PUBusuario != null)

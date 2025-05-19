@@ -73,7 +73,7 @@ const Editar_Perfil: React.FC = () => {
             authContext?.logout();
             navigate("/login");
         } catch (e) {
-            alert("Error al intentar salir de la aplicacion");
+            console.error("Error al intentar salir de la aplicacion");
         }
     };
 
@@ -85,7 +85,7 @@ const Editar_Perfil: React.FC = () => {
             Salir();
         } catch (error: any) {
             if (error.response?.data?.error) alert(`Error: ${error.response.data.error}`);
-            else alert("Error inesperado al borrar el usuario");
+            else console.error("Error inesperado al borrar el usuario");
         }
     };
 
@@ -114,7 +114,7 @@ const Editar_Perfil: React.FC = () => {
             }, 1000);
         } catch (error: any) {
             if (error.response?.data?.error) showAlert(`❌ ${error.response.data.error}`, "error");
-            else alert("Error inesperado al editar el usuario");
+            else console.error("Error inesperado al editar el usuario");
         }
     };
 
@@ -139,10 +139,6 @@ const Editar_Perfil: React.FC = () => {
     return (
         <>
             <Menu />
-<<<<<<< HEAD
-=======
-            {/* Floating alerts */}
->>>>>>> c942114410c855e0e02cbf53a00c516ef6ffec6a
             {alerts.map((alert, idx) => (
                 <div key={idx} className={`fixed top-5 left-1/2 transform -translate-x-1/2 ${alert.type === 'error' ? 'bg-red-600' : 'bg-green-600'} text-white px-6 py-2 rounded-lg shadow-lg z-50`}>
                     {alert.msg}
@@ -251,24 +247,12 @@ const Editar_Perfil: React.FC = () => {
                     <div className="bg-white/90 p-6 rounded-lg shadow-lg space-y-4 backdrop-blur-sm">
                         <p className="text-lg font-semibold">¿Seguro que deseas guardar estos cambios?</p>
                         <div className="flex justify-end space-x-4">
-<<<<<<< HEAD
                             <button onClick={handleCancel} className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400">Cancelar </button>
                             <button onClick={handleConfirm} className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Confirmar </button>
 
  </div>
  </div>
  </div>)}
-=======
-                            <button onClick={handleCancel} className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400">
-                                Cancelar </button>
-                            <button onClick={handleConfirm} className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
-                                Confirmar </button>
-
-                        </div>
-                    </div>
-                </div>
-            )}
->>>>>>> c942114410c855e0e02cbf53a00c516ef6ffec6a
         </>
     );
 };

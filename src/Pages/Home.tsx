@@ -37,7 +37,6 @@ const Home: React.FC = () => {
         const interval = setInterval(() => { setLoadingDots(prev => prev.length < 3 ? prev + '.' : ''); }, 500);
         return () => clearInterval(interval);
     }, [loading]);
-<<<<<<< HEAD
 
     useEffect(() => {
         const fetchTopUsers = async () => {
@@ -83,8 +82,6 @@ const Home: React.FC = () => {
 
         fetchTopUsers();
     }, []);
-=======
->>>>>>> c942114410c855e0e02cbf53a00c516ef6ffec6a
 
     useEffect(() => {
         const fetchTopUsers = async () => {
@@ -260,11 +257,6 @@ const UsuariosPopulares: React.FC<UsuarioPopularProps> = ({ usuario, puesto }) =
             <Link
                 to={`/Perfil/${usuario._id}`}
                 className="p-2 bg-gray-700 text-white mr-3 mb-3 rounded hover:drop-shadow-xl hover:bg-gray-500 flex flex-col items-center w-full">
-<<<<<<< HEAD
-
-=======
-                {/* Aquí va la imagen del usuario */}
->>>>>>> c942114410c855e0e02cbf53a00c516ef6ffec6a
                 <img
                     src={usuario.imagen || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTELPl2WQuMBShrQaqe0IWYjLf_y2XRkhGNWcdLfADOPJ6KAJe84GaYOQ51__wkkbGfR78&usqp=CAU"}
                     alt={usuario.nombre}

@@ -55,7 +55,7 @@ const Login: React.FC = () => {
             } else if (error.response && error.response.data && error.response.data.error) {
                 showAlert(`❌ ${error.response.data.error}`, 'error')
             } else {
-                alert("Error inesperado al iniciar sesión");
+                console.log("Error inesperado al iniciar sesión");
             }
         }
     };
