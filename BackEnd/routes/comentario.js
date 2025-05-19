@@ -7,7 +7,7 @@ import {verificarToken} from '../helpers/authentication.js'
 console.log(comentarioController)
 
 route.use(cors({
-    origin: 'http://localhost:5173', // Permitir solo tu frontend
+    origin: `http://localhost:${process.env.LOCALHOST}`, // Permitir solo tu frontend
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
 }));

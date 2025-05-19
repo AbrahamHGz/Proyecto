@@ -7,7 +7,7 @@ const route = express.Router();
 
 route.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: `http://localhost:${process.env.LOCALHOST}`,
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
