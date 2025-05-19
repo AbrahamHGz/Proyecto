@@ -128,10 +128,14 @@ const Report: React.FC<ReporteProps> = ({ reporteP, fetch }) => {
     const [respuesta, setRespuesta] = useState('');
     const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
     const [actionToDelete, setActionToDelete] = useState<'publicacion' | 'comentario' | null>(null);
-
+    const [alerts, setAlerts] = useState<{ msg: string, type: 'success' | 'error' }[]>([]);
     const handleRespuesta = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         const value = e.target.value;
         setRespuesta(value);
+    };
+    const showAlert = (msg: string, type: 'success' | 'error' = 'error') => {
+        setAlerts([{ msg, type }]);
+        setTimeout(() => setAlerts([]), 3000);
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -142,14 +146,17 @@ const Report: React.FC<ReporteProps> = ({ reporteP, fetch }) => {
                 respuesta,
                 true
             );
-            alert("Reporte actualizado");
+            showAlert("Reporte actualizado", 'success');
             setRespuesta('');
-            fetch();
+            setTimeout(() => {
+                fetch();
+
+            }, 1000);
         } catch (error: any) {
             if (error.response && error.response.data && error.response.data.error) {
-                alert(`Error: ${error.response.data.error}`);
+                showAlert(`❌ ${error.response.data.error}`, 'error');
             } else {
-                alert("Error inesperado al actualizar el reporte");
+                console.error("Error inesperado al actualizar el reporte");
             }
         }
     };
@@ -180,13 +187,16 @@ const Report: React.FC<ReporteProps> = ({ reporteP, fetch }) => {
                 reporteP?.REPpublicacion._id,
                 false
             );
-            alert('Publicación borrada');
-            fetch();
+            showAlert('Publicación borrada', 'success');
+            setTimeout(() => {
+                fetch();
+                
+            }, 100);
         } catch (error: any) {
             if (error.response && error.response.data && error.response.data.error) {
-                alert(`Error: ${error.response.data.error}`);
+                showAlert(`❌ ${error.response.data.error}`, 'error');
             } else {
-                alert("Error inesperado al borrar la publicación");
+                console.error("Error inesperado al borrar la publicación");
             }
         }
     };
@@ -198,13 +208,16 @@ const Report: React.FC<ReporteProps> = ({ reporteP, fetch }) => {
                 false,
                 "Borrar"
             );
-            alert('Comentario borrado');
-            fetch();
+            showAlert('¡Comentario borrado!', 'success');
+            setTimeout(() => {
+                fetch();
+
+            }, 1000);
         } catch (error: any) {
             if (error.response && error.response.data && error.response.data.error) {
-                alert(`Error: ${error.response.data.error}`);
+                showAlert(`❌ ${error.response.data.error}`, 'error');
             } else {
-                alert("Error inesperado al borrar el comentario");
+                console.log("Error inesperado al borrar el comentario");
             }
         }
     };
@@ -216,6 +229,11 @@ const Report: React.FC<ReporteProps> = ({ reporteP, fetch }) => {
                     {alert.msg}
                 </div>
             ))} */}
+            {alerts.map((alert, idx) => (
+                <div key={idx} className={`fixed top-5 left-1/2 transform -translate-x-1/2 ${alert.type === 'error' ? 'bg-red-600' : 'bg-green-600'} text-white px-6 py-2 rounded-lg shadow-lg z-50`}>
+                    {alert.msg}
+                </div>
+            ))}
             <div className="bg-slate-300 p-2 rounded mt-2">
                 <div className="flex items-center space-x-2">
                     <img src={reporteP?.REPusuario.imagen || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTELPl2WQuMBShrQaqe0IWYjLf_y2XRkhGNWcdLfADOPJ6KAJe84GaYOQ51__wkkbGfR78&usqp=CAU"}
