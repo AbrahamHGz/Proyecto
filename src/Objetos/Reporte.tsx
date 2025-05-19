@@ -1,21 +1,25 @@
 import React, { useState, useEffect } from "react";
 import { crearReporte } from "../services/apiReporte";
 
-/// Pantalla modal
 interface ModalProps {
     onToggle: () => void;
     Tipo: string;
-    idPublicacion:string | null,
-    idUsuario:string
-    idComentario:string | null
+    idPublicacion: string | null,
+    idUsuario: string
+    idComentario: string | null
 }
 
-const ModalReporte: React.FC<ModalProps> = ({onToggle, Tipo, idPublicacion, idUsuario, idComentario}) => {
+const ModalReporte: React.FC<ModalProps> = ({ onToggle, Tipo, idPublicacion, idUsuario, idComentario }) => {
 
     const [descripcion, setDescripcion] = useState('')
     const handleDescripcion = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         const value = e.target.value;
         setDescripcion(value);
+    };
+    const [alerts, setAlerts] = useState<{ msg: string, type: 'success' | 'error' }[]>([]);
+    const showAlert = (msg: string, type: 'success' | 'error' = 'error') => {
+        setAlerts([{ msg, type }]);
+        setTimeout(() => setAlerts([]), 3000);
     };
     const handleSubmit = async (e: React.FormEvent) => {
 
@@ -28,25 +32,31 @@ const ModalReporte: React.FC<ModalProps> = ({onToggle, Tipo, idPublicacion, idUs
                 idPublicacion,
                 idComentario
             );
-            alert("Reporte exitoso");
-            onToggle();
+            showAlert("¡Reporte exitoso!", 'success');
+            setTimeout(() => {
+                onToggle();
+                
+            }, 1000);
 
         } catch (error: any) {
             if (error.response && error.response.data && error.response.data.error) {
-                alert(`Error: ${error.response.data.error}`);  // Muestra el mensaje del backend
+                showAlert(`Error: ${error.response.data.error}`);
             } else {
-                alert("Error inesperado al reportar");  // Fallback si el error no tiene mensaje específico
+                console.error("Error inesperado al reportar");
             }
         }
     };
 
-    
+
 
     return (
         <>
-            {/* Fondo oscuro semitransparente */}
             <div className="fixed inset-0 backdrop-blur-sm  bg-opacity-50 z-50 flex items-center justify-center">
-                {/* Contenido del modal */}
+            {alerts.map((alert, idx) => (
+                <div key={idx} className={`z-50 fixed top-5 left-1/2 transform -translate-x-1/2 ${alert.type === 'error' ? 'bg-red-600' : 'bg-green-600'} text-white px-6 py-2 rounded-lg shadow-lg z-50`}>
+                    {alert.msg}
+                </div>
+            ))}
                 <div className="bg-gray-200 rounded-lg p-6 shadow-md w-full max-w-md mx-4">
                     <p className="text-gray-800 font-semibold text-2xl text-center mb-6">
                         ¿Estás seguro que quieres proceder con esta acción?

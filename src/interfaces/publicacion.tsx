@@ -8,7 +8,8 @@ export interface publicacion {
     PUBusuario: {
         _id:string,
         nombre:string,
-        imagen:string;
+        imagen:string,
+        Estatus:boolean; 
     },
     PUBlikes:number;
     PUBdescripcion:string;
@@ -16,4 +17,5 @@ export interface publicacion {
     PUBimagen:string,
     createdAt:string;
     updatedAt:string
+    likesCount: number;
 }

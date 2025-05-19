@@ -27,7 +27,7 @@ class comentarioModelo {
         return await Comentario.find({COMpublicacion, COMestatus: true})
         .populate({
             path:'COMusuario', 
-            select:'nombre',
+            select:'nombre imagen',
             match: {Estatus: true}
         })
         .then(comentario => {
@@ -37,7 +37,7 @@ class comentarioModelo {
 
     async getOne(id){
        return await Comentario.findById({_id: new mongoose.Types.ObjectId(id)})
-       .populate('COMusuario', 'nombre')
+       .populate('COMusuario', 'nombre email')
        .populate('COMpublicacion', 'PUBnombre')
     }
 }

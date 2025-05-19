@@ -2,6 +2,7 @@ import express from 'express';
 import comentarioController from '../controllers/comentario.js'
 const route = express.Router();
 import cors from 'cors';
+import {verificarToken} from '../helpers/authentication.js'
 
 console.log(comentarioController)
 
@@ -11,11 +12,11 @@ route.use(cors({
     allowedHeaders: ['Content-Type', 'Authorization'],
 }));
 
-route.post('/', comentarioController.create);
+route.post('/', verificarToken,comentarioController.create);
 route.get('/:id', comentarioController.getOne);
 route.get('/', comentarioController.getAll);
 route.get('/com/:id', comentarioController.getAllByPub)
-route.put('/:id', comentarioController.update);
-route.delete('/:id' ,comentarioController.delete);
+route.put('/:id',verificarToken ,comentarioController.update);
+route.delete('/:id' ,verificarToken,comentarioController.delete);
 
 export default route;

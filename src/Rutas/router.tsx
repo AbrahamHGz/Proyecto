@@ -14,6 +14,10 @@ import Admin from '../Pages/Admin'
 import Agrega_Administrador from '../Pages/Agrega_Administrador'
 import PruebaDb from '../Pages/PruebaDb'
 import PrivateRoute from '../Rutas/PrivateRoute'
+import RecuperarContraseña from '../Pages/RecuperarContraseña';
+import Confirmacion from '../Pages/Confirmacion';
+import Error from '../Pages/Error';
+import ErrorCategoria from '../Pages/ErrorCategoria';
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -33,7 +37,12 @@ const router = createBrowserRouter(
             <Route path='/Administrador' element={<Admin />}/>
             <Route path='/Agrega-Administrador' element={<Agrega_Administrador />}/>
             <Route path='/PruebaDB' element={<PruebaDb />}/>
-        
+            <Route path='/RecuperarContraseña' element={<RecuperarContraseña />} />
+            <Route path='/Confirmacion' element={<Confirmacion />}/>
+            <Route path='/Error' element={<Error />} />
+            <Route path='/ErrorCategoria' element={<ErrorCategoria />} />
+
+
             {/* Rutas privadas */}
             <Route element={<PrivateRoute />}>
                <Route path='/Home' element={<Home />}/>

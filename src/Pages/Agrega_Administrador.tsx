@@ -25,7 +25,12 @@ const Agrega_Administrador: React.FC = () => {
     const fileInputRef = useRef<HTMLInputElement>(null);
     const usuarioInfo = JSON.parse(sessionStorage.getItem("USER_INFO") || "{}");
     const ids = usuarioInfo.id
+    const [alerts, setAlerts] = useState<{ msg: string, type: 'success' | 'error' }[]>([]);
 
+    const showAlert = (msg: string, type: 'success' | 'error' = 'error') => {
+        setAlerts([{ msg, type }]);
+        setTimeout(() => setAlerts([]), 3000);
+    };
     const navigate = useNavigate();
     const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
@@ -78,26 +83,29 @@ const Agrega_Administrador: React.FC = () => {
         e.preventDefault();
         try {
             await crearUsuario(
-                nombre, 
+                nombre,
                 email,
-                password, 
-                sexo, 
+                password,
+                sexo,
                 TipoUsu,
                 new Date(FechaNac),
-                Estatus 
+                Estatus
             );
-            alert("Administrador creado exitosamente");
+            showAlert("¡Administrador creado exitosamente!", 'success');
             setNombre("");
             setEmail("");
             setPassword("");
             setSexo("");
             setFechaNac("");
-            navigate(`/Administrador/${ids}`);
+            setTimeout(() => {
+                navigate(`/Administrador/${ids}`);
+
+            }, 1000);
         } catch (error: any) {
             if (error.response && error.response.data && error.response.data.error) {
-                alert(`Error: ${error.response.data.error}`);  // Muestra el mensaje del backend
+                showAlert(`❌ ${error.response.data.error}`, 'error');  // Muestra el mensaje del backend
             } else {
-                alert("Error inesperado al crear el usuario");  // Fallback si el error no tiene mensaje específico
+                console.log("Error inesperado al crear el usuario");  // Fallback si el error no tiene mensaje específico
             }
         }
     };
@@ -105,6 +113,11 @@ const Agrega_Administrador: React.FC = () => {
     return (
         <>
             <Menu></Menu>
+            {alerts.map((alert, idx) => (
+                <div key={idx} className={`fixed top-5 left-1/2 transform -translate-x-1/2 ${alert.type === 'error' ? 'bg-red-600' : 'bg-green-600'} text-white px-6 py-2 rounded-lg shadow-lg z-50`}>
+                    {alert.msg}
+                </div>
+            ))}
 
             <div className="pt-40">
                 <div className="grid md:grid-cols-5 ">
@@ -149,10 +162,10 @@ const Agrega_Administrador: React.FC = () => {
                                         <label htmlFor="" className="text-white text-lg">Fecha de Nacimiento:</label>
                                         <br />
                                         <input type="date" name="" className="bg-slate-200 rounded px-2 p-1" id=""
-                                            value={FechaNac} onChange={handleBirthdateChange} />
-                                        {FechaNac.length > 0 && (<div className="text-sm mt-1">
-                                            {FechaNacValid ? (<p className="text-green-200">✅ Fecha seleccionada.</p>) : (<p className="text-red-700">
-                                                ❌ Selecciona una fecha válida. </p>)} </div>)}
+                                            value={FechaNac}
+                                            onChange={(e) => setFechaNac(e.target.value)}
+                                            required />
+
                                     </div>
                                     <div>
                                         <label htmlFor="" className="text-white text-lg">Genero:</label>
@@ -165,7 +178,7 @@ const Agrega_Administrador: React.FC = () => {
                                         </select>
                                     </div>
                                 </li>
-                               
+
                                 <li>
                                     <input type="submit" value="Agregar" className="p-2 bg-slate-800 rounded  hover:bg-slate-700 font-bold text-white w-full my-2" />
                                 </li>

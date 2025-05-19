@@ -11,7 +11,8 @@ export const crearComentario = async(
     
 ): Promise<void> =>{
     try {
-        const response = await axios.post(`${API_URL}/comentario`, { COMdescripcion, email,id});
+        const token = sessionStorage.getItem("TOKEN");
+        const response = await axios.post(`${API_URL}/comentario`, { COMdescripcion, email,id}, {headers: {Authorization: `Bearer ${token}`}});
         console.log("Respuesta del servidor:", response.data);
     } catch (error) {
         console.error("Error al crear comentario:", error);
@@ -34,10 +35,12 @@ export const obtenerComentarios = async(
 
 export const editarComentario = async(
     id:string,
-    COMdescripcion:string
+    COMdescripcion:string,
+    caso:string
 ): Promise<void> =>{
     try {
-        const response = await axios.put(`${API_URL}/comentario/${id}`, { id,COMdescripcion});
+        const token = sessionStorage.getItem("TOKEN");
+        const response = await axios.put(`${API_URL}/comentario/${id}`, { id,COMdescripcion, caso}, {headers: {Authorization: `Bearer ${token}`}});
         console.log("Respuesta del servidor:", response.data);
     } catch (error) {
         console.error("Error al editar el comentario:", error);
@@ -47,10 +50,12 @@ export const editarComentario = async(
 
 export const borrarComentario = async(
     id:string,
-    COMestatus:boolean
+    COMestatus:boolean,
+    caso:string
 ): Promise<void> =>{
     try {
-        const response = await axios.put(`${API_URL}/comentario/${id}`, {id, COMestatus});
+        const token = sessionStorage.getItem("TOKEN");
+        const response = await axios.put(`${API_URL}/comentario/${id}`, {id, COMestatus, caso}, {headers: {Authorization: `Bearer ${token}`}});
         console.log("Respuesta del servidor:", response.data);
     } catch (error) {
         console.error("Error al borrar el comentario:", error);

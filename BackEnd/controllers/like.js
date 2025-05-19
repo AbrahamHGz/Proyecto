@@ -1,7 +1,7 @@
 import likeModelo from "../models/like.js";
 import usuarioModel from "../models/usuarios.js";
 import publicacionModel from "../models/publicacion.js";
-
+import logger from "../helpers/logger.js";
 class likeController {
     constructor(){
 
@@ -21,6 +21,7 @@ class likeController {
             const data = await likeModelo.create(req.body)
             res.status(201).json(data);
         }catch(e){
+            logger.error(e);
             res.status(500).send(e)
         }
     }
@@ -31,6 +32,7 @@ class likeController {
             const data = await likeModelo.delete(id);
             res.status(206).json(data);
         }catch(e){
+            logger.error(e);
             res.status(500).send(e)
         }
     }
@@ -41,6 +43,7 @@ class likeController {
             const data = await likeModelo.getOneLike(LIKusuario,  LIKpublicacion);
             res.status(206).json(data);
         }catch(e){
+            logger.error(e);
             res.status(500).send(e)
         }
     }
@@ -51,6 +54,7 @@ class likeController {
             const count = await likeModelo.countLikesbyPublicacion(LIKpublicacion);
             res.status(200).json({cantidadLikes: count});
         }catch(e){
+            logger.error(e);
             res.status(500).send(e);
         }
     }

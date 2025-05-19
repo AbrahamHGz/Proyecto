@@ -1,6 +1,6 @@
 import categoriaModel from "../models/categoria.js";
 import usuarioModel from "../models/usuarios.js";
-
+import logger from "../helpers/logger.js";
 
 class categoriaController {
     constructor(){
@@ -27,6 +27,7 @@ class categoriaController {
             const data = await categoriaModel.create({CATnombre, CATusuario: existeUsuario._id});
             res.status(201).json(data);
         }catch(e){
+            logger.error(e);
             res.status(500).send(e);
         }
     }
@@ -37,6 +38,7 @@ class categoriaController {
             const data = await categoriaModel.update(id,req.body);
             res.status(200).json(data);
         }catch(e){
+            logger.error(e);
             res.status(500).send(e);
         }
     }
@@ -47,6 +49,7 @@ class categoriaController {
                const data = await categoriaModel.delete(id);
                res.status(206).json(data);
            }catch(e){
+                logger.error(e);
                res.status(500).send(e);
            }
        }
@@ -56,6 +59,7 @@ class categoriaController {
                const data = await categoriaModel.getAll();
                res.status(201).json(data);
            }catch(e){
+                logger.error(e);
                res.status(500).send(e);
            }
        }
@@ -67,6 +71,7 @@ class categoriaController {
 
                res.status(201).json(data);
            }catch(e){
+                logger.error(e);
                res.status(500).send(e);
            }
        }
@@ -81,6 +86,7 @@ class categoriaController {
             res.status(201).json({data, email})
 
         }catch(e){
+            logger.error(e);
             res.status(500).send(e);
 
         }

@@ -15,10 +15,15 @@ import Artistas from './Pages/Artistas'
 import Admin from './Pages/Admin'
 import Agrega_Administrador from './Pages/Agrega_Administrador'
 import PruebaDb from './Pages/PruebaDb'
+import Confirmacion from './Pages/Confirmacion'
+import Error from './Pages/Error'
+import ErrorCategoria from './Pages/ErrorCategoria'
+import RecuperarContraseña from './Pages/RecuperarContraseña'
 
 import PrivateRoute from './Rutas/PrivateRoute'
 import AuthProvider from './auth/autenticacion'
 import PrivateRouteWithRole from './Rutas/PrivateRouteRole'
+
 
 function App() {
   const [count, setCount] = useState(0)
@@ -41,6 +46,10 @@ const router = createBrowserRouter(
         <Route path='/' element={<Login />} />
         <Route path='/Login' element={<Login />} />
         <Route path='/SingUp' element={<Singup />} />
+        <Route path='/Confirmacion' element={<Confirmacion />} />
+        <Route path='/Error' element={<Error />} />
+        <Route path='/ErrorCategoria' element={<ErrorCategoria />} />
+        <Route path='/RecuperarContraseña' element={<RecuperarContraseña />} />
 
         {/* Rutas privadas */}
         <Route element={<PrivateRoute />}>

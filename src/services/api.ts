@@ -83,12 +83,12 @@ export const EditarPerfil = async(
     password: String,
     sexo: string,
     FechaNac: Date,
-    imagen: string | null
-    
+    imagen: string | null,
+    caso:string
 ): Promise<void> =>{
     try {
         const token = sessionStorage.getItem("TOKEN");
-        const response = await axios.put(`${API_URL}/usuario/email/${email}`, { nombre, email, password, sexo, FechaNac, imagen} ,{headers: {Authorization: `Bearer ${token}`}});
+        const response = await axios.put(`${API_URL}/usuario/email/${email}`, { nombre, password, sexo, FechaNac, imagen, caso} ,{headers: {Authorization: `Bearer ${token}`}});
         console.log("Respuesta del servidor:", response.data);
     } catch (error) {
         console.error("Error al editar usuario:", error);
@@ -98,11 +98,12 @@ export const EditarPerfil = async(
 
 export const EdtiarAcercaMi = async(
     email: string, 
-    descripcion: string
+    descripcion: string,
+    caso:string
 ): Promise<void> => {
     try{
         const token = sessionStorage.getItem("TOKEN");
-        const response = await axios.put(`${API_URL}/usuario/email/${email}`, {email, descripcion} ,{headers: {Authorization: `Bearer ${token}`}});
+        const response = await axios.put(`${API_URL}/usuario/email/${email}`, { descripcion, caso} ,{headers: {Authorization: `Bearer ${token}`}});
         console.log("Respuesta del servidor:", response.data);
     }catch(error) {
         console.error("Error al editar usuario:", error);
@@ -113,14 +114,33 @@ export const EdtiarAcercaMi = async(
 
 export const desactivarUsu = async(
     email: string, 
-    Estatus:boolean
+    Estatus:boolean 
 ): Promise<void> => {
     try{
         const token = sessionStorage.getItem("TOKEN");
-        const response = await axios.put(`${API_URL}/usuario/email/${email}`, {email, Estatus} ,{headers: {Authorization: `Bearer ${token}`}});
+        const response = await axios.put(`${API_URL}/usuario/email/${email}`, { Estatus } ,{headers: {Authorization: `Bearer ${token}`}});
         console.log("Respuesta del servidor:", response.data);
     }catch(error) {
-        console.error("Error al desactivar usuario:", error);
+        console.error("Error al cambiar el estado del usuario:", error);
         throw error;
+    }
+}
+
+export const recuperarContrasena = async (
+    email: string
+  ): Promise<{ nombre: string; email: string; password: string }> => {
+    const url = `${API_URL}/usuario/email/${encodeURIComponent(email)}`;
+    const response = await axios.get(url);
+    return response.data;
+};
+
+export const getDataArtistasParaAdmin = async (): Promise<any> => {
+    try {
+        const token = sessionStorage.getItem("TOKEN");
+        const response = await axios.get(`${API_URL}/usuario/admin/artistas`, {headers: {Authorization: `Bearer ${token}`}});
+        return response.data;
+    } catch (e) {
+        console.error("Error al obtener todos los artistas para admin: ", e);
+        throw e;
     }
 }

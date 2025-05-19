@@ -5,8 +5,7 @@ const publicacionSchema = new mongoose.Schema(
 
         PUBnombre:{
             type:String,
-            required:true,
-            unique:true
+            required:true
         },
         PUBcategorias:[{
             type:mongoose.Schema.Types.ObjectId, ref: 'categoria',
